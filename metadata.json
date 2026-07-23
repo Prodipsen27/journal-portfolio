@@ -1,0 +1,6 @@
+{
+  "name": "Prodip Sengupta Portfolio",
+  "description": "Personal portfolio website for Prodip Sengupta, Full-stack GenAI Engineer",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
