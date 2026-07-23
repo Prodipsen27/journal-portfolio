@@ -84,12 +84,12 @@ export const JournalCover: React.FC<JournalCoverProps> = ({ onOpenJournal }) => 
         <motion.div
           onMouseEnter={() => setIsStrapHovered(true)}
           onMouseLeave={() => setIsStrapHovered(false)}
-          className={`absolute top-0 bottom-0 right-12 sm:right-16 w-5 sm:w-6 bg-gradient-to-r from-[#171310] via-[#9C3B3B] to-[#171310] border-x border-[#c44e4e]/40 shadow-2xl z-20 transition-all duration-300 ${
+          className={`absolute top-0 bottom-0 right-5 sm:right-8 w-5 sm:w-6 bg-gradient-to-r from-[#171310] via-[#9C3B3B] to-[#171310] border-x border-[#c44e4e]/40 shadow-2xl z-20 transition-all duration-300 ${
             isStrapHovered ? 'scale-x-110 shadow-[0_0_15px_rgba(156,59,59,0.6)]' : ''
           }`}
         >
-          {/* Tag on elastic strap */}
-          <div className="absolute top-1/2 -translate-y-1/2 -left-28 bg-[#9C3B3B] text-[#fbf7ee] text-[10px] font-typewriter px-2.5 py-1.5 rounded border border-[#e67373] shadow-lg flex items-center space-x-1.5 transform group-hover:scale-105 transition-transform">
+          {/* Tag on elastic strap moved higher to avoid text overlay */}
+          <div className="absolute top-12 -left-28 bg-[#9C3B3B] text-[#fbf7ee] text-[10px] font-typewriter px-2.5 py-1.5 rounded border border-[#e67373] shadow-lg flex items-center space-x-1.5 transform group-hover:scale-105 transition-transform">
             {isStrapHovered ? <Unlock className="w-3 h-3 text-emerald-300" /> : <Lock className="w-3 h-3 text-[#fbf7ee]" />}
             <span>Click to Untie & Open</span>
           </div>

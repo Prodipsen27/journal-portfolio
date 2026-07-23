@@ -132,6 +132,18 @@ export const ProjectDetailModal: React.FC<ProjectDetailModalProps> = ({
             <Github className="w-4 h-4 text-[#d4af37]" />
             <span>GitHub Repository</span>
           </a>
+
+          {project.demoUrl && (
+            <a
+              href={project.demoUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="px-5 py-2.5 rounded-xl bg-[#c89d58] hover:bg-[#b08443] border border-[#d4af37] text-xs font-serif-classic font-bold text-[#1a1512] flex items-center space-x-2 transition-colors"
+            >
+              <ExternalLink className="w-4 h-4 text-[#1a1512]" />
+              <span>Live Demo</span>
+            </a>
+          )}
         </div>
       </div>
     </div>

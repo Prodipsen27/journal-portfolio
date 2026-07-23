@@ -1,29 +1,40 @@
 import React, { useState } from 'react';
 import { motion } from 'motion/react';
-import { Bookmark, Send, Mail, MapPin, ExternalLink, Check, Copy, Sparkles } from 'lucide-react';
+import { Send, CheckCircle2, Sparkles, Mail, User, MessageSquare, Tag, Loader2, AlertCircle } from 'lucide-react';
 import { PROFILE_DATA } from '../data/portfolioData';
-import { JournalAILine } from './JournalAILine';
+
+const FORMSPREE_ID = "mdawjoog";
+type Status = "idle" | "sending" | "success" | "error";
 
 export const ContactSection: React.FC = () => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
-    subject: 'GenAI / Full-Stack Project',
+    subject: 'Full-Stack GenAI Application',
     message: ''
   });
-  const [isSealed, setIsSealed] = useState(false);
-  const [copiedEmail, setCopiedEmail] = useState(false);
+  const [status, setStatus] = useState<Status>('idle');
 
-  const handleCopyEmail = () => {
-    navigator.clipboard.writeText(PROFILE_DATA.email);
-    setCopiedEmail(true);
-    setTimeout(() => setCopiedEmail(false), 2000);
-  };
-
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!formData.name || !formData.email || !formData.message) return;
-    setIsSealed(true);
+    setStatus('sending');
+
+    try {
+      const res = await fetch(`https://formspree.io/f/${FORMSPREE_ID}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
+      });
+
+      if (res.ok) {
+        setStatus('success');
+      } else {
+        setStatus('error');
+      }
+    } catch {
+      setStatus('error');
+    }
   };
 
   return (
@@ -31,178 +42,170 @@ export const ContactSection: React.FC = () => {
       initial={{ opacity: 0, y: 12 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4 }}
-      className="space-y-8"
+      className="space-y-6 select-none"
     >
       {/* SECTION HEADER */}
-      <div className="pb-4 border-b border-[#8C8577]/30">
-        <div className="flex items-center space-x-2">
-          <Bookmark className="w-6 h-6 text-[#9C3B3B]" />
-          <h2 className="font-journal text-3xl font-bold text-[#20242B]">
-            Postcard · Contact & Correspondence
+      <div className="pb-3 border-b border-[#8C8577]/30 flex items-center justify-between">
+        <div>
+          <span className="font-typewriter text-[10px] text-[#9C3B3B] font-bold uppercase tracking-widest block">
+            DISPATCH FORM · DIRECT CORRESPONDENCE
+          </span>
+          <h2 className="font-journal italic text-2xl sm:text-3xl font-bold text-[#20242B]">
+            Send Email Inquiry
           </h2>
         </div>
-        <p className="font-journal text-xs text-[#4B5566] mt-1">
-          Send a handwritten note or correspondence regarding full-time roles & contract builds.
-        </p>
+        <div className="hidden sm:flex items-center space-x-1.5 px-2.5 py-1 rounded bg-[#EFE6D2] border border-[#BCAE8E] text-[10px] font-typewriter text-[#8C8577]">
+          <Mail className="w-3.5 h-3.5 text-[#9C3B3B]" />
+          <span>TO: {PROFILE_DATA.email}</span>
+        </div>
       </div>
 
-      {/* HAND-TORN POSTCARD CONTAINER */}
-      <div className="p-6 sm:p-10 rounded-lg bg-[#FBF7EE] border-2 border-[#DCCFAF] shadow-lg relative overflow-hidden transform rotate-[-0.5deg]">
-        {/* Postcard Stamps & Washi Tape */}
-        <div className="wasi-tape absolute -top-3 left-10 w-24 h-4 washi-tape" />
+      {/* FORM PARCHMENT CONTAINER */}
+      <div className="p-5 sm:p-7 rounded-xl bg-[#FBF7EE] border-2 border-[#DCCFAF] shadow-md relative overflow-hidden">
+        {/* WASHI TAPE TOP RIGHT */}
+        <div className="wasi-tape absolute -top-3 right-8 w-20 h-4 washi-tape rotate-[1deg] z-10" />
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-          {/* LEFT SIDE: Postcard Message Form */}
-          <div className="lg:col-span-7 space-y-4">
-            <h3 className="font-handwriting text-3xl text-[#9C3B3B] font-bold">
-              "Write a message on this postcard…"
-            </h3>
-
-            {isSealed ? (
-              <div className="p-6 rounded bg-[#EFE6D2] border border-[#BCAE8E] text-center space-y-3">
-                <div className="w-16 h-16 rounded-full wax-seal mx-auto flex items-center justify-center text-[#fbf7ee] font-handwriting font-bold text-2xl shadow-lg border-2 border-[#d27575]">
-                  PS
-                </div>
-                <h4 className="font-journal text-2xl font-bold text-[#20242B]">
-                  Postcard Stamped & Sealed!
-                </h4>
-                <p className="font-journal text-xs text-[#4B5566]">
-                  Thank you, {formData.name}. Prodip will receive your note and reply to {formData.email} shortly.
-                </p>
-                <button
-                  onClick={() => {
-                    setIsSealed(false);
-                    setFormData({ name: '', email: '', subject: 'GenAI / Full-Stack Project', message: '' });
-                  }}
-                  className="px-4 py-2 rounded bg-[#9C3B3B] text-[#fbf7ee] text-xs font-typewriter shadow"
-                >
-                  Write Another Postcard
-                </button>
-              </div>
-            ) : (
-              <form onSubmit={handleSubmit} className="space-y-4 font-journal text-xs">
-                <div>
-                  <label className="block font-typewriter text-[#8C8577] mb-1">Your Name</label>
-                  <input
-                    type="text"
-                    required
-                    value={formData.name}
-                    onChange={e => setFormData({ ...formData, name: e.target.value })}
-                    placeholder="e.g. Dr. Eleanor Vance"
-                    className="w-full py-2 px-1 ruled-question-input text-sm"
-                  />
-                </div>
-
-                <div>
-                  <label className="block font-typewriter text-[#8C8577] mb-1">Your Email</label>
-                  <input
-                    type="email"
-                    required
-                    value={formData.email}
-                    onChange={e => setFormData({ ...formData, email: e.target.value })}
-                    placeholder="eleanor@example.com"
-                    className="w-full py-2 px-1 ruled-question-input text-sm"
-                  />
-                </div>
-
-                <div>
-                  <label className="block font-typewriter text-[#8C8577] mb-1">Inquiry Subject</label>
-                  <select
-                    value={formData.subject}
-                    onChange={e => setFormData({ ...formData, subject: e.target.value })}
-                    className="w-full p-2 rounded bg-[#EFE6D2] border border-[#BCAE8E] font-typewriter text-xs text-[#20242B]"
-                  >
-                    <option value="GenAI / Full-Stack Project">Full-Stack GenAI Application</option>
-                    <option value="LangGraph Multi-Agent Workflows">LangGraph Multi-Agent Workflows</option>
-                    <option value="Full-Time Engineering Role">Full-Time Engineering Role</option>
-                    <option value="RAG Pipeline Optimization">RAG Pipeline Optimization</option>
-                  </select>
-                </div>
-
-                <div>
-                  <label className="block font-typewriter text-[#8C8577] mb-1">Message Prose</label>
-                  <textarea
-                    required
-                    rows={4}
-                    value={formData.message}
-                    onChange={e => setFormData({ ...formData, message: e.target.value })}
-                    placeholder="Write your note here..."
-                    className="w-full p-2 rounded bg-[#EFE6D2] border border-[#BCAE8E] font-journal text-sm text-[#20242B] focus:outline-none"
-                  />
-                </div>
-
-                <button
-                  type="submit"
-                  className="w-full py-3 rounded bg-[#9C3B3B] text-[#fbf7ee] font-typewriter text-xs font-bold shadow-md hover:bg-[#b84343] transition-colors flex items-center justify-center space-x-2"
-                >
-                  <Send className="w-4 h-4 text-[#fbf7ee]" />
-                  <span>Affix Wax Seal & Send Postcard</span>
-                </button>
-              </form>
-            )}
-          </div>
-
-          {/* RIGHT SIDE: Address Side of Postcard */}
-          <div className="lg:col-span-5 border-t lg:border-t-0 lg:border-l border-dashed border-[#BCAE8E] pt-6 lg:pt-0 lg:pl-8 space-y-6">
-            {/* Stamp Box */}
-            <div className="flex justify-end">
-              <div className="w-16 h-20 bg-[#EFE6D2] border-2 border-dashed border-[#9C3B3B] p-1 flex flex-col items-center justify-between text-center shadow-sm">
-                <span className="font-typewriter text-[9px] text-[#9C3B3B] uppercase">Air Mail</span>
-                <div className="w-8 h-8 rounded-full wax-seal flex items-center justify-center text-[#fbf7ee] font-handwriting text-xs font-bold">
-                  2026
-                </div>
-                <span className="font-typewriter text-[8px] text-[#8C8577]">FIELD POST</span>
-              </div>
+        {status === 'success' ? (
+          /* SUBMITTED STATE */
+          <motion.div 
+            initial={{ scale: 0.95, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            className="p-6 sm:p-8 rounded-lg bg-[#EFE6D2] border-2 border-[#9C3B3B] text-center space-y-4"
+          >
+            <div className="w-20 h-20 rounded-full wax-seal mx-auto flex items-center justify-center text-[#FBF7EE] font-handwriting font-bold text-3xl shadow-xl border-4 border-[#d27575] relative">
+              <Sparkles className="w-4 h-4 text-[#FFD700] absolute top-2 right-2 animate-spin-slow" />
+              PS
             </div>
 
-            {/* Address Lines */}
-            <div className="space-y-3 font-handwriting text-2xl text-[#20242B] leading-tight">
-              <p className="border-b border-[#DCCFAF] pb-1">To: Prodip Sengupta</p>
-              <p className="border-b border-[#DCCFAF] pb-1">Full-stack GenAI Engineer</p>
-              <p className="border-b border-[#DCCFAF] pb-1 text-xl text-[#4B5566]">India (Remote Worldwide)</p>
-              <p className="border-b border-[#DCCFAF] pb-1 text-lg font-typewriter text-[#9C3B3B]">
-                {PROFILE_DATA.email}
+            <div>
+              <span className="font-typewriter text-[10px] text-[#9C3B3B] font-bold uppercase tracking-widest block">
+                DISPATCH SEALED & TRANSMITTED VIA FORMSPREE
+              </span>
+              <h3 className="font-journal text-2xl font-bold text-[#20242B] mt-1">
+                Thank you, {formData.name}!
+              </h3>
+              <p className="font-journal text-xs sm:text-sm text-[#4B5566] max-w-md mx-auto mt-2 leading-relaxed">
+                Your message has been delivered to Prodip Sengupta's inbox. A response will be dispatched to <span className="font-typewriter font-bold text-[#9C3B3B]">{formData.email}</span> shortly.
               </p>
             </div>
 
-            {/* Quick Copy Email Button */}
-            <div className="pt-2">
-              <button
-                onClick={handleCopyEmail}
-                className="w-full py-2 px-3 rounded bg-[#EFE6D2] border border-[#BCAE8E] font-typewriter text-xs text-[#20242B] hover:bg-[#DCCFAF] transition-colors flex items-center justify-center space-x-2"
-              >
-                {copiedEmail ? <Check className="w-3.5 h-3.5 text-[#5C7C74]" /> : <Copy className="w-3.5 h-3.5 text-[#9C3B3B]" />}
-                <span>{copiedEmail ? "Email Address Copied!" : "Copy Email Address"}</span>
-              </button>
+            <button
+              onClick={() => {
+                setStatus('idle');
+                setFormData({ name: '', email: '', subject: 'Full-Stack GenAI Application', message: '' });
+              }}
+              className="px-5 py-2.5 rounded bg-[#9C3B3B] text-[#FBF7EE] font-typewriter text-xs font-bold hover:bg-[#b84343] transition-colors shadow-md inline-flex items-center space-x-2"
+            >
+              <Send className="w-3.5 h-3.5" />
+              <span>Send Another Message</span>
+            </button>
+          </motion.div>
+        ) : (
+          /* EMAIL FORM */
+          <form onSubmit={handleSubmit} className="space-y-4 font-journal text-xs sm:text-sm">
+            {status === 'error' && (
+              <div className="p-3 rounded bg-[#FADBD8] border border-[#E74C3C] text-[#78281F] font-typewriter text-xs flex items-center space-x-2">
+                <AlertCircle className="w-4 h-4 text-[#E74C3C] shrink-0" />
+                <span>Transmission error. Please check internet connection or retry shortly.</span>
+              </div>
+            )}
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              {/* NAME INPUT */}
+              <div>
+                <label className="flex items-center space-x-1.5 font-typewriter text-[10px] text-[#8C8577] font-bold uppercase mb-1">
+                  <User className="w-3.5 h-3.5 text-[#9C3B3B]" />
+                  <span>Your Full Name</span>
+                </label>
+                <input
+                  type="text"
+                  required
+                  value={formData.name}
+                  onChange={e => setFormData({ ...formData, name: e.target.value })}
+                  placeholder="e.g. Dr. Eleanor Vance"
+                  className="w-full py-2 px-2 ruled-question-input text-sm font-journal bg-[#FBF7EE]"
+                />
+              </div>
+
+              {/* EMAIL INPUT */}
+              <div>
+                <label className="flex items-center space-x-1.5 font-typewriter text-[10px] text-[#8C8577] font-bold uppercase mb-1">
+                  <Mail className="w-3.5 h-3.5 text-[#9C3B3B]" />
+                  <span>Your Return Email</span>
+                </label>
+                <input
+                  type="email"
+                  required
+                  value={formData.email}
+                  onChange={e => setFormData({ ...formData, email: e.target.value })}
+                  placeholder="eleanor@example.com"
+                  className="w-full py-2 px-2 ruled-question-input text-sm font-journal bg-[#FBF7EE]"
+                />
+              </div>
             </div>
 
-            {/* Social Links */}
-            <div className="space-y-2 pt-2 border-t border-[#DCCFAF] font-typewriter text-xs text-[#4B5566]">
-              <a
-                href={PROFILE_DATA.github}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center justify-between p-2 rounded bg-[#EFE6D2] hover:bg-[#DCCFAF]"
+            {/* SUBJECT SELECTOR */}
+            <div>
+              <label className="flex items-center space-x-1.5 font-typewriter text-[10px] text-[#8C8577] font-bold uppercase mb-1">
+                <Tag className="w-3.5 h-3.5 text-[#9C3B3B]" />
+                <span>Inquiry Subject / Domain</span>
+              </label>
+              <select
+                value={formData.subject}
+                onChange={e => setFormData({ ...formData, subject: e.target.value })}
+                className="w-full p-2.5 rounded bg-[#EFE6D2] border border-[#BCAE8E] font-typewriter text-xs text-[#20242B] focus:outline-none focus:border-[#9C3B3B]"
               >
-                <span>GitHub: github.com/prodipsen27</span>
-                <ExternalLink className="w-3.5 h-3.5 text-[#9C3B3B]" />
-              </a>
-              <a
-                href={PROFILE_DATA.linkedin}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center justify-between p-2 rounded bg-[#EFE6D2] hover:bg-[#DCCFAF]"
-              >
-                <span>LinkedIn: linkedin.com/in/prodipsen27</span>
-                <ExternalLink className="w-3.5 h-3.5 text-[#9C3B3B]" />
-              </a>
+                <option value="Full-Stack GenAI Application">Full-Stack GenAI Application</option>
+                <option value="LangGraph Multi-Agent Workflows">LangGraph Multi-Agent Workflows</option>
+                <option value="Full-Time Engineering Role">Full-Time Engineering Role</option>
+                <option value="RAG Pipeline & Vector Search">RAG Pipeline & Vector Search</option>
+                <option value="General Consultation / Greeting">General Consultation / Greeting</option>
+              </select>
             </div>
-          </div>
-        </div>
+
+            {/* MESSAGE PROSE */}
+            <div>
+              <label className="flex items-center space-x-1.5 font-typewriter text-[10px] text-[#8C8577] font-bold uppercase mb-1">
+                <MessageSquare className="w-3.5 h-3.5 text-[#9C3B3B]" />
+                <span>Message Prose</span>
+              </label>
+              <textarea
+                required
+                rows={5}
+                value={formData.message}
+                onChange={e => setFormData({ ...formData, message: e.target.value })}
+                placeholder="Write your note or project scope here..."
+                className="w-full p-3 rounded-lg bg-[#EFE6D2]/70 border border-[#BCAE8E] font-journal text-sm text-[#20242B] focus:outline-none focus:border-[#9C3B3B] focus:bg-[#EFE6D2] leading-relaxed resize-none"
+              />
+            </div>
+
+            {/* SUBMIT BUTTON WITH WAX SEAL STAMP STYLE */}
+            <button
+              type="submit"
+              disabled={status === 'sending'}
+              className="w-full py-3.5 px-4 rounded-lg bg-[#9C3B3B] text-[#FBF7EE] font-typewriter text-xs font-bold shadow-md hover:bg-[#b84343] disabled:opacity-60 transition-all duration-200 flex items-center justify-center space-x-2 group"
+            >
+              {status === 'sending' ? (
+                <>
+                  <Loader2 className="w-4 h-4 text-[#FBF7EE] animate-spin" />
+                  <span>TRANSMITTING DISPATCH...</span>
+                </>
+              ) : (
+                <>
+                  <Send className="w-4 h-4 text-[#FBF7EE] group-hover:translate-x-1 transition-transform" />
+                  <span>AFFIX WAX SEAL & TRANSMIT DISPATCH</span>
+                </>
+              )}
+            </button>
+          </form>
+        )}
       </div>
 
-      {/* BOTTOM AI QUESTION LINE */}
-      <JournalAILine />
+      {/* FOOTER NOTE */}
+      <div className="text-center font-typewriter text-[10px] text-[#8C8577] flex items-center justify-center space-x-1">
+        <CheckCircle2 className="w-3.5 h-3.5 text-[#3B6B58]" />
+        <span>DIRECT FIELD LOG CHANNEL · PRODIP SENGUPTA PORTFOLIO</span>
+      </div>
     </motion.div>
   );
 };

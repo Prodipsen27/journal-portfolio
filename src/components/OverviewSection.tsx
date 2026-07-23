@@ -137,57 +137,32 @@ export const OverviewSection: React.FC<OverviewSectionProps> = ({ onNavigate, on
         </div>
       </div>
 
-      {/* FEATURED PROJECTS ENTRY PREVIEW */}
-      <div className="pt-8 border-t border-[#8C8577]/30">
+      {/* ENGINEERING FOCUS & METHODOLOGY */}
+      <div className="pt-6 border-t border-[#8C8577]/30">
         <div className="flex items-center justify-between mb-4">
           <h3 className="font-journal text-2xl font-bold text-[#20242B] flex items-center space-x-2">
             <Bookmark className="w-5 h-5 text-[#9C3B3B]" />
-            <span>Featured Project Entries</span>
+            <span>Engineering Focus & Methodology</span>
           </h3>
-          <button
-            onClick={() => onNavigate('projects')}
-            className="font-typewriter text-xs text-[#9C3B3B] hover:underline flex items-center space-x-1"
-          >
-            <span>Read All Entries (27+) →</span>
-          </button>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {topProjects.map((project, idx) => (
-            <div
-              key={project.id}
-              onClick={() => onSelectProject(project)}
-              className={`polaroid-card p-4 rounded-lg cursor-pointer transition-all ${
-                idx % 2 === 0 ? 'rotate-[-1.5deg]' : 'rotate-[1.5deg]'
-              }`}
-            >
-              <div className="wasi-tape absolute -top-2 right-4 w-12 h-3.5 washi-tape" />
-
-              <div className="text-[10px] font-typewriter text-[#8C8577] flex items-center justify-between mb-1">
-                <span>{project.date}</span>
-                <span className="text-[#5C7C74] font-bold">#{project.category.toLowerCase().replace(/\s+/g, '')}</span>
-              </div>
-
-              <h4 className="font-journal text-lg font-bold text-[#20242B] mb-1 hover:text-[#9C3B3B]">
-                {project.title}
-              </h4>
-
-              <p className="font-journal text-xs text-[#4B5566] line-clamp-2 mb-3">
-                {project.tagline}
-              </p>
-
-              <div className="pt-2 border-t border-[#DCCFAF] flex items-center justify-between text-[10px] font-typewriter text-[#8C8577]">
-                <div className="flex gap-1 flex-wrap">
-                  {project.tech.slice(0, 2).map((t, i) => (
-                    <span key={i} className="px-1.5 py-0.5 rounded bg-[#EFE6D2] border border-[#BCAE8E]">
-                      {t}
-                    </span>
-                  ))}
-                </div>
-                <ExternalLink className="w-3.5 h-3.5 text-[#9C3B3B]" />
-              </div>
-            </div>
-          ))}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="p-4 rounded-lg bg-[#EFE6D2]/60 border border-[#BCAE8E]">
+            <h4 className="font-handwriting text-xl font-bold text-[#20242B] mb-1">
+              Multi-Agent AI & System Reasoning
+            </h4>
+            <p className="font-journal text-xs text-[#4B5566] leading-relaxed">
+              Designing stateful agent workflows, autonomous tool calling pipelines, RAG with hybrid search, and production LLM integrations.
+            </p>
+          </div>
+          <div className="p-4 rounded-lg bg-[#EFE6D2]/60 border border-[#BCAE8E]">
+            <h4 className="font-handwriting text-xl font-bold text-[#20242B] mb-1">
+              Tactile Full-Stack Software Engineering
+            </h4>
+            <p className="font-journal text-xs text-[#4B5566] leading-relaxed">
+              Building responsive frontend interfaces and microservice architectures with modern TypeScript, Next.js, Express, Docker, and PostgreSQL.
+            </p>
+          </div>
         </div>
       </div>
 

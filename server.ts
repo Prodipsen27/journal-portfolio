@@ -19,24 +19,32 @@ async function startServer() {
 
       const apiKey = process.env.GEMINI_API_KEY;
       if (apiKey && apiKey !== "MY_GEMINI_API_KEY") {
-        const ai = new GoogleGenAI({ apiKey });
-        const systemPrompt = `You are Prodip Sengupta's Portfolio AI System Agent. Prodip is a Full-stack GenAI Engineer from India with 1+ years experience, 27+ projects, and 99% uptime.
-Core Tech Stack: Gemini/Claude API (Function Calling), LangGraph JS & LangChain, RAG Pipelines & pgvector (RRF), Anthropic MCP, React, Next.js, Node.js, Express, MongoDB, PostgreSQL, Supabase, Docker.
-Quote: "I don't just build apps — I build systems that think."
-Projects: VitalTrace AI Health Assistant, Grocery Delivery Platform with Gemini cart agent, FinDoc AI Research Assistant, MenuOS AI Restaurant Ordering, QueryCart, TaraEffects, Property Listing, Aurality - Music Platform, Artistly.com.
+        const ai = new GoogleGenAI({
+          apiKey,
+          httpOptions: {
+            headers: {
+              'User-Agent': 'aistudio-build',
+            },
+          },
+        });
+        const systemPrompt = `You are Prodip Sengupta's Professional Twin AI Assistant on his portfolio website. Prodip is a Full-Stack GenAI Engineer from India with 1+ years experience, 27+ projects, and 99% uptime.
+Core Stack: Gemini/Claude API (Function Calling), LangGraph JS & LangChain, RAG Pipelines & pgvector (RRF), Anthropic MCP, React, Next.js, Node.js, Express, MongoDB, PostgreSQL, Docker, Cloud Run.
+Featured Projects: VitalTrace AI, Grocery Delivery Platform with Gemini Cart Agent, FinDoc AI SEC Filing Research Assistant, MenuOS AI Restaurant Assistant, Aurality Music Platform, QueryCart.
+Contact: prodipsengupta27@gmail.com | github.com/prodipsen27 | linkedin.com/in/prodipsen27 | Open to Work (Remote Worldwide).
 
-Respond directly, concisely, and professionally to the user's inquiry in 2-3 short paragraphs or bullet points. Include a brief thought process array.`;
+Answer user questions concisely, warmly, and accurately as Prodip's AI twin.`;
 
         const response = await ai.models.generateContent({
-          model: "gemini-2.5-flash",
+          model: "gemini-3.6-flash",
           contents: `${systemPrompt}\n\nUser Question: ${query}`
         });
 
-        const text = response.text || "I am grounded in Prodip's 27+ projects and full-stack GenAI engineering background.";
+        const text = response.text || "I am Prodip Sengupta's AI twin, grounded in his 27+ full-stack GenAI engineering projects.";
         return res.json({
           answer: text,
-          thoughtProcess: ["Gemini 2.5 Flash execution node", "Retrieved vector context from portfolio knowledge graph"],
-          sources: ["Prodip Sengupta Portfolio Database", "Gemini AI Model"]
+          reply: text,
+          thoughtProcess: ["Gemini 3.6 Flash execution node", "Retrieved vector context from portfolio knowledge graph"],
+          sources: ["Prodip Sengupta Portfolio Database", "Gemini 3.6 Flash AI Model"]
         });
       }
 

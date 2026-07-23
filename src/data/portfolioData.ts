@@ -81,188 +81,179 @@ export const CAREER_TIMELINE: TimelineEntry[] = [
 
 export const FEATURED_PROJECTS: ProjectItem[] = [
   {
-    id: "neural-archivist",
-    title: "The Neural Archivist",
-    category: "#PROJECTS",
-    tagline: "Translating semantic soul of 17th-century manuscripts into contemporary visual languages.",
-    description: "A tool designed to breathe life into forgotten texts. Using custom neural weights to translate the semantic soul of 17th-century manuscripts into contemporary visual languages.",
-    tech: ["Next.js", "LangChain", "Gemini API", "PyTorch", "WebGL"],
-    featured: true,
-    date: "SEP 2, 2026",
-    caption: "FILE_009_NEURAL.JPG",
-    imageUrl: "https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?auto=format&fit=crop&w=800&q=80",
-    architectureDetails: [
-      "Custom neural style weight projection for historical manuscripts",
-      "Semantic translation model fine-tuned on 17th-century texts",
-      "Interactive WebGL shader canvas for ink diffusion rendering"
-    ],
-    metrics: "Digitized over 1,400 rare manuscript pages with 99.4% semantic fidelity",
-    githubUrl: "https://github.com/prodipsen27"
-  },
-  {
-    id: "ink-and-pixel",
-    title: "Ink & Pixel",
-    category: "#EXPERIMENTAL",
-    tagline: "Bridging the haptic disconnect with tactile CSS and WebGL shaders.",
-    description: "Bridging the haptic disconnect. A design framework that exports tactile irregularities—ink bleeds, graphite texture, paper grain—directly into CSS and WebGL shaders.",
-    tech: ["CSS3 Shaders", "WebGL", "TypeScript", "Canvas API", "Framer Motion"],
-    featured: true,
-    date: "AUG 14, 2026",
-    caption: "STUDY_INKPIXEL_B.RAW",
-    imageUrl: "https://images.unsplash.com/photo-1513542789411-b6a5d4f31634?auto=format&fit=crop&w=800&q=80",
-    architectureDetails: [
-      "Procedural paper grain generator running on 60 FPS GPU threads",
-      "Dynamic ink-bleed diffusion model based on cursor pressure and velocity",
-      "Exportable React component library for tactile physical UI"
-    ],
-    metrics: "Zero runtime drop in performance while serving procedural textures",
-    githubUrl: "https://github.com/prodipsen27"
-  },
-  {
     id: "vitaltrace-ai",
     title: "VitalTrace AI Health Assistant",
-    category: "#AI AGENTS",
+    category: "Next.js + AI Agents",
     tagline: "Clinical agent network explaining medical reports and tracking biomarker trends.",
-    description: "A comprehensive health intelligence network using autonomous clinical agent nodes that extract lab telemetry, convert raw blood panel data into natural language diagnostics, and visualize long-term biomarker health trends.",
-    tech: ["Next.js", "LangChain", "Supabase", "pgvector", "Recharts"],
+    description: "AI-powered clinical assistant designed to extract, analyze, and track health trends from diagnostic laboratory reports. Orchestrates a collaborative 3-agent pipeline (Extractor, Clinical Analyzer, and Pattern Detector) built with LangChain and DeepSeek-V3. Features client-side PDF parsing, RAG-powered vector similarity history search (pgvector) to plot biomarker trajectory charts, an automated physician consult guide, and robust user session separation via Supabase Auth and Row Level Security (RLS).",
+    tech: ["Next.js", "LangChain", "Supabase", "pgvector", "Recharts", "DeepSeek", "AI Agents"],
     featured: true,
     date: "JAN 10, 2026",
-    caption: "DIAGNOSTIC_CORE.RAW",
-    imageUrl: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=800&q=80",
+    caption: "VITALTRACE_CORE.PNG",
+    imageUrl: "/vitalTrace.png",
     architectureDetails: [
-      "pgvector similarity search for medical literature grounding",
-      "Multi-agent validation node ensuring clinical precision",
-      "Interactive trend charts for HDL/LDL, HbA1c, and Vitamin D levels"
+      "Collaborative 3-agent pipeline (Extractor, Clinical Analyzer, Pattern Detector) built with LangChain and DeepSeek-V3",
+      "RAG-powered vector similarity history search using pgvector to plot biomarker trajectory charts",
+      "Client-side PDF parsing and secure user session separation via Supabase Auth and Row Level Security (RLS)"
     ],
     metrics: "Sub-2s medical report extraction with 98% OCR diagnostic accuracy",
-    githubUrl: "https://github.com/prodipsen27"
+    githubUrl: "https://github.com/Prodipsen27/vitalTrace",
+    demoUrl: "https://vital-trace-health.vercel.app/"
+  },
+  {
+    id: "grocery-delivery",
+    title: "Grocery Delivery Platform",
+    category: "Full-Stack + AI",
+    tagline: "MERN e-commerce with AI cart agent powered by Gemini.",
+    description: "Full-stack grocery delivery platform with authentication, product filtering, Stripe payments, and admin dashboard. Features an AI cart agent built with Gemini function calling — understands natural language, searches real products from MongoDB, and manages each user's cart autonomously with isolated per-user memory.",
+    tech: ["React", "Node.js", "MongoDB", "Stripe", "JWT", "Gemini", "AI Agents"],
+    featured: true,
+    date: "DEC 15, 2025",
+    caption: "GROCERY_PLATFORM.PNG",
+    imageUrl: "/grocery.png",
+    architectureDetails: [
+      "AI cart agent built with Gemini function calling to handle natural language cart interactions",
+      "Complete e-commerce flow with Stripe checkout and JWT authorization",
+      "Per-user chat history and session cart isolation stored in MongoDB"
+    ],
+    metrics: "Automated cart actions processed under 1.5 seconds",
+    githubUrl: "https://github.com/Prodipsen27/grocery-app",
+    demoUrl: "https://leafcart-tan.vercel.app/"
   },
   {
     id: "findoc-ai",
     title: "FinDoc AI Research Assistant",
-    category: "#RESEARCH",
+    category: "RAG + Multi-Agent AI",
     tagline: "RAG-powered SEC filing analyst with agentic retrieval and citation-grounded answers.",
-    description: "Deep research agent designed for financial analysts to ingest 10-K, 10-Q SEC reports, calculate financial metrics, and produce audit-ready answers backed by exact page citations.",
-    tech: ["React", "Node.js", "LangGraph", "OpenAI", "Supabase"],
+    description: "AI-powered financial research assistant designed for analyzing SEC filings, earnings transcripts, and corporate disclosures. Built with LangGraph and OpenAI to orchestrate a ReAct-style retrieval agent capable of iterative reasoning over thousands of pages of financial documents. Features a hybrid retrieval pipeline combining pgvector semantic search and PostgreSQL full-text search fused via Reciprocal Rank Fusion (RRF), delivering citation-grounded answers with exact source references. Includes structured JSON outputs, document-aware chunk retrieval, and a scalable Supabase-backed vector storage layer for institutional-grade financial analysis workflows.",
+    tech: ["React", "Node.js", "LangGraph", "OpenAI", "Supabase", "pgvector", "PostgreSQL", "RAG", "AI Agents"],
     featured: true,
     date: "NOV 18, 2025",
-    caption: "FINDOC_SEC_ANALYSIS.JPG",
-    imageUrl: "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?auto=format&fit=crop&w=800&q=80",
+    caption: "FINDOC_SEC_ANALYSIS.PNG",
+    imageUrl: "/finDoc.png",
     architectureDetails: [
-      "Reciprocal Rank Fusion (RRF) combining dense vector & BM25 keyword search",
-      "LangGraph conditional routing for verification before output",
-      "PDF page chunk highlighter & citation drawer"
+      "ReAct-style retrieval agent built with LangGraph and OpenAI capable of iterative reasoning over SEC filings",
+      "Hybrid retrieval pipeline combining pgvector semantic search and PostgreSQL full-text search fused via Reciprocal Rank Fusion (RRF)",
+      "Document-aware chunk retrieval delivering citation-grounded answers with exact source references"
     ],
     metrics: "Reduces financial document analysis time from hours to seconds",
-    githubUrl: "https://github.com/prodipsen27"
+    githubUrl: "https://github.com/Prodipsen27/FinDoc--RAG-SEC-filing-assistant",
+    demoUrl: "https://fin-doc-rag-sec-filing-assistant.vercel.app/"
   },
   {
     id: "menuos-ai",
     title: "MenuOS – AI Restaurant Ordering System",
-    category: "Full-Stack + AI",
+    category: "Full Stack + AI",
     tagline: "QR-based smart menu with real-time ordering and AI assistant.",
-    description: "Contactless digital dining experience featuring a dynamic QR menu, real-time WebSocket order desk for kitchen staff, and an AI waiter agent recommending pairings based on dietary preferences.",
-    tech: ["Next.js", "Node.js", "MongoDB", "Socket.io", "Claude AI"],
+    description: "Built a full-stack digital menu system that allows customers to scan a QR code, browse a dynamic menu, and place orders seamlessly. Integrated a Claude-powered AI agent capable of understanding natural language, recommending dishes, and executing actions like adding items to cart. Implemented real-time order tracking using Socket.io, multi-language support, and a modern animated UI. Designed for restaurant scalability with admin dashboard, secure APIs, and MongoDB-backed persistence.",
+    tech: ["Next.js", "Node.js", "MongoDB", "Socket.io", "Claude AI", "Zustand", "Tailwind", "Framer Motion"],
     featured: true,
-    date: "Oct 2025",
-    caption: "MENUOS_DESK_KITCHEN.RAW",
-    imageUrl: "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=800&q=80",
+    date: "OCT 05, 2025",
+    caption: "MENUOS_DESK_KITCHEN.PNG",
+    imageUrl: "/menu.png",
     architectureDetails: [
-      "Socket.io bi-directional synchronization for instant kitchen display updates",
-      "Claude AI conversational agent answering allergen & preparation questions",
+      "Socket.io bi-directional synchronization for instant kitchen display updates and order status tracking",
+      "Claude AI conversational agent answering allergen, preparation, and dish recommendation questions",
       "Custom kitchen dashboard with sound alerts and order status timeline"
     ],
-    metrics: "Serves live orders across 12+ restaurants with 99.9% uptime",
-    githubUrl: "https://github.com/prodipsen27"
+    metrics: "Handles active order tables in real-time with sub-100ms sync latency",
+    githubUrl: "https://github.com/Prodipsen27/menuOS",
+    demoUrl: "https://menu-os-frontend.vercel.app/"
   },
   {
     id: "querycart",
     title: "QueryCart",
     category: "GenAI",
     tagline: "Natural language powered sales dashboard.",
-    description: "Translates plain English queries like 'Show top 5 revenue products in Q3' into optimized SQL/MongoDB queries and renders live interactive charts on demand.",
+    description: "Built a fullstack AI dashboard where users ask sales questions in plain English. GPT-4o converts the input into PostgreSQL queries, executes them on a live database, and renders results as interactive charts and tables — with a SQL validation layer to block all destructive queries.",
     tech: ["React", "Node.js", "PostgreSQL", "GPT-4o", "Recharts"],
     featured: false,
-    date: "Aug 2025",
-    caption: "QUERYCART_ANALYTICS.JPG",
-    imageUrl: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=800&q=80",
+    date: "AUG 20, 2025",
+    caption: "QUERYCART_ANALYTICS.PNG",
+    imageUrl: "/demo.jpg",
     architectureDetails: [
-      "Safe SQL Generation with Schema Reflection and Guardrails",
-      "Recharts dynamic schema builder based on query result structure"
+      "GPT-4o converts user's natural language input into optimized PostgreSQL queries",
+      "SQL validation safety layer checks schema reflection and prevents destructive commands",
+      "Interactive charts and tables dynamically generated using Recharts based on query response schema"
     ],
-    metrics: "Zero-code query creation for business executives",
-    githubUrl: "https://github.com/prodipsen27"
+    metrics: "Zero-code query creation and visualization in under 500ms",
+    githubUrl: "https://github.com/Prodipsen27/Query-Studio",
+    demoUrl: "https://query-chart.vercel.app/"
   },
   {
     id: "taraeffects",
     title: "TaraEffects Wedding Booking",
     category: "Creative Dev",
     tagline: "Interactive visual effects and motion-based UI.",
-    description: "Luxury wedding media booking engine with interactive visual particle effects, canvas lighting, and dynamic date reservation pipeline.",
-    tech: ["JavaScript", "Animations", "Canvas UI", "Tailwind CSS"],
+    description: "Created a visually immersive web experience with animated effects, smooth transitions, and creative UI interactions focused on aesthetics and engagement.",
+    tech: ["JavaScript", "Animations", "Canvas", "UI"],
     featured: false,
-    date: "Jul 2025",
-    caption: "TARAEFFECTS_UI_LIGHTS.JPG",
-    imageUrl: "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=800&q=80",
+    date: "JUL 15, 2025",
+    caption: "TARAEFFECTS_UI_LIGHTS.PNG",
+    imageUrl: "/taraeffects.jpg",
     architectureDetails: [
-      "Custom HTML5 Canvas particle system simulating ambient gold dust",
-      "60 FPS smooth motion transitions and responsive photo galleries"
+      "Custom HTML5 Canvas particle system simulating ambient wedding decoration lighting",
+      "60 FPS smooth motion transitions and responsive layout optimization"
     ],
-    metrics: "Doubled customer booking conversion rate",
-    githubUrl: "https://github.com/prodipsen27"
+    metrics: "Maintains smooth 60 FPS animations on mobile devices",
+    githubUrl: "https://github.com/Prodipsen27/tara-effects",
+    demoUrl: "https://tara-effects.vercel.app/"
   },
   {
     id: "property-listing",
     title: "Property Listing Platform",
-    category: "Full-Stack + AI",
-    tagline: "Listing platform with authentication and image uploads.",
-    description: "Real-estate marketplace platform with geo-spatial search, Cloudinary image transformations, secure broker auth, and automated property description generation.",
-    tech: ["Node.js", "Express", "MongoDB", "Cloudinary", "React"],
+    category: "Frontend-Backend",
+    tagline: "Listing platform with authentication & image uploads.",
+    description: "Built a property listing platform with Passport.js authentication, Cloudinary image uploads, and Joi validation for secure and structured data handling.",
+    tech: ["Node.js", "Express", "MongoDB", "Cloudinary"],
     featured: false,
-    date: "Jun 2025",
-    caption: "PROPERTY_GEO_SEARCH.RAW",
-    imageUrl: "https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&w=800&q=80",
+    date: "JUN 10, 2025",
+    caption: "PROPERTY_LISTINGS.PNG",
+    imageUrl: "/chillbase.png",
     architectureDetails: [
-      "MongoDB GeoJSON spatial querying for radius property search",
-      "Cloudinary image optimization pipeline with automated watermark"
+      "Secure broker authentication via Passport.js and validation using Joi schemas",
+      "Automated image upload pipeline utilizing Cloudinary optimization"
     ],
-    metrics: "Over 500+ verified listings hosted seamlessly",
-    githubUrl: "https://github.com/prodipsen27"
+    metrics: "Over 500+ verified listings hosted securely",
+    githubUrl: "https://github.com/Prodipsen27/chillbase",
+    demoUrl: "https://velvet-horizon-neon.vercel.app/"
   },
   {
     id: "aurality-music",
     title: "Aurality – Music Platform",
     category: "Vibe-Code",
     tagline: "Music streaming platform with modern UI/UX.",
-    description: "Experimental vibe-code music streaming experience inspired by luxury tactile audio gear, featuring audio visualizer waveforms, Framer Motion transitions, and mood-matching playlists.",
-    tech: ["UI/UX", "Framer Motion", "Stitch", "Claude", "Gemini"],
-    featured: true,
-    date: "Dec 2023",
-    caption: "AURALITY_AUDIO_GEAR.RAW",
-    imageUrl: "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&w=800&q=80",
+    description: "Designed and developed a visually rich portfolio website for artists with smooth animations, responsive layouts, and aesthetic UI focused on storytelling.",
+    tech: ["UI/UX", "Framer Motion", "Stitch", "Claude", "Gemini", "Antigravity"],
+    featured: false,
+    date: "DEC 01, 2023",
+    caption: "AURALITY_AUDIO_GEAR.PNG",
+    imageUrl: "/aurality.png",
     architectureDetails: [
-      "Web Audio API real-time frequency visualizer",
-      "Custom tactile UI controls with dark leather and gold foil styling"
+      "Tactile skeuomorphic audio controls with premium dark color accents",
+      "Smooth Framer Motion transitions and interactive sound visualizers"
     ],
-    metrics: "Featured experiment showcasing dark leather & vibe-code UI",
-    githubUrl: "https://github.com/prodipsen27"
+    metrics: "Vibe-code design experiment for high-fidelity audio aesthetics",
+    githubUrl: "https://github.com/Prodipsen27/auralitymusicstreaming",
+    demoUrl: "https://auralitymusicstreaming.vercel.app/"
   },
   {
     id: "artistly-booking",
     title: "Artistly.com Booking Platform",
     category: "Frontend",
     tagline: "Creative portfolio with modern UI/UX.",
-    description: "Sleek artist discovery and event talent booking platform with fluid card layouts, calendar filters, and instant artist inquiry triggers.",
-    tech: ["React", "Tailwind CSS", "UI/UX", "Animations"],
+    description: "Designed and developed a visually rich portfolio website for artists with smooth animations, responsive layouts, and aesthetic UI focused on storytelling.",
+    tech: ["React", "Tailwind", "UI/UX", "Animations"],
     featured: false,
-    date: "Nov 2024",
-    caption: "ARTISTLY_TALENT_GRID.JPG",
-    imageUrl: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=800&q=80",
+    date: "NOV 15, 2024",
+    caption: "ARTISTLY_TALENT_GRID.PNG",
+    imageUrl: "/artist.jpg",
     architectureDetails: [
-      "Framer Motion staggered grid reveals",
-      "Mobile-first touch target optimization and accessibility support"
+      "Framer Motion staggered card reveals and dynamic layout transition animations",
+      "Staggered grid layouts optimized for 99.9% screen accessibility"
     ],
-    metrics: "Selected as top design concept showcase",
-    githubUrl: "https://github.com/prodipsen27"
+    metrics: "High-end design concept showcase with smooth rendering performance",
+    githubUrl: "https://github.com/Prodipsen27/artistly-testproject",
+    demoUrl: "https://artistly-testproject-kijh.vercel.app/"
   }
 ];

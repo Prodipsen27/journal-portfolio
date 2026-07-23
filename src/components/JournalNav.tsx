@@ -13,9 +13,8 @@ export const JOURNAL_TABS = [
   { id: 'overview', label: 'Me', tag: '#me', date: 'Oct 14', icon: User, chapter: 'Entry 01' },
   { id: 'projects', label: 'Projects', tag: '#projects', date: 'Oct 20', icon: FolderGit2, chapter: 'Entry 02', badge: '27+' },
   { id: 'skills', label: 'Skills', tag: '#skills', date: 'Inside Cover', icon: Cpu, chapter: 'Entry 03' },
-  { id: 'timeline', label: 'Timeline', tag: '#timeline', date: 'Growth Log', icon: History, chapter: 'Entry 04' },
-  { id: 'agent-sandbox', label: 'AI Agent', tag: '#ai-agent', date: 'Interactive', icon: Terminal, chapter: 'Entry 05' },
-  { id: 'contact', label: 'Contact', tag: '#contact', date: 'Postcard', icon: Mail, chapter: 'Entry 06' },
+  { id: 'assistant', label: 'Assistant', tag: '#assistant', date: 'AI Twin', icon: Terminal, chapter: 'Entry 04', badge: 'AI' },
+  { id: 'contact', label: 'Contact', tag: '#contact', date: 'Postcard', icon: Mail, chapter: 'Entry 05' },
 ];
 
 export const JournalNav: React.FC<JournalNavProps> = ({
