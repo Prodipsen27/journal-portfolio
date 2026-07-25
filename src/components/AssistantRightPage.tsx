@@ -114,7 +114,7 @@ export const AssistantRightPage: React.FC<AssistantRightPageProps> = ({
       </div>
 
       {/* CONVERSATION AREA ON LINED JOURNAL PAGE */}
-      <div ref={chatContainerRef} className="my-3 flex-1 overflow-y-auto space-y-4 pr-1 max-h-[390px]">
+      <div ref={chatContainerRef} className="my-3 flex-1 overflow-y-auto space-y-4 pr-1 h-full">
         {messages.length === 0 ? (
           <div className="h-full flex flex-col items-center justify-center text-center p-6 space-y-3 my-12">
             <div className="w-16 h-16 rounded-full bg-[#EFE6D2] border-2 border-[#DCCFAF] flex items-center justify-center text-[#9C3B3B] shadow-inner">

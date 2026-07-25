@@ -38,7 +38,7 @@ export const SealedEnvelopeContact: React.FC = () => {
   };
 
   return (
-    <div className="space-y-4 select-none">
+    <div className="space-y-4 select-none mt-16 mr-4">
       {/* SECTION HEADER */}
       <div>
         <span className="font-typewriter text-[10px] text-[#8C8577] uppercase tracking-widest font-bold">

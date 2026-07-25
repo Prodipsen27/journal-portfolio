@@ -52,25 +52,34 @@ export const TimelineSection: React.FC = () => {
               </span>
             </div>
 
-            {/* Paper Card */}
-            <div className="p-5 rounded-lg bg-[#FBF7EE] border border-[#DCCFAF] shadow-sm space-y-3 relative overflow-hidden">
-              <div className="wasi-tape absolute -top-2 right-6 w-12 h-3.5 washi-tape opacity-80" />
+            {/* Sticky Note Card */}
+            <div 
+              style={{
+                transform: `rotate(${idx % 2 === 0 ? '-1deg' : '1deg'})`,
+              }}
+              className="p-5 rounded-xs bg-[#FAF4CE] dark:bg-[#282e3a] border-2 border-[#1c222c] dark:border-[#E6DFCF] border-l-[#9C3B3B] dark:border-l-[#E56B6B] shadow-[5px_5px_0px_rgba(0,0,0,0.15)] space-y-3 relative hover:-translate-y-1 hover:shadow-[7px_7px_0px_rgba(0,0,0,0.2)] transition-all duration-300"
+            >
+              {/* Hand-drawn paper tape tack at the top */}
+              <div className="absolute -top-4.5 left-1/2 -translate-x-1/2 w-10 h-6 bg-[#FAFAFA] dark:bg-[#EAEAEA] border-2 border-black/80 dark:border-white/90 shadow-sm rotate-[-1deg] z-10 flex flex-col justify-between overflow-hidden">
+                <div className="w-full h-1 border-b border-dashed border-black/30" />
+                <div className="w-full h-1 border-t border-dashed border-black/30" />
+              </div>
 
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-2 border-b border-[#DCCFAF] gap-1">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-2 border-b border-[#DCCFAF] dark:border-[#524933] gap-1">
                 <div>
-                  <span className="font-typewriter text-xs text-[#9C3B3B] font-bold uppercase tracking-wider">
+                  <span className="font-typewriter text-xs text-[#9C3B3B] dark:text-[#E56B6B] font-bold uppercase tracking-wider">
                     {entry.year} · {entry.subtitle}
                   </span>
-                  <h3 className="font-journal text-xl font-bold text-[#20242B]">
+                  <h3 className="font-journal text-xl font-bold text-[#20242B] dark:text-[#E6DFCF]">
                     {entry.title}
                   </h3>
                 </div>
-                <div className="p-1.5 rounded bg-[#EFE6D2] border border-[#BCAE8E] self-start sm:self-auto">
+                <div className="p-1.5 rounded bg-[#EFE6D2] dark:bg-[#2D2A24] border border-[#BCAE8E] dark:border-[#524933] self-start sm:self-auto">
                   {getIcon(entry.iconName)}
                 </div>
               </div>
 
-              <p className="font-journal text-xs sm:text-sm text-[#4B5566] leading-relaxed">
+              <p className="font-journal text-xs sm:text-sm text-[#4B5566] dark:text-[#B0B7C6] leading-relaxed">
                 {entry.description}
               </p>
 
@@ -79,9 +88,9 @@ export const TimelineSection: React.FC = () => {
                 {entry.highlights.map((item, i) => (
                   <span 
                     key={i} 
-                    className="inline-flex items-center space-x-1 text-xs font-typewriter px-2.5 py-0.5 rounded bg-[#EFE6D2] text-[#20242B] border border-[#BCAE8E]"
+                    className="inline-flex items-center space-x-1 text-xs font-typewriter px-2.5 py-0.5 rounded bg-[#EFE6D2] dark:bg-[#2D2A24] text-[#20242B] dark:text-[#E6DFCF] border border-[#BCAE8E] dark:border-[#524933]"
                   >
-                    <CheckCircle2 className="w-3 h-3 text-[#5C7C74]" />
+                    <CheckCircle2 className="w-3 h-3 text-[#5C7C74] dark:text-[#4ADE80]" />
                     <span>{item}</span>
                   </span>
                 ))}

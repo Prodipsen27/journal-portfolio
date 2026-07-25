@@ -24,5 +24,6 @@
     "noEmit": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true
-  }
+  },
+  "exclude": ["react-pageflip-master", "node_modules", "dist"]
 }

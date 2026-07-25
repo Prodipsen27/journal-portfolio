@@ -1,5 +1,7 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 @layer base {
   body {
     font-family: 'Lora', Georgia, serif;
@@ -20,7 +22,45 @@
   }
 }
 
-/* Custom Scrollbars matching fountain pen aesthetics */
+/* StPageFlip Stretch Rules - Fill 100% of Parent Container */
+.stpageflip--container {
+  width: 100% !important;
+  height: 100% !important;
+  max-width: 100% !important;
+  max-height: 100% !important;
+}
+
+.stpageflip--wrapper {
+  width: 100% !important;
+  height: 100% !important;
+  max-width: 100% !important;
+  max-height: 100% !important;
+}
+
+.stpageflip--canvas {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+/* Hand cursor on page corners */
+.corner-hand-trigger {
+  cursor: pointer !important;
+  cursor: grab !important;
+}
+.corner-hand-trigger:active {
+  cursor: grabbing !important;
+}
+
+/* Hide scrollbar but keep scrolling */
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+
 ::-webkit-scrollbar {
   width: 7px;
   height: 7px;
@@ -85,6 +125,10 @@
     0 8px 20px -4px rgba(40, 30, 20, 0.2),
     0 2px 4px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease;
+}
+.dark .polaroid-card {
+  background-color: #1D222C;
+  border-color: #3f4756;
 }
 
 .polaroid-card:hover {
@@ -163,6 +207,36 @@
   background-image: radial-gradient(circle at 50% 0%, rgba(255, 255, 255, 0.8) 0%, rgba(235, 226, 206, 0.15) 100%);
 }
 
+.book-paper-static {
+  background-color: #EFE6D2;
+  background-image:
+    linear-gradient(90deg, rgba(72, 48, 24, 0.08), transparent 9%, transparent 91%, rgba(72, 48, 24, 0.08)),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.34), rgba(176, 141, 63, 0.12)),
+    repeating-linear-gradient(0deg, rgba(38, 31, 24, 0.025) 0 1px, transparent 1px 4px),
+    repeating-linear-gradient(90deg, rgba(38, 31, 24, 0.018) 0 1px, transparent 1px 5px);
+  box-shadow:
+    inset 0 0 52px rgba(122, 86, 42, 0.22),
+    inset 0 0 0 1px rgba(93, 71, 43, 0.12);
+}
+
+.book-lighting {
+  background:
+    linear-gradient(90deg, rgba(0, 0, 0, 0.1), transparent 14%, transparent 86%, rgba(255, 255, 255, 0.18)),
+    linear-gradient(100deg, transparent 0%, rgba(255, 255, 255, 0.16) 47%, rgba(255, 255, 255, 0.04) 53%, transparent 100%);
+  mix-blend-mode: multiply;
+}
+
+.page-flip-leaf {
+  transform-style: preserve-3d;
+  will-change: transform;
+  filter: drop-shadow(0 18px 26px rgba(42, 29, 14, calc(var(--flip-shadow, 0) * 0.22)));
+}
+
+[data-book-transitioning="true"] .polaroid-card,
+[data-book-transitioning="true"] .transition-transform {
+  transition-duration: 0ms !important;
+}
+
 .clip-ribbon-tail {
   clip-path: polygon(0 0, 100% 0, 50% 100%);
 }
@@ -206,4 +280,288 @@
   animation: inkSpread 1.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
+/* Button Click Ripple Animation */
+@keyframes rippleExpand {
+  0% {
+    width: 0px;
+    height: 0px;
+    opacity: 0.6;
+  }
+  100% {
+    width: 240px;
+    height: 240px;
+    opacity: 0;
+  }
+}
 
+.animate-ripple {
+  animation: rippleExpand 0.6s cubic-bezier(0.1, 0.8, 0.3, 1) forwards;
+}
+
+/* Subtle Green Pulse for Success CTAs */
+@keyframes pulseSubtle {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.92; transform: scale(1.015); }
+}
+
+.animate-pulse-subtle {
+  animation: pulseSubtle 3s ease-in-out infinite;
+}
+
+/* ==========================================
+   DARK MODE STYLES
+   ========================================== */
+
+/* Dark Mode Dotted Background */
+.dark-mode-grid {
+  background-color: #0b0c0e !important;
+  background-image: radial-gradient(#1e2430 1.5px, transparent 1.5px) !important;
+  background-size: 16px 16px !important;
+}
+
+/* Base text overrides */
+.dark .text-\[\#20242B\],
+.dark .text-\[\#4B5566\],
+.dark .text-\[\#383D48\],
+.dark .text-\[\#2C4A42\],
+.dark .text-\[\#4b5566\] {
+  color: #E6DFCF !important;
+}
+
+.dark .text-\[\#8C8577\],
+.dark .text-\[\#A69F90\] {
+  color: #A39B8E !important;
+}
+
+/* Red accents: Brighter terracotta/coral in dark mode */
+.dark .text-\[\#9C3B3B\],
+.dark .text-\[\#7A1C1C\],
+.dark .text-\[\#E05252\],
+.dark .text-red-700 {
+  color: #df6868 !important;
+}
+
+/* Green accents: Brighter emerald/mint in dark mode */
+.dark .text-\[\#5C7C74\] {
+  color: #68b8a5 !important;
+}
+.dark .text-\[\#3B6B58\],
+.dark .text-\[\#2C5243\] {
+  color: #55cbb0 !important;
+}
+
+/* Gold accents: Brighter gold in dark mode */
+.dark .text-\[\#B08D3F\] {
+  color: #dcb360 !important;
+}
+
+/* Background parchment & card overrides */
+.dark .bg-\[\#FDFBF7\] {
+  background-color: #1A1D24 !important;
+}
+
+.dark [class*="bg-[#FAFAFA]"] {
+  background-color: #252A34 !important;
+}
+
+.dark [class*="bg-[#EAF2ED]"] {
+  background-color: #162820 !important;
+}
+
+.dark [class*="bg-[#FBF7EE]"] {
+  background-color: #1A1D24 !important;
+}
+
+.dark [class*="bg-[#EFE6D2]"] {
+  background-color: #232834 !important;
+}
+
+.dark [class*="bg-[#F5EFE4]"] {
+  background-color: #1A1D24 !important;
+}
+
+/* Envelope flap gradient override */
+.dark .from-\[\#E2D6BB\] {
+  --tw-gradient-from: #232834 !important;
+  --tw-gradient-to: rgba(35, 40, 52, 0) !important;
+  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to) !important;
+}
+
+/* Hover overrides for dark mode */
+.dark .hover\:bg-\[\#DCCFAF\]:hover {
+  background-color: #2b3140 !important;
+}
+
+.dark .bg-\[\#5C7C74\]\/20 {
+  background-color: rgba(92, 124, 116, 0.3) !important;
+  color: #83a39b !important;
+}
+
+/* Border overrides */
+.dark .border-\[\#8C8577\]\/30,
+.dark .border-\[\#8C8577\]\/35,
+.dark .border-\[\#8C8577\]\/25,
+.dark .border-\[\#DCCFAF\],
+.dark .border-\[\#BCAE8E\],
+.dark .border-y-2,
+.dark .border-r-2 {
+  border-color: rgba(140, 133, 119, 0.25) !important;
+}
+
+/* Ruled input overrides */
+.dark .ruled-question-input {
+  border-bottom-color: #3f4756 !important;
+  color: #E6DFCF !important;
+}
+.dark .ruled-question-input:focus {
+  border-bottom-color: #b85c37 !important;
+}
+
+.dark .ruled-question-input::placeholder {
+  color: #6a7685 !important;
+}
+
+/* Sidebar Tab active state overrides - keep light parchment */
+.dark button.bg-\[\#FBF7EE\] {
+  background-color: #FBF7EE !important;
+}
+
+/* Active tab text / icon stays dark for readability */
+.dark button.bg-\[\#FBF7EE\],
+.dark button.bg-\[\#FBF7EE\] *,
+.dark button.bg-\[\#FBF7EE\] span {
+  color: #20242B !important;
+}
+
+/* Hover overrides for dark mode */
+.dark .hover\:bg-\[\#E2D6BB\]:hover {
+  background-color: #2b3140 !important;
+}
+.dark .hover\:bg-\[\#EFE6D2\]\/60:hover {
+  background-color: rgba(45, 52, 65, 0.6) !important;
+}
+
+/* Polaroid Card text must remain dark on the white card background */
+.dark .polaroid-card {
+  background-color: #FAFAFA !important;
+  border-color: #E2D9C5 !important;
+}
+.dark .polaroid-card,
+.dark .polaroid-card * {
+  color: #20242B !important;
+}
+.dark .polaroid-card .text-\[\#9C3B3B\],
+.dark .polaroid-card .text-\[\#E05252\] {
+  color: #9C3B3B !important;
+}
+.dark .polaroid-card .text-\[\#8C8577\],
+.dark .polaroid-card .text-\[\#A69F90\] {
+  color: #8C8577 !important;
+}
+
+/* Dark Lined Paper (Left Page) */
+.dark .lined-paper {
+  background-color: #1E222B !important;
+  background-image: repeating-linear-gradient(
+    transparent,
+    transparent 31px,
+    rgba(255, 255, 255, 0.05) 31px,
+    rgba(255, 255, 255, 0.05) 32px
+  ) !important;
+}
+
+/* Dark Clean Paper (Right Page) */
+.dark .clean-paper {
+  background-color: #13161C !important;
+  background-image: radial-gradient(circle at 50% 0%, rgba(30, 35, 45, 0.4) 0%, rgba(19, 22, 28, 0.1) 100%) !important;
+}
+
+/* Projects page dark shade match */
+.dark .bg-\[\#262320\] {
+  background-color: #13161C !important;
+  border-left-color: rgba(140, 133, 119, 0.2) !important;
+}
+
+/* Projects badge pills dark mode override */
+.dark .bg-\[\#DCCFAF\]\/50,
+.dark .bg-\[\#DCCFAF\] {
+  background-color: #2D323F !important;
+  color: #E6DFCF !important;
+  border-color: #3f4756 !important;
+}
+.dark .bg-\[\#EFE6D2\]\/30 {
+  background-color: rgba(45, 52, 65, 0.3) !important;
+  border-color: rgba(140, 133, 119, 0.2) !important;
+}
+
+/* Career Map background wrapper */
+.dark .bg-\[\#F9F4E8\],
+.dark .bg-\[\#F5EFE4\]\/80 {
+  background-color: #13161C !important;
+  border-color: rgba(140, 133, 119, 0.25) !important;
+}
+
+/* Career Map timeline cards */
+.dark .bg-\[\#FBF7EE\].border-\[\#9C3B3B\],
+.dark .bg-\[\#FBF7EE\]\/60 {
+  background-color: #1A1D24 !important;
+  border-color: #b85c37 !important;
+}
+
+/* Terracotta ribbon bookmark in dark mode */
+.dark .ribbon-bookmark {
+  background: linear-gradient(90deg, #8c4327 0%, #b85c37 40%, #cf754f 70%, #8c4327 100%) !important;
+}
+
+/* Specific elements like select tags, chat textareas */
+.dark select, 
+.dark textarea {
+  background-color: #252A34 !important;
+  color: #E6DFCF !important;
+  border-color: #3f4756 !important;
+}
+
+/* Wax seal stamp - Terracotta tone in dark mode */
+.dark .wax-seal {
+  background: radial-gradient(circle at 35% 35%, #cf754f 0%, #b85c37 50%, #7e3c23 100%) !important;
+  border-color: #b85c37 !important;
+}
+
+/* Journal Cover Dark Mode background override */
+.dark .journal-cover {
+  background-color: #11141a !important;
+  background-image: 
+    radial-gradient(circle at 30% 20%, rgba(35, 42, 53, 0.6) 0%, transparent 80%),
+    radial-gradient(circle at 80% 80%, rgba(15, 18, 23, 0.8) 0%, transparent 80%) !important;
+  border-color: #2b323e !important;
+}
+
+.dark .journal-paper {
+  border-color: rgba(140, 133, 119, 0.25) !important;
+}
+
+.dark .book-paper-static {
+  background-color: #171A21;
+  background-image:
+    linear-gradient(90deg, rgba(0, 0, 0, 0.22), transparent 9%, transparent 91%, rgba(255, 255, 255, 0.05)),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.05), rgba(0, 0, 0, 0.16)),
+    repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.025) 0 1px, transparent 1px 4px),
+    repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.018) 0 1px, transparent 1px 5px);
+  box-shadow:
+    inset 0 0 52px rgba(0, 0, 0, 0.28),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.06);
+}
+
+.dark .book-lighting {
+  background:
+    linear-gradient(90deg, rgba(0, 0, 0, 0.22), transparent 15%, transparent 84%, rgba(255, 255, 255, 0.06)),
+    linear-gradient(100deg, transparent 0%, rgba(255, 255, 255, 0.05) 47%, rgba(255, 255, 255, 0.015) 53%, transparent 100%);
+  mix-blend-mode: screen;
+}
+
+.dark ::-webkit-scrollbar-thumb {
+  background: #b85c37 !important;
+}
+.dark ::-webkit-scrollbar-thumb:hover {
+  background: #cf754f !important;
+}

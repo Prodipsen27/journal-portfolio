@@ -1,29 +1,108 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { JournalCover } from './components/JournalCover';
 import { JournalSidebar } from './components/JournalSidebar';
 import { JournalLeftPage } from './components/JournalLeftPage';
 import { JournalRightPage } from './components/JournalRightPage';
 import { ProjectDetailModal } from './components/ProjectDetailModal';
 import { SumieBackground } from './components/SumieBackground';
+// import { AmbientSakuraParticles } from './components/AmbientSakuraParticles';
 import { PageFlipSpread } from './components/PageFlipSpread';
+import { BrushTransition } from './components/BrushTransition';
+import { MobileChatSection } from './components/MobileChatSection';
+import {
+  MobileAboutSection,
+  MobileProjectsSection,
+  MobileSkillsSection,
+  MobileContactSection,
+} from './components/MobileSections';
+import { Download } from 'lucide-react';
 
 import { FEATURED_PROJECTS } from './data/portfolioData';
 import { ProjectItem, ChatMessage } from './types';
+import { usePageFlipSound } from './hooks/usePageFlipSound';
+import { HTMLFlipBookWrapper } from './components/HTMLFlipBookWrapper';
+import { JournalInsideFrontCover } from './components/JournalInsideFrontCover';
+import { JournalTitlePage } from './components/JournalTitlePage';
+import { JournalInsideBackCover } from './components/JournalInsideBackCover';
+import { JournalBackCover } from './components/JournalBackCover';
+import { motion, AnimatePresence } from 'motion/react';
 
 export default function App() {
+  const { playPageFlipSound } = usePageFlipSound();
   const [isJournalOpen, setIsJournalOpen] = useState<boolean>(false);
-  const [activeTab, setActiveTab] = useState<string>('projects');
+  const [isDarkMode, setIsDarkMode] = useState<boolean>(false);
+  const [isBrushTriggered, setIsBrushTriggered] = useState<boolean>(false);
+  const [activeTab, setActiveTab] = useState<string>('overview');
   const [activeProject, setActiveProject] = useState<ProjectItem>(FEATURED_PROJECTS[0]);
   const [modalProject, setModalProject] = useState<ProjectItem | null>(null);
 
   const TAB_ORDER = ['overview', 'projects', 'skills', 'assistant', 'contact'];
 
+  const [isMobile, setIsMobile] = useState<boolean>(false);
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 1024);
+    };
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
   const lastScrollTime = useRef<number>(0);
   const touchStartRef = useRef<{ x: number; y: number } | null>(null);
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!isMobile || !scrollContainerRef.current) return;
+
+    const sections = ['overview', 'projects', 'skills', 'assistant', 'contact'];
+    
+    // Create an observer
+    const observerOptions = {
+      root: scrollContainerRef.current,
+      rootMargin: '-20% 0px -40% 0px',
+      threshold: 0,
+    };
+
+    const observerCallback = (entries: IntersectionObserverEntry[]) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const tabId = entry.target.id.replace('section-', '');
+          setActiveTab(tabId);
+        }
+      });
+    };
+
+    const observer = new IntersectionObserver(observerCallback, observerOptions);
+
+    sections.forEach(tab => {
+      const el = document.getElementById(`section-${tab}`);
+      if (el) observer.observe(el);
+    });
+
+    return () => observer.disconnect();
+  }, [isMobile, isJournalOpen]);
+
+  const handleOpenJournal = () => {
+    setActiveTab('overview');
+    setIsJournalOpen(true);
+  };
 
   const triggerTabChange = (nextTab: string) => {
-    if (nextTab === activeTab) return;
+    const isDesktopViewport = window.innerWidth >= 1024;
+    if (nextTab !== activeTab && isDesktopViewport) {
+      playPageFlipSound();
+    }
     setActiveTab(nextTab);
+    if (window.innerWidth < 1024) {
+      setTimeout(() => {
+        const element = document.getElementById(`section-${nextTab}`);
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      }, 50);
+    }
   };
 
   const canScrollElement = (target: HTMLElement, direction: 'up' | 'down'): boolean => {
@@ -53,34 +132,8 @@ export default function App() {
   };
 
   const handleWheel = (e: React.WheelEvent) => {
-    const target = e.target as HTMLElement;
-    if (target.closest('input, textarea, [contenteditable="true"]')) {
-      return;
-    }
-
-    const direction = e.deltaY > 0 ? 'down' : 'up';
-    if (canScrollElement(target, direction)) {
-      return; // Let the container scroll inside the page
-    }
-
-    const now = Date.now();
-    if (now - lastScrollTime.current < 900) return;
-
-    const threshold = 35;
-    if (Math.abs(e.deltaY) < threshold) return;
-
-    const currentIndex = TAB_ORDER.indexOf(activeTab);
-    if (direction === 'down') {
-      if (currentIndex < TAB_ORDER.length - 1) {
-        triggerTabChange(TAB_ORDER[currentIndex + 1]);
-        lastScrollTime.current = now;
-      }
-    } else {
-      if (currentIndex > 0) {
-        triggerTabChange(TAB_ORDER[currentIndex - 1]);
-        lastScrollTime.current = now;
-      }
-    }
+    // Scroll-to-flip feature disabled
+    return;
   };
 
   const handleTouchStart = (e: React.TouchEvent) => {
@@ -89,6 +142,9 @@ export default function App() {
   };
 
   const handleTouchEnd = (e: React.TouchEvent) => {
+    // Disable swipe-to-tab on mobile devices (allow native vertical scroll instead)
+    if (window.innerWidth < 1024) return;
+
     if (!touchStartRef.current) return;
     const target = e.target as HTMLElement;
     if (target.closest('input, textarea, [contenteditable="true"]')) {
@@ -247,57 +303,135 @@ export default function App() {
   };
 
   // Render closed cover if user toggles book closed
-  if (!isJournalOpen) {
-    return <JournalCover onOpenJournal={() => setIsJournalOpen(true)} />;
-  }
+ 
 
   return (
-    <div className="min-h-screen text-[#20242B] p-2 sm:p-6 md:p-10 flex items-center justify-center relative overflow-x-hidden">
+    <div className={`h-screen w-screen overflow-hidden text-[#20242B] p-0 sm:p-6 md:p-10 flex items-center justify-center relative transition-colors duration-300 ${isDarkMode ? 'dark dark-mode-grid' : ''}`}>
       {/* JAPANESE SUMI-E INK WASH BACKGROUND WITH RED RISING SUN */}
-      <SumieBackground />
+      <SumieBackground isDarkMode={isDarkMode} />
+      {/* <AmbientSakuraParticles isDarkMode={isDarkMode} /> */}
+
+      {/* ALWAYS VISIBLE MOBILE NAVBAR */}
+      <div className="block md:hidden w-full relative z-30">
+        <JournalSidebar
+          activeTab={activeTab}
+          setActiveTab={triggerTabChange}
+          onCloseJournal={() => setIsJournalOpen(false)}
+          isDarkMode={isDarkMode}
+          onToggleTheme={() => setIsBrushTriggered(true)}
+        />
+      </div>
 
       {/* MAIN TWO-PAGE OPEN NOTEBOOK WITH SPINE SIDEBAR */}
       <div 
         onWheel={handleWheel}
         onTouchStart={handleTouchStart}
         onTouchEnd={handleTouchEnd}
-        className="relative z-10 w-full max-w-[1400px] md:h-[720px] md:max-h-[90vh] flex flex-col md:flex-row shadow-2xl rounded-2xl my-2 overflow-hidden"
+        className="relative z-10 w-full max-w-[1400px] h-full md:h-[760px] md:max-h-[92vh] flex flex-col md:flex-row items-center justify-center my-0 md:my-2 bg-transparent"
       >
-        {/* LEFT LEATHER SPINE SIDEBAR */}
-        <JournalSidebar
-          activeTab={activeTab}
-          setActiveTab={triggerTabChange}
-          onCloseJournal={() => setIsJournalOpen(false)}
-        />
+        {/* LEFT LEATHER SPINE SIDEBAR FOR DESKTOP (Fades in when book open, fades out when closed) */}
+        <AnimatePresence initial={false}>
+          {isJournalOpen && (
+            <motion.div
+              initial={{ opacity: 0, x: -20, width: 0 }}
+              animate={{ opacity: 1, x: 0, width: 'auto' }}
+              exit={{ opacity: 0, x: -20, width: 0 }}
+              transition={{ duration: 0.4, ease: 'easeInOut' }}
+              className="hidden md:block shrink-0 z-20"
+            >
+              <JournalSidebar
+                activeTab={activeTab}
+                setActiveTab={triggerTabChange}
+                onCloseJournal={() => setIsJournalOpen(false)}
+                isDarkMode={isDarkMode}
+                onToggleTheme={() => setIsBrushTriggered(true)}
+              />
+            </motion.div>
+          )}
+        </AnimatePresence>
 
         {/* TWO-PAGE SPREAD CONTAINER */}
-        <PageFlipSpread
-          pageKey={activeTab}
-          leftPage={
-            <JournalLeftPage
-              activeTab={activeTab}
-              setActiveTab={triggerTabChange}
-              activeProject={activeProject}
-              onSelectProject={handleSelectProject}
-              onAssistantQuery={handleAssistantQuery}
-              isAssistantProcessing={isAssistantProcessing}
-              onClearAssistantChat={() => setAssistantMessages([])}
-              onSaveAssistantConversation={handleSaveConversation}
-              hasAssistantMessages={assistantMessages.length > 0}
-            />
-          }
-          rightPage={
-            <JournalRightPage
-              activeTab={activeTab}
-              setActiveTab={triggerTabChange}
-              activeProject={activeProject}
-              onSelectProject={handleOpenModal}
-              assistantMessages={assistantMessages}
-              isAssistantProcessing={isAssistantProcessing}
-              onClearAssistantChat={() => setAssistantMessages([])}
-            />
-          }
-        />
+        {isMobile ? (
+          <div 
+            ref={scrollContainerRef}
+            className="flex-1 bg-transparent flex flex-col relative overflow-y-auto w-full px-3 sm:px-5 pt-16 pb-28 space-y-8 no-scrollbar scroll-smooth"
+          >
+            {/* 1. ABOUT SECTION */}
+            <div id="section-overview" className="">
+              <MobileAboutSection isDarkMode={isDarkMode} />
+            </div>
+
+            {/* 2. PROJECTS SECTION */}
+            <div id="section-projects" className="">
+              <MobileProjectsSection
+                isDarkMode={isDarkMode}
+                onSelectProject={handleOpenModal}
+              />
+            </div>
+
+            {/* 3. SKILLS SECTION */}
+            <div id="section-skills" className="">
+              <MobileSkillsSection isDarkMode={isDarkMode} />
+            </div>
+
+            {/* 4. AI TWIN AGENT SECTION */}
+            <div id="section-assistant" className="flex flex-col">
+              <MobileChatSection
+                messages={assistantMessages}
+                isProcessing={isAssistantProcessing}
+                onQuerySubmit={handleAssistantQuery}
+                onClearChat={() => setAssistantMessages([])}
+                onSaveConversation={handleSaveConversation}
+                isDarkMode={isDarkMode}
+              />
+            </div>
+
+            {/* 5. CONTACT SECTION */}
+            <div id="section-contact" className="pb-6">
+              <MobileContactSection isDarkMode={isDarkMode} />
+            </div>
+          </div>
+        ) : (
+         <HTMLFlipBookWrapper
+            activeTab={activeTab}
+            setActiveTab={setActiveTab}
+            isJournalOpen={isJournalOpen}
+            onCloseJournal={() => setIsJournalOpen(false)}
+            onOpenJournal={handleOpenJournal}
+            frontCover={<JournalCover onOpenJournal={handleOpenJournal} />}
+            insideFrontCover={<JournalInsideFrontCover />}
+            titlePage={<JournalTitlePage />}
+            insideBackCover={<JournalInsideBackCover />}
+            backCover={<JournalBackCover onCloseJournal={() => setIsJournalOpen(false)} />}
+            pages={['overview', 'projects', 'skills', 'assistant', 'contact'].map(tab => ({
+              id: tab,
+              left: (
+                <JournalLeftPage
+                  activeTab={tab}
+                  setActiveTab={setActiveTab}
+                  activeProject={activeProject}
+                  onSelectProject={handleSelectProject}
+                  onAssistantQuery={handleAssistantQuery}
+                  isAssistantProcessing={isAssistantProcessing}
+                  onClearAssistantChat={() => setAssistantMessages([])}
+                  onSaveAssistantConversation={handleSaveConversation}
+                  hasAssistantMessages={assistantMessages.length > 0}
+                />
+              ),
+              right: (
+                <JournalRightPage
+                  activeTab={tab}
+                  setActiveTab={setActiveTab}
+                  activeProject={activeProject}
+                  onSelectProject={handleOpenModal}
+                  assistantMessages={assistantMessages}
+                  isAssistantProcessing={isAssistantProcessing}
+                  onClearAssistantChat={() => setAssistantMessages([])}
+                />
+              )
+            }))}
+          />
+        )}
       </div>
 
       {/* PROJECT DETAIL MODAL */}
@@ -307,7 +441,15 @@ export default function App() {
         onOpenAgentSandbox={(prompt) => prompt && handleAssistantQuery(prompt)}
       />
 
-    
+      {/* BRUSH WIPE THEME TRANSITION */}
+      <BrushTransition
+        isTriggered={isBrushTriggered}
+        onHalfway={() => setIsDarkMode(prev => !prev)}
+        onComplete={() => setIsBrushTriggered(false)}
+      />
+
+
+
     </div>
   );
 }

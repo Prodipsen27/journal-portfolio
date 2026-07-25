@@ -122,8 +122,12 @@ export const ContactSection: React.FC = () => {
                   required
                   value={formData.name}
                   onChange={e => setFormData({ ...formData, name: e.target.value })}
+                  onPointerDown={e => e.stopPropagation()}
+                  onMouseDown={e => e.stopPropagation()}
+                  onTouchStart={e => e.stopPropagation()}
+                  onClick={e => e.stopPropagation()}
                   placeholder="e.g. Dr. Eleanor Vance"
-                  className="w-full py-2 px-2 ruled-question-input text-sm font-journal bg-[#FBF7EE]"
+                  className="w-full py-2 px-2 ruled-question-input text-sm font-journal bg-[#FBF7EE] select-text cursor-text"
                 />
               </div>
 
@@ -138,8 +142,12 @@ export const ContactSection: React.FC = () => {
                   required
                   value={formData.email}
                   onChange={e => setFormData({ ...formData, email: e.target.value })}
+                  onPointerDown={e => e.stopPropagation()}
+                  onMouseDown={e => e.stopPropagation()}
+                  onTouchStart={e => e.stopPropagation()}
+                  onClick={e => e.stopPropagation()}
                   placeholder="eleanor@example.com"
-                  className="w-full py-2 px-2 ruled-question-input text-sm font-journal bg-[#FBF7EE]"
+                  className="w-full py-2 px-2 ruled-question-input text-sm font-journal bg-[#FBF7EE] select-text cursor-text"
                 />
               </div>
             </div>
@@ -153,6 +161,10 @@ export const ContactSection: React.FC = () => {
               <select
                 value={formData.subject}
                 onChange={e => setFormData({ ...formData, subject: e.target.value })}
+                onPointerDown={e => e.stopPropagation()}
+                onMouseDown={e => e.stopPropagation()}
+                onTouchStart={e => e.stopPropagation()}
+                onClick={e => e.stopPropagation()}
                 className="w-full p-2.5 rounded bg-[#EFE6D2] border border-[#BCAE8E] font-typewriter text-xs text-[#20242B] focus:outline-none focus:border-[#9C3B3B]"
               >
                 <option value="Full-Stack GenAI Application">Full-Stack GenAI Application</option>
@@ -174,8 +186,12 @@ export const ContactSection: React.FC = () => {
                 rows={5}
                 value={formData.message}
                 onChange={e => setFormData({ ...formData, message: e.target.value })}
+                onPointerDown={e => e.stopPropagation()}
+                onMouseDown={e => e.stopPropagation()}
+                onTouchStart={e => e.stopPropagation()}
+                onClick={e => e.stopPropagation()}
                 placeholder="Write your note or project scope here..."
-                className="w-full p-3 rounded-lg bg-[#EFE6D2]/70 border border-[#BCAE8E] font-journal text-sm text-[#20242B] focus:outline-none focus:border-[#9C3B3B] focus:bg-[#EFE6D2] leading-relaxed resize-none"
+                className="w-full p-3 rounded-lg bg-[#EFE6D2]/70 border border-[#BCAE8E] font-journal text-sm text-[#20242B] focus:outline-none focus:border-[#9C3B3B] focus:bg-[#EFE6D2] leading-relaxed resize-none select-text cursor-text"
               />
             </div>
 
