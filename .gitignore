@@ -10,3 +10,5 @@ coverage/
 .vercel
 react-pageflip-master
 react-pageflip-master.zip
+.vercel
+.env*

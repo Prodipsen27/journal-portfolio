@@ -161,7 +161,6 @@ export const AssistantLeftPage: React.FC<AITwinLeftPageProps> = ({
             onPointerDown={(e) => e.stopPropagation()}
             onMouseDown={(e) => e.stopPropagation()}
             onTouchStart={(e) => e.stopPropagation()}
-            onClick={(e) => e.stopPropagation()}
             className="relative flex items-center w-full bg-[#FBF7EE]/60 border-[2.5px] border-solid border-[#4B5566]/80 shadow-[1px_3px_6px_rgba(0,0,0,0.1)] rounded-[255px_15px_225px_15px/15px_225px_15px_255px] p-1.5 hover:border-[#9C3B3B]/80 transition-colors"
           >
             <div className="pl-2.5 sm:pl-3 text-[#9C3B3B] shrink-0">
@@ -175,7 +174,6 @@ export const AssistantLeftPage: React.FC<AITwinLeftPageProps> = ({
               onPointerDown={(e) => e.stopPropagation()}
               onMouseDown={(e) => e.stopPropagation()}
               onTouchStart={(e) => e.stopPropagation()}
-              onClick={(e) => e.stopPropagation()}
               placeholder="Ask me anything..."
               className="w-full px-3 py-1.5 sm:py-2 bg-transparent font-handwriting text-xl sm:text-2xl text-[#20242B] placeholder-[#4B5566]/60 focus:outline-none select-text cursor-text"
             />

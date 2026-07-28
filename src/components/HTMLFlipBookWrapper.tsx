@@ -78,13 +78,15 @@ export const HTMLFlipBookWrapper: React.FC<HTMLFlipBookWrapperProps> = ({
         target.tagName === 'TEXTAREA' || 
         target.tagName === 'SELECT' || 
         target.isContentEditable ||
-        target.closest('input, textarea, select, form, button')
+        target.closest('input, textarea, select, form, button, a')
       )) {
-        e.stopPropagation();
+        if (e.type === 'pointerdown' || e.type === 'mousedown' || e.type === 'touchstart') {
+          e.stopPropagation();
+        }
       }
     };
 
-    const events = ['pointerdown', 'mousedown', 'touchstart', 'click', 'keydown', 'keyup'];
+    const events = ['pointerdown', 'mousedown', 'touchstart'];
     events.forEach(evt => container.addEventListener(evt, stopIfInput, true));
 
     return () => {
