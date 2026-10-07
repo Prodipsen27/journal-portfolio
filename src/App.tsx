@@ -1,30 +1,27 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useMemo, useCallback } from 'react';
 import { JournalCover } from './components/JournalCover';
 import { JournalSidebar } from './components/JournalSidebar';
 import { JournalLeftPage } from './components/JournalLeftPage';
 import { JournalRightPage } from './components/JournalRightPage';
-import { ProjectDetailModal } from './components/ProjectDetailModal';
-import { SumieBackground } from './components/SumieBackground';
-// import { AmbientSakuraParticles } from './components/AmbientSakuraParticles';
-import { PageFlipSpread } from './components/PageFlipSpread';
-import { BrushTransition } from './components/BrushTransition';
-import { MobileChatSection } from './components/MobileChatSection';
-import {
-  MobileAboutSection,
-  MobileProjectsSection,
-  MobileSkillsSection,
-  MobileContactSection,
-} from './components/MobileSections';
-import { Download } from 'lucide-react';
-
-import { FEATURED_PROJECTS } from './data/portfolioData';
 import { ProjectItem, ChatMessage } from './types';
 import { usePageFlipSound } from './hooks/usePageFlipSound';
-import { HTMLFlipBookWrapper } from './components/HTMLFlipBookWrapper';
-import { JournalInsideFrontCover } from './components/JournalInsideFrontCover';
-import { JournalTitlePage } from './components/JournalTitlePage';
-import { JournalInsideBackCover } from './components/JournalInsideBackCover';
-import { JournalBackCover } from './components/JournalBackCover';
+import { SumieBackground } from './components/SumieBackground';
+import { BrushTransition } from './components/BrushTransition';
+import { FEATURED_PROJECTS } from './data/portfolioData';
+
+// Dynamic imports for code splitting
+const HTMLFlipBookWrapper = React.lazy(() => import('./components/HTMLFlipBookWrapper').then(m => ({ default: m.HTMLFlipBookWrapper })));
+const MobileChatSection = React.lazy(() => import('./components/MobileChatSection').then(m => ({ default: m.MobileChatSection })));
+const MobileAboutSection = React.lazy(() => import('./components/MobileSections').then(m => ({ default: m.MobileAboutSection })));
+const MobileProjectsSection = React.lazy(() => import('./components/MobileSections').then(m => ({ default: m.MobileProjectsSection })));
+const MobileSkillsSection = React.lazy(() => import('./components/MobileSections').then(m => ({ default: m.MobileSkillsSection })));
+const MobileContactSection = React.lazy(() => import('./components/MobileSections').then(m => ({ default: m.MobileContactSection })));
+const ProjectDetailModal = React.lazy(() => import('./components/ProjectDetailModal').then(m => ({ default: m.ProjectDetailModal })));
+const JournalInsideFrontCover = React.lazy(() => import('./components/JournalInsideFrontCover').then(m => ({ default: m.JournalInsideFrontCover })));
+const JournalTitlePage = React.lazy(() => import('./components/JournalTitlePage').then(m => ({ default: m.JournalTitlePage })));
+const JournalInsideBackCover = React.lazy(() => import('./components/JournalInsideBackCover').then(m => ({ default: m.JournalInsideBackCover })));
+const JournalBackCover = React.lazy(() => import('./components/JournalBackCover').then(m => ({ default: m.JournalBackCover })));
+
 import { motion, AnimatePresence } from 'motion/react';
 
 export default function App() {
@@ -36,21 +33,25 @@ export default function App() {
   const [activeProject, setActiveProject] = useState<ProjectItem>(FEATURED_PROJECTS[0]);
   const [modalProject, setModalProject] = useState<ProjectItem | null>(null);
 
-  const TAB_ORDER = ['overview', 'projects', 'skills', 'assistant', 'contact'];
-
-  const [isMobile, setIsMobile] = useState<boolean>(false);
+  const [isMobile, setIsMobile] = useState<boolean>(() => 
+    typeof window !== 'undefined' ? window.innerWidth < 1024 : false
+  );
 
   useEffect(() => {
+    let timeoutId: any = null;
     const checkMobile = () => {
-      setIsMobile(window.innerWidth < 1024);
+      clearTimeout(timeoutId);
+      timeoutId = setTimeout(() => {
+        setIsMobile(window.innerWidth < 1024);
+      }, 100);
     };
-    checkMobile();
     window.addEventListener('resize', checkMobile);
-    return () => window.removeEventListener('resize', checkMobile);
+    return () => {
+      window.removeEventListener('resize', checkMobile);
+      clearTimeout(timeoutId);
+    };
   }, []);
 
-  const lastScrollTime = useRef<number>(0);
-  const touchStartRef = useRef<{ x: number; y: number } | null>(null);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -84,12 +85,12 @@ export default function App() {
     return () => observer.disconnect();
   }, [isMobile, isJournalOpen]);
 
-  const handleOpenJournal = () => {
+  const handleOpenJournal = useCallback(() => {
     setActiveTab('overview');
     setIsJournalOpen(true);
-  };
+  }, []);
 
-  const triggerTabChange = (nextTab: string) => {
+  const triggerTabChange = useCallback((nextTab: string) => {
     const isDesktopViewport = window.innerWidth >= 1024;
     if (nextTab !== activeTab && isDesktopViewport) {
       playPageFlipSound();
@@ -103,86 +104,7 @@ export default function App() {
         }
       }, 50);
     }
-  };
-
-  const canScrollElement = (target: HTMLElement, direction: 'up' | 'down'): boolean => {
-    let el: HTMLElement | null = target;
-    while (el && el !== document.body) {
-      const style = window.getComputedStyle(el);
-      const overflowY = style.overflowY;
-      const isScrollable = overflowY === 'auto' || overflowY === 'scroll';
-      const hasScrollRange = el.scrollHeight > el.clientHeight;
-
-      if (isScrollable && hasScrollRange) {
-        if (direction === 'down') {
-          // Can scroll down further if scrollTop + clientHeight is less than scrollHeight
-          if (el.scrollTop + el.clientHeight < el.scrollHeight - 6) {
-            return true;
-          }
-        } else {
-          // Can scroll up further if scrollTop is greater than 0
-          if (el.scrollTop > 6) {
-            return true;
-          }
-        }
-      }
-      el = el.parentElement;
-    }
-    return false;
-  };
-
-  const handleWheel = (e: React.WheelEvent) => {
-    // Scroll-to-flip feature disabled
-    return;
-  };
-
-  const handleTouchStart = (e: React.TouchEvent) => {
-    const touch = e.touches[0];
-    touchStartRef.current = { x: touch.clientX, y: touch.clientY };
-  };
-
-  const handleTouchEnd = (e: React.TouchEvent) => {
-    // Disable swipe-to-tab on mobile devices (allow native vertical scroll instead)
-    if (window.innerWidth < 1024) return;
-
-    if (!touchStartRef.current) return;
-    const target = e.target as HTMLElement;
-    if (target.closest('input, textarea, [contenteditable="true"]')) {
-      return;
-    }
-
-    const touch = e.changedTouches[0];
-    const diffX = touch.clientX - touchStartRef.current.x;
-    const diffY = touch.clientY - touchStartRef.current.y;
-    
-    touchStartRef.current = null;
-
-    // Detect vertical swipe gestures (scroll up/down)
-    if (Math.abs(diffY) > Math.abs(diffX) && Math.abs(diffY) > 50) {
-      const direction = diffY < 0 ? 'down' : 'up';
-      if (canScrollElement(target, direction)) {
-        return; // Let the container scroll inside the page
-      }
-
-      const now = Date.now();
-      if (now - lastScrollTime.current < 900) return;
-
-      const currentIndex = TAB_ORDER.indexOf(activeTab);
-      if (direction === 'down') {
-        // Swiped Up (Scrolling Down) -> Next Tab
-        if (currentIndex < TAB_ORDER.length - 1) {
-          triggerTabChange(TAB_ORDER[currentIndex + 1]);
-          lastScrollTime.current = now;
-        }
-      } else {
-        // Swiped Down (Scrolling Up) -> Previous Tab
-        if (currentIndex > 0) {
-          triggerTabChange(TAB_ORDER[currentIndex - 1]);
-          lastScrollTime.current = now;
-        }
-      }
-    }
-  };
+  }, [activeTab, playPageFlipSound]);
 
 
   // Assistant Twin Chat State
@@ -276,16 +198,20 @@ export default function App() {
       setIsAssistantProcessing(false);
     }
   };
-  const handleSelectProject = (project: ProjectItem) => {
+  const handleSelectProject = useCallback((project: ProjectItem) => {
     setActiveProject(project);
     setActiveTab('projects');
-  };
+  }, []);
 
-  const handleOpenModal = (project: ProjectItem) => {
+  const handleOpenModal = useCallback((project: ProjectItem) => {
     setModalProject(project);
-  };
+  }, []);
 
-  const handleSaveConversation = () => {
+  const handleClearAssistantChat = useCallback(() => {
+    setAssistantMessages([]);
+  }, []);
+
+  const handleSaveConversation = useCallback(() => {
     if (assistantMessages.length === 0) return;
     const content = assistantMessages
       .map(m => `[${m.timestamp}] ${m.sender === 'user' ? 'VISITOR' : "PRODIP'S AI TWIN"}:\n${m.text}\n`)
@@ -300,16 +226,54 @@ export default function App() {
     a.click();
     document.body.removeChild(a);
     URL.revokeObjectURL(url);
-  };
+  }, [assistantMessages]);
 
-  // Render closed cover if user toggles book closed
- 
+  const bookPages = useMemo(() => {
+    const tabs = ['overview', 'projects', 'skills', 'assistant', 'contact'];
+    return tabs.map(tab => ({
+      id: tab,
+      left: (
+        <JournalLeftPage
+          activeTab={tab}
+          setActiveTab={setActiveTab}
+          activeProject={activeProject}
+          onSelectProject={handleSelectProject}
+          onAssistantQuery={handleAssistantQuery}
+          isAssistantProcessing={isAssistantProcessing}
+          onClearAssistantChat={handleClearAssistantChat}
+          onSaveAssistantConversation={handleSaveConversation}
+          hasAssistantMessages={assistantMessages.length > 0}
+        />
+      ),
+      right: (
+        <JournalRightPage
+          activeTab={tab}
+          setActiveTab={setActiveTab}
+          activeProject={activeProject}
+          onSelectProject={handleOpenModal}
+          assistantMessages={assistantMessages}
+          isAssistantProcessing={isAssistantProcessing}
+          onClearAssistantChat={handleClearAssistantChat}
+          isDarkMode={isDarkMode}
+        />
+      )
+    }));
+  }, [
+    activeProject,
+    handleSelectProject,
+    handleAssistantQuery,
+    isAssistantProcessing,
+    handleClearAssistantChat,
+    handleSaveConversation,
+    assistantMessages,
+    handleOpenModal,
+    isDarkMode
+  ]);
 
   return (
     <div className={`h-screen w-screen overflow-hidden text-[#20242B] p-0 sm:p-6 md:p-10 flex items-center justify-center relative transition-colors duration-300 ${isDarkMode ? 'dark dark-mode-grid' : ''}`}>
       {/* JAPANESE SUMI-E INK WASH BACKGROUND WITH RED RISING SUN */}
-      <SumieBackground isDarkMode={isDarkMode} />
-      {/* <AmbientSakuraParticles isDarkMode={isDarkMode} /> */}
+      <SumieBackground isDarkMode={isDarkMode} isJournalOpen={isJournalOpen} />
 
       {/* ALWAYS VISIBLE MOBILE NAVBAR */}
       <div className="block md:hidden w-full relative z-30">
@@ -324,9 +288,6 @@ export default function App() {
 
       {/* MAIN TWO-PAGE OPEN NOTEBOOK WITH SPINE SIDEBAR */}
       <div 
-        onWheel={handleWheel}
-        onTouchStart={handleTouchStart}
-        onTouchEnd={handleTouchEnd}
         className="relative z-10 w-full max-w-[1400px] h-full md:h-[760px] md:max-h-[92vh] flex flex-col md:flex-row items-center justify-center my-0 md:my-2 bg-transparent"
       >
         {/* LEFT LEATHER SPINE SIDEBAR FOR DESKTOP (Fades in when book open, fades out when closed) */}
@@ -356,6 +317,7 @@ export default function App() {
             ref={scrollContainerRef}
             className="flex-1 bg-transparent flex flex-col relative overflow-y-auto w-full px-3 sm:px-5 pt-16 pb-28 space-y-8 no-scrollbar scroll-smooth"
           >
+           <React.Suspense fallback={<div className="p-10 text-center text-[#c4b5a3]">Loading...</div>}>
             {/* 1. ABOUT SECTION */}
             <div id="section-overview" className="">
               <MobileAboutSection isDarkMode={isDarkMode} />
@@ -380,7 +342,7 @@ export default function App() {
                 messages={assistantMessages}
                 isProcessing={isAssistantProcessing}
                 onQuerySubmit={handleAssistantQuery}
-                onClearChat={() => setAssistantMessages([])}
+                onClearChat={handleClearAssistantChat}
                 onSaveConversation={handleSaveConversation}
                 isDarkMode={isDarkMode}
               />
@@ -390,56 +352,35 @@ export default function App() {
             <div id="section-contact" className="pb-6">
               <MobileContactSection isDarkMode={isDarkMode} />
             </div>
+           </React.Suspense>
           </div>
         ) : (
-         <HTMLFlipBookWrapper
-            activeTab={activeTab}
-            setActiveTab={setActiveTab}
-            isJournalOpen={isJournalOpen}
-            onCloseJournal={() => setIsJournalOpen(false)}
-            onOpenJournal={handleOpenJournal}
-            frontCover={<JournalCover onOpenJournal={handleOpenJournal} />}
-            insideFrontCover={<JournalInsideFrontCover />}
-            titlePage={<JournalTitlePage />}
-            insideBackCover={<JournalInsideBackCover />}
-            backCover={<JournalBackCover onCloseJournal={() => setIsJournalOpen(false)} />}
-            pages={['overview', 'projects', 'skills', 'assistant', 'contact'].map(tab => ({
-              id: tab,
-              left: (
-                <JournalLeftPage
-                  activeTab={tab}
-                  setActiveTab={setActiveTab}
-                  activeProject={activeProject}
-                  onSelectProject={handleSelectProject}
-                  onAssistantQuery={handleAssistantQuery}
-                  isAssistantProcessing={isAssistantProcessing}
-                  onClearAssistantChat={() => setAssistantMessages([])}
-                  onSaveAssistantConversation={handleSaveConversation}
-                  hasAssistantMessages={assistantMessages.length > 0}
-                />
-              ),
-              right: (
-                <JournalRightPage
-                  activeTab={tab}
-                  setActiveTab={setActiveTab}
-                  activeProject={activeProject}
-                  onSelectProject={handleOpenModal}
-                  assistantMessages={assistantMessages}
-                  isAssistantProcessing={isAssistantProcessing}
-                  onClearAssistantChat={() => setAssistantMessages([])}
-                />
-              )
-            }))}
-          />
+         <React.Suspense fallback={<div className="h-full w-full flex items-center justify-center text-[#e8ded1]">Loading Journal...</div>}>
+           <HTMLFlipBookWrapper
+              activeTab={activeTab}
+              setActiveTab={setActiveTab}
+              isJournalOpen={isJournalOpen}
+              onCloseJournal={() => setIsJournalOpen(false)}
+              onOpenJournal={handleOpenJournal}
+              frontCover={<JournalCover onOpenJournal={handleOpenJournal} />}
+              insideFrontCover={<JournalInsideFrontCover />}
+              titlePage={<JournalTitlePage />}
+              insideBackCover={<JournalInsideBackCover />}
+              backCover={<JournalBackCover onCloseJournal={() => setIsJournalOpen(false)} />}
+              pages={bookPages}
+            />
+         </React.Suspense>
         )}
       </div>
 
       {/* PROJECT DETAIL MODAL */}
-      <ProjectDetailModal
-        project={modalProject}
-        onClose={() => setModalProject(null)}
-        onOpenAgentSandbox={(prompt) => prompt && handleAssistantQuery(prompt)}
-      />
+      <React.Suspense fallback={null}>
+        <ProjectDetailModal
+          project={modalProject}
+          onClose={() => setModalProject(null)}
+          onOpenAgentSandbox={(prompt) => prompt && handleAssistantQuery(prompt)}
+        />
+      </React.Suspense>
 
       {/* BRUSH WIPE THEME TRANSITION */}
       <BrushTransition

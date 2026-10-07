@@ -120,13 +120,13 @@ export const JournalSidebar: React.FC<JournalSidebarProps> = ({
         {/* Top Section: Red Wax Seal Stamp with "P", Animated Compass & Theme Toggle */}
         <div className="flex flex-col items-center space-y-2 mb-2">
           <motion.button
-            animate={{ scale: [1, 1.05, 1] }}
-            transition={{ duration: 3.5, repeat: Infinity, ease: 'easeInOut' }}
+            whileHover={{ scale: 1.08, rotate: 0 }}
+            whileTap={{ scale: 0.96 }}
             onClick={(e) => {
               e.stopPropagation();
               onCloseJournal?.();
             }}
-            className="w-12 h-12 rounded-full bg-gradient-to-br from-[#802222] via-[#661818] to-[#3d0b0b] border-2 border-[#b88f51]/70 flex items-center justify-center text-[#f7e8c8] font-handwriting text-2xl font-bold shadow-[inset_0_2px_4px_rgba(255,255,255,0.2),0_4px_8px_rgba(0,0,0,0.5)] transform -rotate-6 cursor-pointer hover:scale-110 hover:rotate-0 transition-all duration-300 relative group"
+            className="w-12 h-12 rounded-full bg-gradient-to-br from-[#802222] via-[#661818] to-[#3d0b0b] border-2 border-[#b88f51]/70 flex items-center justify-center text-[#f7e8c8] font-handwriting text-2xl font-bold shadow-[inset_0_2px_4px_rgba(255,255,255,0.2),0_4px_8px_rgba(0,0,0,0.5)] transform -rotate-6 cursor-pointer transition-all duration-300 relative group"
             title="Close Journal (Return to Cover)"
           >
             <span className="drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)]">P</span>

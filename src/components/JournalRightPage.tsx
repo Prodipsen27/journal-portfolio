@@ -1,20 +1,12 @@
 import React from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { ExternalLink, Github, Sparkles, CheckCircle2, ArrowRight, Eye, Code2 } from 'lucide-react';
+import { ExternalLink, Github, Sparkles, CheckCircle2 } from 'lucide-react';
 import { FEATURED_PROJECTS } from '../data/portfolioData';
 import { ProjectItem, ChatMessage } from '../types';
-import { OverviewSection } from './OverviewSection';
-import { SkillsSection } from './SkillsSection';
-import { TimelineSection } from './TimelineSection';
 import { FairyCareerMap } from './FairyCareerMap';
-import { FunSection } from './FunSection';
-import { AgentSandbox } from './AgentSandbox';
 import { ContactSection } from './ContactSection';
 import { AssistantRightPage } from './AssistantRightPage';
 import { HanddrawnMarginOverlay } from './HanddrawnMarginOverlay';
-import { ProjectActionButtons } from './ui/ProjectActionButtons';
-import { useBookContext } from './book/BookContext';
-import SpiralBinderSpine from './SpiralBinderSpine';
 
 interface JournalRightPageProps {
   activeTab: string;
@@ -28,7 +20,7 @@ interface JournalRightPageProps {
   isDarkMode?: boolean;
 }
 
-export const JournalRightPage: React.FC<JournalRightPageProps> = ({
+export const JournalRightPage: React.FC<JournalRightPageProps> = React.memo(({
   activeTab,
   setActiveTab,
   activeProject,
@@ -39,7 +31,6 @@ export const JournalRightPage: React.FC<JournalRightPageProps> = ({
   onClearAssistantChat,
   isDarkMode = false
 }) => {
-  const { isTransitioning } = useBookContext();
   const dk = isDarkMode;
   const pageText = dk ? 'text-[#EFE6D2]' : 'text-[#20242B]';
   const titleText = dk ? 'text-[#F3E8D5]' : 'text-[#20242B]';
@@ -60,9 +51,8 @@ export const JournalRightPage: React.FC<JournalRightPageProps> = ({
   if (activeTab === 'projects') {
     const project = activeProject || FEATURED_PROJECTS[0];
 
-    return (<><div className="absolute top-0 bottom-0 left-0 -translate-x-1/2 z-50 pointer-events-none">
-      <SpiralBinderSpine />
-    </div><div className={`p-5 sm:p-7 space-y-6 clean-paper h-full overflow-y-auto rounded-r-2xl ${pageText}`}>
+    return (
+      <div className={`p-5 sm:p-7 space-y-6 clean-paper h-full overflow-y-auto rounded-r-2xl ${pageText}`}>
         <AnimatePresence mode="wait">
           <motion.div
             key={project.id}
@@ -94,8 +84,6 @@ export const JournalRightPage: React.FC<JournalRightPageProps> = ({
                     </span>
                   </motion.div>
 
-
-
                   <p className={`mt-2 ${mutedText} font-typewriter text-xs uppercase tracking-widest`}>
                     {project.category} • {project.date}
                   </p>
@@ -103,7 +91,7 @@ export const JournalRightPage: React.FC<JournalRightPageProps> = ({
 
                 <motion.div
                   layoutId="live-status"
-                  whileHover={isTransitioning ? undefined : { scale: 1.05 }}
+                  whileHover={{ scale: 1.05 }}
                   className="rounded-full bg-emerald-100 dark:bg-emerald-950/60 border border-emerald-300 dark:border-emerald-700/60 px-4 py-2"
                 >
                   <span className="flex items-center gap-2 text-xs font-typewriter font-bold text-emerald-700 dark:text-emerald-400">
@@ -116,7 +104,7 @@ export const JournalRightPage: React.FC<JournalRightPageProps> = ({
               {/* Hero Preview */}
               <motion.div
                 layoutId="project-preview"
-                whileHover={isTransitioning ? undefined : 'hover'}
+                whileHover="hover"
                 initial={{ opacity: 0, scale: 0.98 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.45 }}
@@ -136,9 +124,7 @@ export const JournalRightPage: React.FC<JournalRightPageProps> = ({
 
                 {/* Hero Image */}
                 <motion.img
-                  whileHover={isTransitioning ? undefined : {
-                    scale: 1.05
-                  }}
+                  whileHover={{ scale: 1.05 }}
                   transition={{
                     duration: 1
                   }}
@@ -162,11 +148,11 @@ export const JournalRightPage: React.FC<JournalRightPageProps> = ({
                     <div className="flex gap-2">
                       {project.githubUrl && (
                         <motion.a
-                          whileHover={isTransitioning ? undefined : { y: -3 }}
+                          whileHover={{ y: -3 }}
                           href={project.githubUrl}
                           target="_blank"
                           rel="noreferrer"
-                          className="backdrop-blur-lg bg-white/15 hover:bg-white/30 border border-white/25 rounded-xl p-3 text-white transition-colors"
+                          className="bg-black/60 hover:bg-black/80 border border-white/25 rounded-xl p-3 text-white transition-colors"
                           title="View Source on GitHub"
                         >
                           <Github className="w-5 h-5" />
@@ -175,11 +161,11 @@ export const JournalRightPage: React.FC<JournalRightPageProps> = ({
 
                       {project.demoUrl && (
                         <motion.a
-                          whileHover={isTransitioning ? undefined : { y: -3 }}
+                          whileHover={{ y: -3 }}
                           href={project.demoUrl}
                           target="_blank"
                           rel="noreferrer"
-                          className="backdrop-blur-lg bg-emerald-500/90 hover:bg-emerald-500 rounded-xl px-4 py-2.5 sm:px-5 sm:py-3 flex items-center gap-2 text-white font-semibold text-sm transition-colors shadow-lg shadow-emerald-500/30"
+                          className="bg-emerald-600 hover:bg-emerald-500 rounded-xl px-4 py-2.5 sm:px-5 sm:py-3 flex items-center gap-2 text-white font-semibold text-sm transition-colors shadow-md shadow-emerald-600/30"
                         >
                           <ExternalLink className="w-4 h-4" />
                           <span>Live Demo</span>
@@ -263,15 +249,14 @@ export const JournalRightPage: React.FC<JournalRightPageProps> = ({
 
           </motion.div>
         </AnimatePresence>
-      </div></>
+      </div>
     );
   }
 
   // IF ACTIVE TAB IS 'OVERVIEW' (EXACT MATCH TO REFERENCE IMAGE)
   if (activeTab === 'overview') {
-    return (<><div className="absolute top-0 bottom-0 left-0 -translate-x-1/2 z-50 pointer-events-none">
-      <SpiralBinderSpine />
-    </div><div className={`p-5 sm:p-7 space-y-6 clean-paper w-full h-full rounded-r-2xl relative ${pageText}`}>
+    return (
+      <div className={`p-5 sm:p-7 space-y-6 clean-paper w-full h-full rounded-r-2xl relative ${pageText}`}>
         {/* HAND-DRAWN MARGIN OVERLAY SKETCHES */}
         <HanddrawnMarginOverlay pageSide="right" />
 
@@ -280,7 +265,7 @@ export const JournalRightPage: React.FC<JournalRightPageProps> = ({
           {/* LEFT SECTION: POLAROID & CONTACT/LOCATION INFO (Col Span 7) */}
           <div className="lg:col-span-7 space-y-5">
             {/* POLAROID PHOTO FRAME */}
-            <motion.div layoutId="profile-photo" className="polaroid-card p-3.5 pb-4 rounded-md bg-[#FAFAFA] border border-[#E2D9C5] shadow-lg relative rotate-[-1deg] group">
+            <div className="polaroid-card p-3.5 pb-4 rounded-md bg-[#FAFAFA] border border-[#E2D9C5] shadow-lg relative rotate-[-1deg] group">
               {/* Top Masking Tape */}
               <div className="wasi-tape absolute -top-3.5 left-1/2 -translate-x-1/2 w-24 h-5 bg-[#E8DEC8]/80 border-t border-b border-[#D4C8B0] shadow-2xs rotate-[1deg] z-10" />
 
@@ -294,7 +279,7 @@ export const JournalRightPage: React.FC<JournalRightPageProps> = ({
               {/* Main Photo */}
               <div className="aspect-[4/5] bg-[#EFE6D2] rounded overflow-hidden relative border border-[#DCCFAF]">
                 <img
-                  src="/me.png"
+                  src="/me.webp"
                   alt="Prodip Sengupta"
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 filter contrast-[1.04]"
                   referrerPolicy="no-referrer" />
@@ -305,9 +290,9 @@ export const JournalRightPage: React.FC<JournalRightPageProps> = ({
               <div className="mt-3 text-center space-y-1 relative">
 
 
-                <motion.h3 layoutId="profile-name" className="theme-responsive-text font-handwriting text-3xl font-bold text-[#20242B] leading-none pt-0.5">
+                <h3 className="theme-responsive-text font-handwriting text-3xl font-bold text-[#20242B] leading-none pt-0.5">
                   Prodip Sengupta
-                </motion.h3>
+                </h3>
 
                 <p className="font-typewriter text-[9px] text-[#7A1C1C] font-bold tracking-widest uppercase">
                   FULL-STACK GENAI ENGINEER
@@ -323,7 +308,7 @@ export const JournalRightPage: React.FC<JournalRightPageProps> = ({
                   </svg>
                 </div>
               </div>
-            </motion.div>
+            </div>
 
             {/* MOUNTAIN SKETCH & CONTACT / LOCATION INFO */}
             <div className="relative pt-2">
@@ -457,64 +442,38 @@ export const JournalRightPage: React.FC<JournalRightPageProps> = ({
             </motion.div>
           </div>
         </div>
-      </div></>
+      </div>
     );
   }
 
   // Handle other tab views
   if (activeTab === 'skills' || activeTab === 'timeline') {
     return (
-        <>
-        <div className="p-5 sm:p-7 clean-paper w-full h-full overflow-y-auto rounded-r-2xl">
-        <FairyCareerMap />
-      </div>
-      <div className="absolute top-0 bottom-0 left-0 -translate-x-1/2 z-50 pointer-events-none">
-          <SpiralBinderSpine />
-        </div>
-        </>
-    );
-  }
-
-  if (activeTab === 'fun' || activeTab === 'sketch') {
-    return (
       <div className="p-5 sm:p-7 clean-paper w-full h-full overflow-y-auto rounded-r-2xl">
-        <FunSection />
+        <FairyCareerMap />
       </div>
     );
   }
 
   if (activeTab === 'contact' || activeTab === 'mail') {
     return (
-      <><div className="p-5 sm:p-7 clean-paper w-full h-full overflow-y-auto rounded-r-2xl">
+      <div className="p-5 sm:p-7 clean-paper w-full h-full overflow-y-auto rounded-r-2xl">
         <ContactSection />
-      </div><div className="absolute top-0 bottom-0 left-0 -translate-x-1/2 z-50 pointer-events-none">
-          <SpiralBinderSpine />
-        </div></>
+      </div>
     );
   }
 
   if (activeTab === 'assistant') {
     return (
-      <><AssistantRightPage
+      <AssistantRightPage
         messages={assistantMessages}
         isProcessing={isAssistantProcessing}
-        onClearChat={onClearAssistantChat} /><div className="absolute top-0 bottom-0 left-0 -translate-x-1/2 z-50 pointer-events-none">
-          <SpiralBinderSpine />
-        </div></>
+        onClearChat={onClearAssistantChat}
+      />
     );
   }
 
-  if (activeTab === 'agent-sandbox') {
-    return (
-      <div className="p-5 sm:p-7 clean-paper w-full h-full overflow-y-auto rounded-r-2xl">
-        <AgentSandbox />
-      </div>
-    );
-  }
+  return null;
+});
 
-  return (
-    <div className="p-5 sm:p-7 clean-paper w-full h-full overflow-y-auto rounded-r-2xl">
-      <OverviewSection onNavigate={setActiveTab} onSelectProject={onSelectProject} />
-    </div>
-  );
-};
+JournalRightPage.displayName = 'JournalRightPage';

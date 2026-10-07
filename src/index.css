@@ -229,7 +229,7 @@
 .page-flip-leaf {
   transform-style: preserve-3d;
   will-change: transform;
-  filter: drop-shadow(0 18px 26px rgba(42, 29, 14, calc(var(--flip-shadow, 0) * 0.22)));
+  backface-visibility: hidden;
 }
 
 [data-book-transitioning="true"] .polaroid-card,

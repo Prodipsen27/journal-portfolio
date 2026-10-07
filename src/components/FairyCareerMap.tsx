@@ -14,78 +14,42 @@ interface TimelineNode {
   icon: string;
 }
 
-const CAREER_NODES: TimelineNode[] = [
-  {
-    year: "2022",
-    title: "Started Coding",
-    subtitle: "Foundational Computer Science",
-    description: "Core programming logic, algorithms, and fundamental computer science concepts.",
-    landmark: "The Codex of Logic",
-    region: "Kingdom of Algorithms",
-    highlights: ["Programming Logic", "Algorithms & CS Basics", "JavaScript Foundations"],
-    xPos: "left",
-    icon: "📜"
-  },
-  {
-    year: "2024",
-    title: "Started WebDev",
-    subtitle: "Frontend Interfaces & Styling",
-    description: "Modern frontend web interfaces, layout styling, responsive design, and interactive logic.",
-    landmark: "The Enchanter's Portal",
-    region: "Sea of DOM & CSS",
-    highlights: ["Modern React & Tailwind", "Responsive Layouts", "Interactive Canvas UI"],
-    xPos: "right",
-    icon: "🏰"
-  },
-  {
-    year: "2025",
-    title: "Fullstack MERN Dev",
-    subtitle: "Isolated Sessions & Gateways",
-    description: "Built applications with isolated user sessions, database integrations, and secure web API gateways.",
-    landmark: "The Alchemist's Forge",
-    region: "Gulf of Full-Stack",
-    highlights: ["MERN Architecture", "Database Modeling", "API Gateway Security"],
-    xPos: "left",
-    icon: "⚡"
-  },
-  {
-    year: "2026",
-    title: "Fullstack Gen AI",
-    subtitle: "Autonomous Agent Reasoning",
-    description: "Specialized in agentic architectures, RAG pipelines, function calling, tool use, and multi-agent reasoning graphs.",
-    landmark: "The Astral Agent Spire",
-    region: "Peak of Multi-Agent Systems",
-    highlights: ["LangGraph & MCP", "RAG Pipelines with RRF", "Autonomous AI Agents"],
-    xPos: "right",
-    icon: "🧙‍♂️"
-  }
-];
+import { CAREER_TIMELINE } from '../data/portfolioData';
 
 export const FairyCareerMap: React.FC = () => {
   const scrollRef = useRef<HTMLDivElement>(null);
   const [scrollProgress, setScrollProgress] = useState<number>(0);
   const [selectedNode, setSelectedNode] = useState<number | null>(null);
 
-  const handleScroll = () => {
-    if (!scrollRef.current) return;
-    const { scrollTop, scrollHeight, clientHeight } = scrollRef.current;
-    const totalScroll = scrollHeight - clientHeight;
-    if (totalScroll <= 0) {
-      setScrollProgress(100);
-      return;
-    }
-    const currentProgress = Math.min(100, Math.max(0, (scrollTop / totalScroll) * 100));
-    setScrollProgress(currentProgress);
-  };
-
   useEffect(() => {
     const el = scrollRef.current;
-    if (el) {
-      el.addEventListener('scroll', handleScroll);
-      // initial calculation
-      handleScroll();
-      return () => el.removeEventListener('scroll', handleScroll);
-    }
+    if (!el) return;
+
+    let rafId: number | null = null;
+
+    const onScroll = () => {
+      if (rafId !== null) return;
+      rafId = requestAnimationFrame(() => {
+        if (el) {
+          const { scrollTop, scrollHeight, clientHeight } = el;
+          const totalScroll = scrollHeight - clientHeight;
+          if (totalScroll <= 0) {
+            setScrollProgress(100);
+          } else {
+            const currentProgress = Math.min(100, Math.max(0, (scrollTop / totalScroll) * 100));
+            setScrollProgress(Math.round(currentProgress));
+          }
+        }
+        rafId = null;
+      });
+    };
+
+    el.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+    return () => {
+      el.removeEventListener('scroll', onScroll);
+      if (rafId !== null) cancelAnimationFrame(rafId);
+    };
   }, []);
 
   return (
@@ -190,9 +154,10 @@ export const FairyCareerMap: React.FC = () => {
 
             {/* NODES LIST */}
             <div className="space-y-8 relative z-10">
-              {CAREER_NODES.map((node, idx) => {
-                const isReached = (scrollProgress >= (idx / (CAREER_NODES.length - 1)) * 75) || idx === 0;
+              {CAREER_TIMELINE.map((node, idx) => {
+                const isReached = (scrollProgress >= (idx / (CAREER_TIMELINE.length - 1)) * 75) || idx === 0;
                 const isSelected = selectedNode === idx;
+                const xPos = idx % 2 === 0 ? 'left' : 'right';
 
                 return (
                   <motion.div
@@ -202,7 +167,7 @@ export const FairyCareerMap: React.FC = () => {
                     viewport={{ once: true }}
                     transition={{ duration: 0.4, delay: idx * 0.1 }}
                     className={`flex flex-col ${
-                      node.xPos === 'left' ? 'sm:flex-row' : 'sm:flex-row-reverse'
+                      xPos === 'left' ? 'sm:flex-row' : 'sm:flex-row-reverse'
                     } items-center gap-4 group cursor-pointer`}
                     onClick={() => setSelectedNode(isSelected ? null : idx)}
                   >
@@ -214,15 +179,14 @@ export const FairyCareerMap: React.FC = () => {
                           : 'bg-[#F5EFE4]/80 border-[#DCCFAF] opacity-75'
                       } ${isSelected ? 'ring-2 ring-[#9C3B3B]' : ''}`}>
                         {/* Washi tape accent on corner */}
-                        <div className={`wasi-tape absolute -top-2 ${node.xPos === 'left' ? 'right-4' : 'left-4'} w-10 h-3 opacity-70`} />
+                        <div className={`wasi-tape absolute -top-2 ${xPos === 'left' ? 'right-4' : 'left-4'} w-10 h-3 opacity-70`} />
 
                         {/* Node Header */}
                         <div className="flex items-center justify-between pb-1.5 border-b border-[#DCCFAF]">
                           <div className="flex items-center space-x-2">
-                            <span className="text-xl">{node.icon}</span>
                             <div>
                               <span className="font-typewriter text-[10px] text-[#9C3B3B] font-bold uppercase tracking-wider block">
-                                {node.year} · {node.region}
+                                {node.year}
                               </span>
                               <h3 className="font-handwriting text-2xl font-bold text-[#20242B] leading-none">
                                 {node.title}
@@ -230,7 +194,7 @@ export const FairyCareerMap: React.FC = () => {
                             </div>
                           </div>
                           <span className="font-typewriter text-[9px] px-1.5 py-0.5 rounded bg-[#EFE6D2] text-[#8C8577] border border-[#BCAE8E]">
-                            {node.landmark}
+                            {node.subtitle}
                           </span>
                         </div>
 
@@ -293,3 +257,4 @@ export const FairyCareerMap: React.FC = () => {
     </div>
   );
 };
+

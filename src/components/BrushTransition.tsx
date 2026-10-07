@@ -1,5 +1,5 @@
-import React, { useEffect, useRef } from 'react';
-import anime from 'animejs';
+import React, { useEffect, useState } from 'react';
+import { motion, AnimatePresence } from 'motion/react';
 
 interface BrushTransitionProps {
   isTriggered: boolean;
@@ -12,57 +12,34 @@ export const BrushTransition: React.FC<BrushTransitionProps> = ({
   onHalfway,
   onComplete
 }) => {
-  const overlayRef = useRef<HTMLDivElement>(null);
+  const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
-    if (!isTriggered) return;
-
-    if (overlayRef.current) {
-      overlayRef.current.style.display = 'block';
-      overlayRef.current.style.opacity = '0';
-    }
-
-    const timeline = anime.timeline({
-      complete: () => {
-        if (overlayRef.current) {
-          overlayRef.current.style.display = 'none';
-        }
-        onComplete();
-      }
-    });
-
-    // 1. Fade in the black overlay
-    timeline.add({
-      targets: overlayRef.current,
-      opacity: [0, 1],
-      duration: 350,
-      easing: 'easeOutQuad',
-      changeComplete: () => {
-        // Toggle the theme when fully black/opaque
+    if (isTriggered) {
+      setIsVisible(true);
+      
+      // Simulate the timeline halfway point
+      const halfwayTimer = setTimeout(() => {
         onHalfway();
-      }
-    });
+        setIsVisible(false);
+      }, 350 + 80); // 350 fade in + 80 pause
 
-    // 2. Pause briefly at full opacity
-    timeline.add({
-      duration: 80
-    });
-
-    // 3. Fade out the black overlay
-    timeline.add({
-      targets: overlayRef.current,
-      opacity: [1, 0],
-      duration: 350,
-      easing: 'easeInQuad'
-    });
-
-  }, [isTriggered]);
+      return () => clearTimeout(halfwayTimer);
+    }
+  }, [isTriggered, onHalfway]);
 
   return (
-    <div 
-      ref={overlayRef}
-      className="fixed inset-0 z-[9999] bg-[#0a0807] pointer-events-none hidden"
-      style={{ opacity: 0 }}
-    />
+    <AnimatePresence onExitComplete={onComplete}>
+      {isVisible && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.35, ease: "easeInOut" }}
+          className="fixed inset-0 z-[9999] bg-[#0a0807] pointer-events-none"
+        />
+      )}
+    </AnimatePresence>
   );
 };
+

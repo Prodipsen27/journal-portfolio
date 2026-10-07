@@ -4,7 +4,8 @@ import {
   Github, ExternalLink, MapPin, Mail, Linkedin,
   Copy, Check, ChevronLeft, ChevronRight, ChevronDown, ChevronUp,
   Cpu, Server, Layout, Code2,
-  Bookmark, Send, Sparkles, Filter, CheckCircle2
+  Bookmark, Send, Sparkles, Filter, CheckCircle2,
+  Loader2, AlertCircle
 } from 'lucide-react';
 import { PROFILE_DATA, FEATURED_PROJECTS, SKILL_CATEGORIES, CAREER_TIMELINE } from '../data/portfolioData';
 import { ProjectItem } from '../types';
@@ -67,7 +68,7 @@ export const MobileAboutSection: React.FC<SectionProps> = ({ isDarkMode = false 
               dk ? 'bg-[#161A23] border-[#3f4756]' : 'bg-[#EFE6D2] border-[#DCCFAF]'
             }`}>
               <img
-                src="/me.png"
+                src="/me.webp"
                 alt="Prodip Sengupta"
                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 filter contrast-[1.04]"
                 referrerPolicy="no-referrer"
@@ -185,7 +186,7 @@ export const MobileAboutSection: React.FC<SectionProps> = ({ isDarkMode = false 
           </span>
         </div>
         <p className={`font-handwriting text-base sm:text-lg font-semibold leading-relaxed ${dk ? 'text-[#FBF7EE]' : 'text-[#20242B]'}`}>
-          I'm an AI-native full-stack developer focused on building production-ready applications, not demos. I specialize in <strong className={dk ? 'text-[#F07F75]' : 'text-[#9C3B3B]'}>MERN, Next.js, PostgreSQL</strong>, and <strong className={dk ? 'text-[#F07F75]' : 'text-[#9C3B3B]'}>Supabase</strong>, combined with Generative AI technologies including <strong className={dk ? 'text-[#F07F75]' : 'text-[#9C3B3B]'}>LLM agents, RAG, LangChain, LangGraph, MCP, vector search</strong>, and <strong className={dk ? 'text-[#F07F75]' : 'text-[#9C3B3B]'}>function calling</strong>. I've built AI-powered systems such as financial RAG assistants, Text-to-SQL platforms, conversational commerce agents, and agentic workflows, with a strong emphasis on scalable architecture, clean backend engineering, and real-world deployment.
+          I'm a full-stack developer and GenAI engineer. I specialize in <strong className={dk ? 'text-[#F07F75]' : 'text-[#9C3B3B]'}>MERN, Next.js, PostgreSQL</strong>, and <strong className={dk ? 'text-[#F07F75]' : 'text-[#9C3B3B]'}>Supabase</strong>, combined with Generative AI technologies including <strong className={dk ? 'text-[#F07F75]' : 'text-[#9C3B3B]'}>LLM agents, RAG, LangChain, LangGraph, MCP, vector search</strong>, and <strong className={dk ? 'text-[#F07F75]' : 'text-[#9C3B3B]'}>function calling</strong>. I build scalable, AI-native systems for real-world deployment.
         </p>
       </div>
 
@@ -365,6 +366,7 @@ export const MobileProjectsSection: React.FC<MobileProjectsSectionProps> = ({ is
                 <img
                   src={p.imageUrl || "https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c"}
                   alt={p.title}
+                  loading="lazy"
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                   onError={e => { (e.target as HTMLImageElement).src = "https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c"; }}
                 />
@@ -609,9 +611,9 @@ export const MobileContactSection: React.FC<SectionProps> = ({ isDarkMode = fals
   const muted = dk ? 'text-[#B8AA98]' : 'text-[#8C8577]';
   const lnk   = dk ? 'bg-[#232936] border-[#3f4756] text-[#E6DFCF] hover:border-[#9C3B3B]' : 'bg-[#EFE6D2] border-[#BCAE8E] text-[#20242B] hover:border-[#9C3B3B]';
 
-  const [form, setForm] = useState({ name: '', email: '', message: '' });
+  const [form, setForm] = useState({ name: '', email: '', subject: 'Full-Stack GenAI Application', message: '' });
   const [emailCopied, setEmailCopied] = useState(false);
-  const [sent, setSent] = useState(false);
+  const [status, setStatus] = useState<'idle' | 'sending' | 'success' | 'error'>('idle');
 
   const copyEmail = () => {
     navigator.clipboard.writeText(PROFILE_DATA.email);
@@ -619,13 +621,26 @@ export const MobileContactSection: React.FC<SectionProps> = ({ isDarkMode = fals
     setTimeout(() => setEmailCopied(false), 2000);
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const mailto = `mailto:${PROFILE_DATA.email}?subject=Portfolio Enquiry from ${encodeURIComponent(form.name)}&body=${encodeURIComponent(form.message)}%0A%0AFrom: ${encodeURIComponent(form.email)}`;
-    window.open(mailto, '_blank');
-    setSent(true);
-    setTimeout(() => setSent(false), 3000);
-    setForm({ name: '', email: '', message: '' });
+    if (!form.name || !form.email || !form.message) return;
+    setStatus('sending');
+
+    try {
+      const res = await fetch('https://formspree.io/f/mdawjoog', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(form),
+      });
+
+      if (res.ok) {
+        setStatus('success');
+      } else {
+        setStatus('error');
+      }
+    } catch {
+      setStatus('error');
+    }
   };
 
   return (
@@ -686,52 +701,116 @@ export const MobileContactSection: React.FC<SectionProps> = ({ isDarkMode = fals
         </div>
       </div>
 
-      {/* CONTACT FORM */}
+      {/* CONTACT FORM CONTAINER */}
       <div className={`rounded-2xl border p-5 shadow-sm ${card}`}>
-        <p className={`font-typewriter text-[9px] font-bold uppercase tracking-widest mb-4 ${muted}`}>Send a Message</p>
-        <form onSubmit={handleSubmit} className="space-y-3">
-          <div className="grid grid-cols-2 gap-3">
-            <div>
-              <label className={`font-typewriter text-[9px] uppercase tracking-wider block mb-1 ${muted}`}>Name</label>
-              <input 
-                type="text" 
-                required 
-                value={form.name} 
-                onChange={e => setForm(f => ({ ...f, name: e.target.value }))}
-                placeholder="Full name"
-                className={`w-full px-3 py-2.5 rounded-xl border font-journal text-sm focus:outline-none focus:ring-2 focus:ring-[#9C3B3B]/20 transition-colors ${inputCls}`} 
-              />
+        {status === 'success' ? (
+          <div className="text-center py-6 space-y-3">
+            <div className="w-16 h-16 rounded-full wax-seal mx-auto flex items-center justify-center text-[#FBF7EE] font-handwriting font-bold text-2xl shadow-lg border-2 border-[#d27575] relative">
+              <Sparkles className="w-4 h-4 text-[#FFD700] absolute top-1 right-1" />
+              PS
             </div>
-            <div>
-              <label className={`font-typewriter text-[9px] uppercase tracking-wider block mb-1 ${muted}`}>Email</label>
-              <input 
-                type="email" 
-                required 
-                value={form.email} 
-                onChange={e => setForm(f => ({ ...f, email: e.target.value }))}
-                placeholder="you@email.com"
-                className={`w-full px-3 py-2.5 rounded-xl border font-journal text-sm focus:outline-none focus:ring-2 focus:ring-[#9C3B3B]/20 transition-colors ${inputCls}`} 
-              />
-            </div>
+            <p className="font-typewriter text-[10px] text-[#9C3B3B] font-bold uppercase tracking-widest">
+              DISPATCH SEALED & TRANSMITTED
+            </p>
+            <h3 className={`font-journal text-xl font-bold ${dk ? 'text-[#E8DDCA]' : 'text-[#20242B]'}`}>
+              Thank you, {form.name}!
+            </h3>
+            <p className={`font-journal text-xs max-w-xs mx-auto leading-relaxed ${muted}`}>
+              Your note was sent directly to Prodip Sengupta. Expect a reply at <span className="font-typewriter font-semibold text-[#9C3B3B]">{form.email}</span>.
+            </p>
+            <button
+              onClick={() => {
+                setStatus('idle');
+                setForm({ name: '', email: '', subject: 'Full-Stack GenAI Application', message: '' });
+              }}
+              className="mt-3 px-4 py-2 rounded-xl bg-[#9C3B3B] hover:bg-[#b84343] text-white font-typewriter text-xs font-bold inline-flex items-center gap-1.5 transition-all shadow-md"
+            >
+              <Send className="w-3.5 h-3.5" />
+              <span>Send Another Note</span>
+            </button>
           </div>
-          <div>
-            <label className={`font-typewriter text-[9px] uppercase tracking-wider block mb-1 ${muted}`}>Message</label>
-            <textarea 
-              required 
-              rows={4} 
-              value={form.message} 
-              onChange={e => setForm(f => ({ ...f, message: e.target.value }))}
-              placeholder="Tell me about your project or opportunity..."
-              className={`w-full px-3 py-2.5 rounded-xl border font-journal text-sm focus:outline-none focus:ring-2 focus:ring-[#9C3B3B]/20 transition-colors resize-none ${inputCls}`} 
-            />
-          </div>
-          <button 
-            type="submit"
-            className="w-full py-3 rounded-xl bg-[#9C3B3B] hover:bg-[#b84343] text-white font-typewriter text-xs font-bold flex items-center justify-center gap-2 transition-all active:scale-95 shadow-md"
-          >
-            {sent ? <><Check className="w-4 h-4" /> Email App Opened!</> : <><Send className="w-4 h-4" /> Send via Email</>}
-          </button>
-        </form>
+        ) : (
+          <>
+            <p className={`font-typewriter text-[9px] font-bold uppercase tracking-widest mb-4 ${muted}`}>Send a Direct Message</p>
+            {status === 'error' && (
+              <div className="mb-3 p-3 rounded-xl bg-[#FADBD8] border border-[#E74C3C] text-[#78281F] font-typewriter text-xs flex items-center gap-2">
+                <AlertCircle className="w-4 h-4 text-[#E74C3C] shrink-0" />
+                <span>Transmission error. Please check connection or retry.</span>
+              </div>
+            )}
+            <form onSubmit={handleSubmit} className="space-y-3">
+              <div className="grid grid-cols-2 gap-3">
+                <div>
+                  <label className={`font-typewriter text-[9px] uppercase tracking-wider block mb-1 ${muted}`}>Name</label>
+                  <input 
+                    type="text" 
+                    required 
+                    value={form.name} 
+                    onChange={e => setForm(f => ({ ...f, name: e.target.value }))}
+                    placeholder="Full name"
+                    className={`w-full px-3 py-2.5 rounded-xl border font-journal text-sm focus:outline-none focus:ring-2 focus:ring-[#9C3B3B]/20 transition-colors ${inputCls}`} 
+                  />
+                </div>
+                <div>
+                  <label className={`font-typewriter text-[9px] uppercase tracking-wider block mb-1 ${muted}`}>Email</label>
+                  <input 
+                    type="email" 
+                    required 
+                    value={form.email} 
+                    onChange={e => setForm(f => ({ ...f, email: e.target.value }))}
+                    placeholder="you@email.com"
+                    className={`w-full px-3 py-2.5 rounded-xl border font-journal text-sm focus:outline-none focus:ring-2 focus:ring-[#9C3B3B]/20 transition-colors ${inputCls}`} 
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label className={`font-typewriter text-[9px] uppercase tracking-wider block mb-1 ${muted}`}>Subject</label>
+                <select
+                  value={form.subject}
+                  onChange={e => setForm(f => ({ ...f, subject: e.target.value }))}
+                  className={`w-full px-3 py-2.5 rounded-xl border font-typewriter text-xs focus:outline-none focus:ring-2 focus:ring-[#9C3B3B]/20 transition-colors ${inputCls}`}
+                >
+                  <option value="Full-Stack GenAI Application">Full-Stack GenAI Application</option>
+                  <option value="LangGraph Multi-Agent Workflows">LangGraph Multi-Agent Workflows</option>
+                  <option value="Full-Time Engineering Role">Full-Time Engineering Role</option>
+                  <option value="RAG Pipeline & Vector Search">RAG Pipeline & Vector Search</option>
+                  <option value="General Consultation / Greeting">General Consultation / Greeting</option>
+                </select>
+              </div>
+
+              <div>
+                <label className={`font-typewriter text-[9px] uppercase tracking-wider block mb-1 ${muted}`}>Message</label>
+                <textarea 
+                  required 
+                  rows={4} 
+                  value={form.message} 
+                  onChange={e => setForm(f => ({ ...f, message: e.target.value }))}
+                  placeholder="Tell me about your project or opportunity..."
+                  className={`w-full px-3 py-2.5 rounded-xl border font-journal text-sm focus:outline-none focus:ring-2 focus:ring-[#9C3B3B]/20 transition-colors resize-none ${inputCls}`} 
+                />
+              </div>
+
+              <button 
+                type="submit"
+                disabled={status === 'sending'}
+                className="w-full py-3 rounded-xl bg-[#9C3B3B] hover:bg-[#b84343] disabled:opacity-60 text-white font-typewriter text-xs font-bold flex items-center justify-center gap-2 transition-all active:scale-95 shadow-md"
+              >
+                {status === 'sending' ? (
+                  <>
+                    <Loader2 className="w-4 h-4 animate-spin text-white" />
+                    <span>TRANSMITTING DISPATCH...</span>
+                  </>
+                ) : (
+                  <>
+                    <Send className="w-4 h-4" />
+                    <span>TRANSMIT DISPATCH</span>
+                  </>
+                )}
+              </button>
+            </form>
+          </>
+        )}
       </div>
 
       {/* AVAILABILITY BADGE */}

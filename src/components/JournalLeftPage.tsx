@@ -1,13 +1,10 @@
 import React from 'react';
 import { motion } from 'motion/react';
-import { Brain, Sparkles, MapPin, CheckCircle2, ShieldCheck, Layers, FolderGit2 } from 'lucide-react';
-import { FEATURED_PROJECTS, PROFILE_DATA } from '../data/portfolioData';
+import { FEATURED_PROJECTS } from '../data/portfolioData';
 import { ProjectItem } from '../types';
 import { SealedEnvelopeContact } from './SealedEnvelopeContact';
 import { AssistantLeftPage } from './AssistantLeftPage';
-import { HanddrawnMarginOverlay } from './HanddrawnMarginOverlay';
 import { SkillTreePage } from './SkillTreePage';
-import SpiralBinderSpine from './SpiralBinderSpine';
 
 interface JournalLeftPageProps {
   activeTab: string;
@@ -48,26 +45,19 @@ export const JournalLeftPage: React.FC<JournalLeftPageProps> = React.memo(({
 
       {/* RENDER CONTENT BASED ON ACTIVE TAB */}
       {activeTab === 'assistant' ? (
-        <><AssistantLeftPage
+        <AssistantLeftPage
           onQuerySubmit={(q) => onAssistantQuery && onAssistantQuery(q)}
           isProcessing={isAssistantProcessing}
           onClearChat={onClearAssistantChat}
           onSaveConversation={onSaveAssistantConversation}
-          hasMessages={hasAssistantMessages} /><div className="absolute top-0 bottom-0 right-0 -translate-x-1/2 z-50 pointer-events-none">
-            <SpiralBinderSpine />
-          </div></>
+          hasMessages={hasAssistantMessages}
+        />
       ) : activeTab === 'contact' ? (
-        <><SealedEnvelopeContact/><div className="absolute top-0 bottom-0 right-0 -translate-x-1/2 z-50 pointer-events-none">
-            <SpiralBinderSpine />
-          </div></>
+        <SealedEnvelopeContact />
       ) : activeTab === 'skills' || activeTab === 'timeline' ? (
-        <><SkillTreePage /><div className="absolute top-0 bottom-0 right-0 -translate-x-1/2 z-50 pointer-events-none">
-          <SpiralBinderSpine />
-        </div></>
+        <SkillTreePage />
       ) : activeTab === 'projects' ? (
-        /* PROJECTS TAB: LIST OF PROJECT NAMES ON LINED PAPER */<><div className="absolute top-0 bottom-0 right-0 -translate-x-1/2 z-50 pointer-events-none">
-        <SpiralBinderSpine />
-      </div>
+        /* PROJECTS TAB: LIST OF PROJECT NAMES ON LINED PAPER */
         <div className="space-y-4">
           <div>
                     <span className="font-typewriter text-[10px] text-[#8C8577] uppercase tracking-widest font-bold">
@@ -111,12 +101,10 @@ export const JournalLeftPage: React.FC<JournalLeftPageProps> = React.memo(({
                       );
                     })}
                   </div>
-                </div></>
+                </div>
       ) : (
-        /* OVERVIEW & BIO TAB (DEFAULT / ABOUT ME - EXACT MATCH TO REFERENCE IMAGE) */<>
-<div className="absolute top-0 bottom-0 right-0 -translate-x-1/2 z-50 pointer-events-none">
-                    <SpiralBinderSpine />
-                  </div><div className="space-y-4 text-[#20242B] relative">
+        /* OVERVIEW & BIO TAB (DEFAULT / ABOUT ME - EXACT MATCH TO REFERENCE IMAGE) */
+        <div className="space-y-4 text-[#20242B] relative">
                     {/* TOP TAG & QUOTE CONTAINER */}
                     <div className="flex flex-col sm:flex-row items-start justify-between gap-3 pr-4">
                       {/* Left Header Info */}
@@ -139,9 +127,9 @@ export const JournalLeftPage: React.FC<JournalLeftPageProps> = React.memo(({
                       <motion.div layoutId="quote" className="relative max-w-[200px] shrink-0 font-handwriting text-xl sm:text-2xl text-[#20242B] leading-tight pt-2">
                         <span className="font-serif text-3xl font-bold text-[#20242B] absolute -top-1 -left-3 opacity-80">“</span>
                         <p className="pl-2 pt-1">
-                          'I don't just build apps - <br />
+                          'Engineering scalable applications - <br />
                           <span className="relative inline-block">
-                            I build systems that think.
+                            with AI at the core.
                             {/* Handdrawn red underline scribble */}
                             <svg className="absolute -bottom-1.5 left-0 w-full h-2 text-[#7A1C1C] opacity-80" viewBox="0 0 100 10" preserveAspectRatio="none">
                               <path d="M2,5 Q25,8 50,4 T98,6" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
@@ -155,7 +143,7 @@ export const JournalLeftPage: React.FC<JournalLeftPageProps> = React.memo(({
 
                     {/* MAIN NARRATIVE BIO */}
                     <p className="font-handwriting text-[17px] sm:text-[19px] text-[#383D48] leading-snug pt-2 max-w-[95%]">
-                      I'm an AI-native full-stack developer focused on building production-ready applications, not demos. I specialize in <strong className="text-[#7A1C1C] font-bold">MERN, Next.js, PostgreSQL</strong> and <strong className="text-[#7A1C1C] font-bold">Supabase</strong>, combined with Generative AI technologies including <strong className="text-[#7A1C1C] font-bold">LLM agents, RAG pipelines, LangChain, MCP, vector search</strong> and <strong className="text-[#7A1C1C] font-bold">function calling</strong>. I've built AI-powered systems such as financial RAG assistants, Text-to-SQL platforms, conversational commerce agents, and agentic workflows, with a strong emphasis on scalable architecture, clean backend engineering, and real-world deployment.
+                      I'm a full-stack developer and GenAI engineer. I specialize in <strong className="text-[#7A1C1C] font-bold">MERN, Next.js, PostgreSQL</strong> and <strong className="text-[#7A1C1C] font-bold">Supabase</strong>, combined with Generative AI technologies including <strong className="text-[#7A1C1C] font-bold">LLM agents, RAG pipelines, LangChain, MCP, vector search</strong> and <strong className="text-[#7A1C1C] font-bold">function calling</strong>. I build scalable, AI-native systems for real-world deployment.
                     </p>
 
                     {/* TECH STACK HIGHLIGHTS SECTION */}
@@ -213,9 +201,7 @@ export const JournalLeftPage: React.FC<JournalLeftPageProps> = React.memo(({
                         </span>
                       </div>
                     </div>
-
-
-                  </div></>
+                  </div>
       )}
     </div>
   );

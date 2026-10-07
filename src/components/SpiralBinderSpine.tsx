@@ -38,5 +38,3 @@ export const SpiralBinderSpine: React.FC = () => {
     </div>
   );
 };
-
-export default SpiralBinderSpine;

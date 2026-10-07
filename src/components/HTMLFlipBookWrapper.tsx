@@ -1,6 +1,7 @@
 import React, { useRef, useEffect } from 'react';
 import HTMLFlipBook from 'react-pageflip';
 import { useBookAnimation } from '../hooks/useBookAnimation';
+import { SpiralBinderSpine } from './SpiralBinderSpine';
 
 interface HTMLFlipBookWrapperProps {
   activeTab: string;
@@ -53,9 +54,11 @@ export const HTMLFlipBookWrapper: React.FC<HTMLFlipBookWrapperProps> = ({
         if (rect.width > 0 && rect.height > 0) {
           const isP = !isJournalOpen || window.innerWidth < 1024;
           setIsPortrait(isP);
-          setDimensions({
-            width: Math.max(300, Math.floor(window.innerWidth < 1024 ? rect.width : rect.width / 2)),
-            height: Math.max(400, Math.floor(rect.height)),
+          const newW = Math.max(300, Math.floor(window.innerWidth < 1024 ? rect.width : rect.width / 2));
+          const newH = Math.max(400, Math.floor(rect.height));
+          setDimensions(prev => {
+            if (prev.width === newW && prev.height === newH) return prev;
+            return { width: newW, height: newH };
           });
         }
       }
@@ -133,13 +136,13 @@ export const HTMLFlipBookWrapper: React.FC<HTMLFlipBookWrapperProps> = ({
         swipeDistance={30}
         showPageCorners={true}
         disableFlipByClick={true}
-        flippingTime={450}
+        flippingTime={360}
         style={{ width: '100%', height: '100%' }}
         startPage={0}
         drawShadow={true}
         startZIndex={0}
         autoSize={true}
-        className="demo-book drop-shadow-2xl"
+        className="demo-book shadow-2xl"
         ref={bookRef}
         onFlip={onFlip}
         usePortrait={!isJournalOpen || isPortrait}
@@ -161,6 +164,13 @@ export const HTMLFlipBookWrapper: React.FC<HTMLFlipBookWrapperProps> = ({
         <Page key="cover-inside-back">{insideBackCover}</Page>
         <Page key="cover-back" className="bg-transparent">{backCover}</Page>
       </HTMLFlipBook>
+
+      {/* CENTRAL SPIRAL BINDER SPINE: MOUNTED ONCE OVER CENTER SPREAD */}
+      {isJournalOpen && (
+        <div className="absolute left-1/2 top-0 bottom-0 -translate-x-1/2 z-50 pointer-events-none hidden md:block">
+          <SpiralBinderSpine />
+        </div>
+      )}
     </div>
   );
 };

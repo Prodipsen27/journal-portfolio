@@ -17,11 +17,11 @@ interface MobileChatSectionProps {
 }
 
 const SHORTCUTS = [
-  { id: 'me', label: 'Me', icon: Smile, iconColor: 'text-[#0D9488]', prompt: "Tell me about Prodip's background, education, and full-stack engineering experience." },
-  { id: 'projects', label: 'Projects', icon: Briefcase, iconColor: 'text-[#059669]', prompt: "What are Prodip's top GenAI projects and live repository highlights?" },
-  { id: 'skills', label: 'Skills', icon: Layers, iconColor: 'text-[#7C3AED]', prompt: "What is Prodip's technical stack, agent framework expertise, and RAG knowledge?" },
-  { id: 'fun', label: 'Fun', icon: PartyPopper, iconColor: 'text-[#DB2777]', prompt: "What are Prodip's creative hobbies, hackathons, and personal interests?" },
-  { id: 'contact', label: 'Contact', icon: UserCheck, iconColor: 'text-[#D97706]', prompt: "How can I contact or hire Prodip for engineering roles and contracts?" },
+  { id: 'me', label: 'Background', icon: Smile, iconColor: 'text-[#0D9488]', prompt: "Tell me about Prodip's background and engineering experience." },
+  { id: 'projects', label: 'Projects', icon: Briefcase, iconColor: 'text-[#059669]', prompt: "What are his top GenAI and full-stack projects?" },
+  { id: 'skills', label: 'Skills', icon: Layers, iconColor: 'text-[#7C3AED]', prompt: "What is his technical stack and agent framework expertise?" },
+  { id: 'fun', label: 'Hobbies', icon: PartyPopper, iconColor: 'text-[#DB2777]', prompt: "What are his personal interests outside of code?" },
+  { id: 'contact', label: 'Contact', icon: UserCheck, iconColor: 'text-[#D97706]', prompt: "How can I contact or hire Prodip?" },
 ];
 
 export const MobileChatSection: React.FC<MobileChatSectionProps> = ({

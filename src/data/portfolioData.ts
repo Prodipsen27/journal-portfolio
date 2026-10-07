@@ -3,24 +3,12 @@ import { ProfileInfo, SkillCategory, TimelineEntry, ProjectItem } from '../types
 export const PROFILE_DATA: ProfileInfo = {
   name: "Prodip Sengupta",
   role: "Full-stack GenAI Engineer",
-  quote: "I don’t just build apps — I build systems that think.",
+  quote: "Building reliable, scalable systems with modern web and AI tools.",
   status: "Open to Work / Available for new projects",
   location: "India",
-  experienceYears: "1+ Years",
-  projectsCompleted: "27+",
-  uptime: "99%",
-  bio: "Prodip builds fast, scalable, and visually engaging web applications focusing on full-stack systems—ranging from UI/UX and backend API gateways to deployment and autonomous AI agents.",
   email: "prodipsengupta27@gmail.com",
   github: "https://github.com/prodipsen27",
-  linkedin: "https://linkedin.com/in/prodipsen27",
-  coreMetrics: [
-    { label: "Problem Solving", value: 96 },
-    { label: "Creativity", value: 91 },
-    { label: "Communication", value: 88 }
-  ],
-  coreTechStack: [
-    "GenAI", "MERN Stack", "MongoDB", "Express", "React", "Node.js", "Next.js", "JavaScript", "OpenAI", "Gemini", "Docker"
-  ]
+  linkedin: "https://linkedin.com/in/prodipsen27"
 };
 
 export const SKILL_CATEGORIES: SkillCategory[] = [
@@ -90,7 +78,7 @@ export const FEATURED_PROJECTS: ProjectItem[] = [
     featured: true,
     date: "JAN 10, 2026",
     caption: "VITALTRACE_CORE.PNG",
-    imageUrl: "/vitalTrace.png",
+    imageUrl: "/vitalTrace.webp",
     architectureDetails: [
       "Collaborative 3-agent pipeline (Extractor, Clinical Analyzer, Pattern Detector) built with LangChain and DeepSeek-V3",
       "RAG-powered vector similarity history search using pgvector to plot biomarker trajectory charts",
@@ -110,7 +98,7 @@ export const FEATURED_PROJECTS: ProjectItem[] = [
     featured: true,
     date: "DEC 15, 2025",
     caption: "GROCERY_PLATFORM.PNG",
-    imageUrl: "/grocery.png",
+    imageUrl: "/grocery.webp",
     architectureDetails: [
       "AI cart agent built with Gemini function calling to handle natural language cart interactions",
       "Complete e-commerce flow with Stripe checkout and JWT authorization",
@@ -130,7 +118,7 @@ export const FEATURED_PROJECTS: ProjectItem[] = [
     featured: true,
     date: "NOV 18, 2025",
     caption: "FINDOC_SEC_ANALYSIS.PNG",
-    imageUrl: "/finDoc.png",
+    imageUrl: "/finDoc.webp",
     architectureDetails: [
       "ReAct-style retrieval agent built with LangGraph and OpenAI capable of iterative reasoning over SEC filings",
       "Hybrid retrieval pipeline combining pgvector semantic search and PostgreSQL full-text search fused via Reciprocal Rank Fusion (RRF)",
@@ -150,7 +138,7 @@ export const FEATURED_PROJECTS: ProjectItem[] = [
     featured: true,
     date: "OCT 05, 2025",
     caption: "MENUOS_DESK_KITCHEN.PNG",
-    imageUrl: "/menu.png",
+    imageUrl: "/menu.webp",
     architectureDetails: [
       "Socket.io bi-directional synchronization for instant kitchen display updates and order status tracking",
       "Claude AI conversational agent answering allergen, preparation, and dish recommendation questions",
@@ -170,7 +158,7 @@ export const FEATURED_PROJECTS: ProjectItem[] = [
     featured: false,
     date: "AUG 20, 2025",
     caption: "QUERYCART_ANALYTICS.PNG",
-    imageUrl: "/demo.jpg",
+    imageUrl: "/demo.webp",
     architectureDetails: [
       "GPT-4o converts user's natural language input into optimized PostgreSQL queries",
       "SQL validation safety layer checks schema reflection and prevents destructive commands",
@@ -190,7 +178,7 @@ export const FEATURED_PROJECTS: ProjectItem[] = [
     featured: false,
     date: "JUL 15, 2025",
     caption: "TARAEFFECTS_UI_LIGHTS.PNG",
-    imageUrl: "/taraeffects.jpg",
+    imageUrl: "/taraeffects.webp",
     architectureDetails: [
       "Custom HTML5 Canvas particle system simulating ambient wedding decoration lighting",
       "60 FPS smooth motion transitions and responsive layout optimization"
@@ -209,7 +197,7 @@ export const FEATURED_PROJECTS: ProjectItem[] = [
     featured: false,
     date: "JUN 10, 2025",
     caption: "PROPERTY_LISTINGS.PNG",
-    imageUrl: "/chillbase.png",
+    imageUrl: "/chillbase.webp",
     architectureDetails: [
       "Secure broker authentication via Passport.js and validation using Joi schemas",
       "Automated image upload pipeline utilizing Cloudinary optimization"
@@ -228,7 +216,7 @@ export const FEATURED_PROJECTS: ProjectItem[] = [
     featured: false,
     date: "DEC 01, 2023",
     caption: "AURALITY_AUDIO_GEAR.PNG",
-    imageUrl: "/aurality.png",
+    imageUrl: "/aurality.webp",
     architectureDetails: [
       "Tactile skeuomorphic audio controls with premium dark color accents",
       "Smooth Framer Motion transitions and interactive sound visualizers"
@@ -247,7 +235,7 @@ export const FEATURED_PROJECTS: ProjectItem[] = [
     featured: false,
     date: "NOV 15, 2024",
     caption: "ARTISTLY_TALENT_GRID.PNG",
-    imageUrl: "/artist.jpg",
+    imageUrl: "/artist.webp",
     architectureDetails: [
       "Framer Motion staggered card reveals and dynamic layout transition animations",
       "Staggered grid layouts optimized for 99.9% screen accessibility"

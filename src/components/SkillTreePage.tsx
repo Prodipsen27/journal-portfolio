@@ -55,19 +55,6 @@ export const SkillTreePage: React.FC = () => {
           preserveAspectRatio="none"
         >
           <defs>
-            <filter id="st-pencil" x="-20%" y="-20%" width="140%" height="140%">
-              <feTurbulence type="fractalNoise" baseFrequency="0.02 0.035" numOctaves="2" seed="7" result="noise"/>
-              <feDisplacementMap in="SourceGraphic" in2="noise" scale="6" xChannelSelector="R" yChannelSelector="G"/>
-            </filter>
-            <filter id="st-pencilSoft" x="-20%" y="-20%" width="140%" height="140%">
-              <feTurbulence type="fractalNoise" baseFrequency="0.025" numOctaves="2" seed="3" result="n2"/>
-              <feDisplacementMap in="SourceGraphic" in2="n2" scale="3.4" xChannelSelector="R" yChannelSelector="G"/>
-            </filter>
-            <filter id="st-blobWobble" x="-15%" y="-15%" width="130%" height="130%">
-              <feTurbulence type="fractalNoise" baseFrequency="0.012 0.014" numOctaves="2" seed="11" result="n3"/>
-              <feDisplacementMap in="SourceGraphic" in2="n3" scale="9" xChannelSelector="R" yChannelSelector="G"/>
-            </filter>
-
             {/* Reusable lumpy cloud/blob path */}
             <path id="cloudBlob" d="
               M120,8 C60,-4 6,40 6,108
@@ -82,7 +69,7 @@ export const SkillTreePage: React.FC = () => {
           </defs>
 
           {/* ══════════ CENTRAL "GENERATIVE AI" CLUSTER CONNECTORS ══════════ */}
-          <g filter="url(#st-pencilSoft)" fill="none" className="stroke-[#20242B] dark:stroke-[#E6DFCF]" strokeWidth="3.5" opacity="0.75">
+          <g fill="none" className="stroke-[#20242B] dark:stroke-[#E6DFCF]" strokeWidth="3.5" opacity="0.75">
             <path d="M450,130 C360,120 280,110 200,98"/>
             <path d="M750,130 C850,130 950,115 1020,98"/>
             <path d="M530,190 C450,225 350,245 270,235"/>
@@ -92,7 +79,7 @@ export const SkillTreePage: React.FC = () => {
           </g>
 
           {/* Core starburst blob */}
-          <g filter="url(#st-blobWobble)">
+          <g>
             <ellipse cx="600" cy="130" rx="175" ry="78" fill="#9C3B3B"/>
           </g>
           <text x="600" y="125" textAnchor="middle" fontFamily="'Caveat', cursive" fontWeight="700" fontSize="56" fill="#FFF8EB">Generative AI</text>
@@ -215,5 +202,3 @@ export const SkillTreePage: React.FC = () => {
     </div>
   );
 };
-
-export default SkillTreePage;

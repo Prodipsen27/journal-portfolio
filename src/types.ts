@@ -4,18 +4,9 @@ export interface ProfileInfo {
   quote: string;
   status: string;
   location: string;
-  experienceYears: string;
-  projectsCompleted: string;
-  uptime: string;
-  bio: string;
   email: string;
   github: string;
   linkedin: string;
-  coreMetrics: {
-    label: string;
-    value: number;
-  }[];
-  coreTechStack: string[];
 }
 
 export interface SkillCategory {

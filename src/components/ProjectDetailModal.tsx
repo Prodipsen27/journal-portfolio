@@ -16,16 +16,11 @@ export const ProjectDetailModal: React.FC<ProjectDetailModalProps> = ({
   if (!project) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#0e0c0a]/80 backdrop-blur-md animate-fadeIn">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-fadeIn">
       <div 
-        className="relative w-full max-w-3xl max-h-[90vh] overflow-y-auto leather-card rounded-2xl p-6 sm:p-8 border-2 border-[#8c714a] shadow-2xl text-[#e8ded1] space-y-6"
+        className="relative w-full max-w-3xl max-h-[90vh] overflow-y-auto bg-[#141210] rounded-xl p-6 sm:p-8 border border-[#2e2620] shadow-2xl text-[#e8ded1] space-y-6"
         onClick={(e) => e.stopPropagation()}
       >
-        {/* Top Right Ribbon Accent */}
-        <div className="absolute top-0 right-14 w-8 h-12 gold-ribbon flex items-center justify-center rounded-b-xs shadow-lg">
-          <Sparkles className="w-4 h-4 text-[#1a1512]" />
-        </div>
-
         {/* Close Button */}
         <button
           onClick={onClose}

@@ -18,11 +18,11 @@ export function JournalTitlePage() {
         <div className="w-16 h-0.5 bg-[#9C3B3B] mx-auto" />
 
         <p className="font-typewriter text-sm text-[#4B5563] tracking-widest uppercase">
-          Full-Stack GenAI Engineer
+          Best Gen AI & Web Developer
         </p>
 
         <p className="font-journal text-xs text-[#6B7280] italic max-w-xs mx-auto leading-relaxed">
-          "Building production-grade AI agents, RAG systems, & scalable web applications."
+          "Building top-tier AI solutions, autonomous pipelines, & scalable web applications in West Bengal, Siliguri, & Kolkata."
         </p>
       </div>
 

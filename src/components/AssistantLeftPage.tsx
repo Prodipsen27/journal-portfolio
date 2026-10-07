@@ -54,11 +54,11 @@ export const AssistantLeftPage: React.FC<AITwinLeftPageProps> = ({
   const categories = [
     {
       id: 'me',
-      label: 'Me',
+      label: 'Background',
       description: 'Background & bio',
       icon: Smile,
       iconColor: 'text-[#0D9488]',
-      prompt: "Tell me about Prodip's background, education, and full-stack engineering experience."
+      prompt: "Tell me about Prodip's background and engineering experience."
     },
     {
       id: 'projects',
@@ -66,7 +66,7 @@ export const AssistantLeftPage: React.FC<AITwinLeftPageProps> = ({
       description: 'Portfolio works',
       icon: Briefcase,
       iconColor: 'text-[#059669]',
-      prompt: "What are Prodip's top GenAI projects and live repository highlights?"
+      prompt: "What are his top GenAI and full-stack projects?"
     },
     {
       id: 'skills',
@@ -74,15 +74,15 @@ export const AssistantLeftPage: React.FC<AITwinLeftPageProps> = ({
       description: 'Technical stack',
       icon: Layers,
       iconColor: 'text-[#7C3AED]',
-      prompt: "What is Prodip's technical stack, agent framework expertise, and RAG knowledge?"
+      prompt: "What is his technical stack and agent framework expertise?"
     },
     {
       id: 'fun',
-      label: 'Fun',
+      label: 'Hobbies',
       description: 'Hobbies & side pr-',
       icon: PartyPopper,
       iconColor: 'text-[#DB2777]',
-      prompt: "What are Prodip's creative hobbies, hackathons, and personal interests?"
+      prompt: "What are his personal interests outside of code?"
     },
     {
       id: 'contact',
@@ -90,7 +90,7 @@ export const AssistantLeftPage: React.FC<AITwinLeftPageProps> = ({
       description: 'Hire & connect',
       icon: UserCheck,
       iconColor: 'text-[#D97706]',
-      prompt: "How can I contact or hire Prodip for engineering roles and contracts?"
+      prompt: "How can I contact or hire Prodip?"
     }
   ];
 
