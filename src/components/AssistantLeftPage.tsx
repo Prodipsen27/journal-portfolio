@@ -79,7 +79,7 @@ export const AssistantLeftPage: React.FC<AITwinLeftPageProps> = ({
     {
       id: 'fun',
       label: 'Hobbies',
-      description: 'Hobbies & side pr-',
+      description: 'Hobbies',
       icon: PartyPopper,
       iconColor: 'text-[#DB2777]',
       prompt: "What are his personal interests outside of code?"
@@ -131,33 +131,40 @@ export const AssistantLeftPage: React.FC<AITwinLeftPageProps> = ({
       <div className="relative z-10 w-full text-center space-y-4 sm:space-y-5 my-auto py-2">
         
         {/* TOP HEADER / SUBTITLE */}
-        <div className="flex flex-col items-center space-y-1 mb-2">
-          <div className="font-typewriter text-xs text-[#8C8577] uppercase tracking-widest font-bold">
-            Interactive Agent
+        <div className="flex flex-col items-center space-y-0.5">
+          <div className="flex items-center justify-center space-x-2 font-typewriter text-xs text-[#9C3B3B]">
+            <span className="opacity-70">-\-</span>
+            <span className="uppercase tracking-widest font-bold">INTERACTIVE AGENT</span>
+            <span className="opacity-70">-/-</span>
           </div>
+          <div className="text-[#9C3B3B] text-sm leading-none">★</div>
         </div>
 
         {/* MAIN TITLE */}
         <div>
-          <h2 className="font-journal text-3xl sm:text-4xl font-bold text-[#20242B] tracking-tight relative inline-block">
-            AI Assistant
+          <h2 className="font-handwriting text-3xl sm:text-4xl lg:text-5xl font-bold text-[#20242B] tracking-tight transform -rotate-1 relative inline-block">
+            Ask Prodip's Assistant
+            {/* Red sketch underline under 'Prodip's' */}
+            <svg className="absolute -bottom-1 left-[15%] w-[35%] h-2 text-[#9C3B3B] opacity-80" viewBox="0 0 100 10" preserveAspectRatio="none">
+              <path d="M0,5 Q50,8 100,4" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round"/>
+            </svg>
           </h2>
-          <p className="font-journal text-sm sm:text-base text-[#4B5566] mt-2 max-w-[85%] mx-auto leading-snug">
-            Ask questions about my experience, technical projects, or skills.
+          <p className="font-handwriting text-lg sm:text-xl text-[#20242B] mt-2 max-w-[95%] mx-auto leading-snug">
+            <span className="text-[#9C3B3B] opacity-70">-\-</span> Ask questions about my experience, technical projects, or skills. <span className="text-[#9C3B3B] opacity-70">-/-</span>
           </p>
         </div>
 
-        {/* SEARCH BAR */}
+        {/* SEARCH BAR (Hand-drawn style) */}
         <div className="w-full max-w-xl mx-auto px-2 mt-4">
           <form 
             onSubmit={handleSubmit}
             onPointerDown={(e) => e.stopPropagation()}
             onMouseDown={(e) => e.stopPropagation()}
             onTouchStart={(e) => e.stopPropagation()}
-            className="relative flex items-center w-full bg-white border border-[#DCCFAF] shadow-sm rounded-xl p-1.5 focus-within:border-[#9C3B3B] focus-within:ring-1 focus-within:ring-[#9C3B3B] transition-all"
+            className="relative flex items-center w-full bg-[#FBF7EE]/60 border-[2.5px] border-solid border-[#4B5566]/80 shadow-[1px_3px_6px_rgba(0,0,0,0.1)] rounded-[255px_15px_225px_15px/15px_225px_15px_255px] p-1.5 hover:border-[#9C3B3B]/80 transition-colors"
           >
-            <div className="pl-3 pr-2 text-[#8C8577] shrink-0">
-              <Search className="w-4 h-4 sm:w-5 sm:h-5" strokeWidth={2} />
+            <div className="pl-2.5 sm:pl-3 text-[#9C3B3B] shrink-0">
+              <Search className="w-5 h-5 sm:w-6 sm:h-6" strokeWidth={2.5} />
             </div>
 
             <input
@@ -167,27 +174,27 @@ export const AssistantLeftPage: React.FC<AITwinLeftPageProps> = ({
               onPointerDown={(e) => e.stopPropagation()}
               onMouseDown={(e) => e.stopPropagation()}
               onTouchStart={(e) => e.stopPropagation()}
-              placeholder="Ask me anything..."
-              className="w-full px-2 py-1.5 sm:py-2 bg-transparent font-journal text-base sm:text-lg text-[#20242B] placeholder-[#8C8577]/80 focus:outline-none select-text cursor-text"
+              placeholder="Ask a question..."
+              className="w-full px-3 py-1.5 sm:py-2 bg-transparent font-journal text-base sm:text-lg text-[#20242B] placeholder-[#4B5566]/60 focus:outline-none select-text cursor-text"
             />
 
             <button
               type="submit"
               disabled={!inputValue.trim() || isProcessing}
-              className="w-8 h-8 sm:w-10 sm:h-10 rounded-lg bg-[#20242B] hover:bg-[#323842] text-white disabled:opacity-50 flex items-center justify-center shrink-0 transition-colors cursor-pointer"
+              className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-[#9C3B3B] border-2 border-[#5a1c1c] disabled:opacity-50 flex items-center justify-center shrink-0 shadow-sm transition-transform active:scale-95 group cursor-pointer"
             >
-              <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5" strokeWidth={2} />
+              <ArrowRight className="w-5 h-5 sm:w-6 sm:h-6 text-[#FBF7EE] group-hover:translate-x-0.5 transition-transform" strokeWidth={2.5} />
             </button>
           </form>
         </div>
 
-        {/* ACTION BUTTONS */}
-        <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-3 mt-4">
+        {/* ACTION BUTTONS (Hand-drawn style) */}
+        <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-3 mt-3">
           <button
             type="button"
             onClick={handleSave}
             disabled={!hasMessages}
-            className="px-4 py-2 bg-white border border-[#DCCFAF] rounded-lg font-journal text-sm sm:text-base text-[#20242B] inline-flex items-center space-x-2 shadow-sm transition-all hover:bg-[#FBF7EE] active:scale-95 disabled:opacity-50 cursor-pointer"
+            className="px-4 py-2 bg-[#FBF7EE]/60 border-[2px] border-solid border-[#4B5566]/80 rounded-[15px_225px_15px_255px/255px_15px_225px_15px] font-journal text-sm sm:text-base text-[#20242B] inline-flex items-center space-x-1.5 shadow-[1px_2px_4px_rgba(0,0,0,0.05)] transition-all hover:border-[#9C3B3B]/80 active:scale-95 disabled:opacity-50 cursor-pointer"
           >
             {savedSuccess ? (
               <>
@@ -196,7 +203,7 @@ export const AssistantLeftPage: React.FC<AITwinLeftPageProps> = ({
               </>
             ) : (
               <>
-                <Download className="w-4 h-4 text-[#8C8577]" />
+                <Download className="w-4 h-4 text-[#9C3B3B]" />
                 <span>Save Chat</span>
               </>
             )}
@@ -206,47 +213,64 @@ export const AssistantLeftPage: React.FC<AITwinLeftPageProps> = ({
             type="button"
             onClick={onClearChat}
             disabled={!hasMessages}
-            className="px-4 py-2 bg-white border border-[#DCCFAF] rounded-lg font-journal text-sm sm:text-base text-[#20242B] inline-flex items-center space-x-2 shadow-sm transition-all hover:bg-[#FBF7EE] active:scale-95 disabled:opacity-50 cursor-pointer"
+            className="px-4 py-2 bg-[#FBF7EE]/60 border-[2px] border-solid border-[#4B5566]/80 rounded-[225px_15px_255px_15px/15px_255px_15px_225px] font-journal text-sm sm:text-base text-[#20242B] inline-flex items-center space-x-1.5 shadow-[1px_2px_4px_rgba(0,0,0,0.05)] transition-all hover:border-[#9C3B3B]/80 active:scale-95 disabled:opacity-50 cursor-pointer"
           >
-            <Trash2 className="w-4 h-4 text-[#8C8577]" />
+            <Trash2 className="w-4 h-4 text-[#9C3B3B]" />
             <span>Clear Chat</span>
           </button>
         </div>
 
-        {/* SUBTEXT */}
+        {/* SUBTEXT with underline */}
         <div className="pt-2">
-          <p className="font-journal text-sm sm:text-base text-[#4B5566]">
-            Grounded in 27+ full-stack GenAI projects
+          <p className="font-journal text-sm sm:text-base text-[#4B5566] relative inline-block">
+            Grounded in <span className="relative font-bold">
+              27+ full-stack GenAI projects
+              <svg className="absolute -bottom-1 left-0 w-full h-1 text-[#9C3B3B]/60" viewBox="0 0 100 10" preserveAspectRatio="none">
+                <path d="M0,5 Q50,8 100,5" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+              </svg>
+            </span>
           </p>
         </div>
 
-        {/* CATEGORIZED NAVIGATION SHORTCUT STAMPS */}
-        <div className="mt-6 pt-4 w-full px-1 max-w-4xl mx-auto border-t border-[#DCCFAF]/50">
-          <div className="flex items-center justify-center mb-4">
+        {/* CATEGORIZED NAVIGATION SHORTCUT STAMPS (Hand-drawn cards) */}
+        <div className="mt-4 pt-2 w-full px-1 max-w-4xl mx-auto">
+          <div className="flex items-center justify-center space-x-2 mb-2.5">
             <span className="font-typewriter text-[10px] font-bold uppercase tracking-widest text-[#8C8577]">
-              Suggested Topics
+              SUGGESTED TOPICS
             </span>
           </div>
 
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
-            {categories.map((cat) => {
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2 sm:gap-3">
+            {categories.map((cat, idx) => {
               const Icon = cat.icon;
+              // Mix up border radius rounding to look hand-drawn
+              const borderStyles = [
+                "rounded-[255px_15px_225px_15px/15px_225px_15px_255px]",
+                "rounded-[15px_225px_15px_255px/255px_15px_225px_15px]",
+                "rounded-[225px_15px_255px_15px/15px_255px_15px_225px]",
+                "rounded-[15px_255px_15px_225px/225px_15px_255px_15px]",
+                "rounded-[255px_15px_225px_15px/15px_225px_15px_255px]"
+              ];
+              const borderClass = borderStyles[idx % borderStyles.length];
+              
               return (
-                <button
+                <motion.button
                   key={cat.id}
+                  whileHover={{ scale: 1.03, y: -2 }}
+                  whileTap={{ scale: 0.96 }}
                   onClick={() => handleShortcutClick(cat.prompt)}
-                  className="p-3 bg-white border border-[#DCCFAF] rounded-xl flex flex-col items-center justify-center text-center cursor-pointer transition-all hover:border-[#9C3B3B]/50 hover:shadow-md group"
+                  className={`p-2 sm:p-2.5 bg-[#FBF7EE]/40 border-[2px] border-solid border-[#4B5566]/70 ${borderClass} flex flex-col items-center justify-center text-center cursor-pointer transition-all hover:border-[#9C3B3B]/80 shadow-[1px_2px_5px_rgba(0,0,0,0.05)] group`}
                 >
-                  <div className={`p-2 mb-2 bg-[#FBF7EE] rounded-lg ${cat.iconColor} group-hover:scale-105 transition-transform`}>
+                  <div className={`p-1.5 sm:p-2 mb-1 bg-[#FBF7EE] border-[1.5px] border-[#4B5566]/60 rounded-[10px_6px_10px_6px/6px_10px_6px_10px] shadow-xs ${cat.iconColor} group-hover:scale-110 transition-transform`}>
                     <Icon className="w-4 h-4 sm:w-5 sm:h-5" strokeWidth={2} />
                   </div>
-                  <span className="font-journal text-sm sm:text-base font-bold text-[#20242B] block leading-tight">
+                  <span className="font-journal text-sm sm:text-base font-bold text-[#20242B] block leading-none">
                     {cat.label}
                   </span>
-                  <span className="font-journal text-xs sm:text-sm text-[#8C8577] block mt-1">
+                  <span className="font-journal text-xs sm:text-sm text-[#4B5566] leading-tight block mt-1 truncate w-full">
                     {cat.description}
                   </span>
-                </button>
+                </motion.button>
               );
             })}
           </div>
