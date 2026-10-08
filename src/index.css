@@ -9,8 +9,9 @@
     background-color: #120e0c;
   }
 
+  /* Redefined to remove the messy handwriting look globally */
   .font-handwriting {
-    font-family: 'Caveat', cursive;
+    font-family: 'Lora', serif;
   }
 
   .font-journal {
@@ -18,7 +19,7 @@
   }
 
   .font-typewriter {
-    font-family: 'Courier Prime', monospace;
+    font-family: 'Inter', system-ui, sans-serif;
   }
 }
 
