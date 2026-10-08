@@ -142,7 +142,18 @@ export const JournalSidebar: React.FC<JournalSidebarProps> = ({
             <Compass className="w-5 h-5 drop-shadow-[0_2px_4px_rgba(0,0,0,0.5)]" />
           </motion.div>
 
-
+          {/* Theme Toggle Button */}
+          <motion.button
+            whileHover={{ rotate: 18, scale: 1.15 }}
+            onClick={(e) => {
+              e.stopPropagation();
+              onToggleTheme?.();
+            }}
+            className="p-1.5 rounded-full hover:bg-white/10 text-[#f7e8c8]/80 hover:text-white transition-colors cursor-pointer flex items-center justify-center"
+            title={isDarkMode ? "Switch to Light Mode" : "Switch to Dark Mode"}
+          >
+            {isDarkMode ? <Sun className="w-4 h-4 text-amber-300" /> : <Moon className="w-4 h-4 text-[#f7e8c8]" />}
+          </motion.button>
         </div>
 
         {/* Navigation Tabs Stack with Leather Bookmark Tabs */}
@@ -255,7 +266,17 @@ export const JournalSidebar: React.FC<JournalSidebarProps> = ({
               >
                 <Download className="w-4 h-4 text-[#d4af37]" />
               </a>
-
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onToggleTheme?.();
+                }}
+                className="w-10 h-10 rounded-full bg-[#3d0f0f]/75 border border-[#b88f51]/40 flex items-center justify-center text-[#f7e8c8] active:scale-95 transition-transform"
+                title={isDarkMode ? "Switch to Light Mode" : "Switch to Dark Mode"}
+                aria-label={isDarkMode ? "Switch to light mode" : "Switch to dark mode"}
+              >
+                {isDarkMode ? <Sun className="w-4 h-4 text-amber-300" /> : <Moon className="w-4 h-4" />}
+              </button>
             </div>
           </div>
         </div>

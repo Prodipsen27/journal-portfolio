@@ -7,11 +7,11 @@ export const DeskBackground: React.FC = React.memo(() => {
       style={{ transform: 'translateZ(0)', willChange: 'transform' }}
     >
       <div
-        className="fixed inset-0 w-full h-full bg-cover bg-center opacity-100"
-        style={{ backgroundImage: 'url("/new-desk-bg.png")' }}
+        className="fixed inset-0 w-full h-full bg-cover bg-center opacity-90"
+        style={{ backgroundImage: 'url("/wood-desk-bg.png")' }}
       />
       {/* Subtle vignette over the desk for depth */}
-      <div className="absolute inset-0 bg-radial from-transparent via-black/5 to-black/30 pointer-events-none" />
+      <div className="absolute inset-0 bg-radial from-transparent via-black/10 to-black/50 pointer-events-none" />
     </div>
   );
 });
