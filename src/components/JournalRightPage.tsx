@@ -17,7 +17,6 @@ interface JournalRightPageProps {
   assistantMessages?: ChatMessage[];
   isAssistantProcessing?: boolean;
   onClearAssistantChat?: () => void;
-  isDarkMode?: boolean;
 }
 
 export const JournalRightPage: React.FC<JournalRightPageProps> = React.memo(({
@@ -28,24 +27,16 @@ export const JournalRightPage: React.FC<JournalRightPageProps> = React.memo(({
   onOpenAgentSandbox,
   assistantMessages = [],
   isAssistantProcessing = false,
-  onClearAssistantChat,
-  isDarkMode = false
+  onClearAssistantChat
 }) => {
-  const dk = isDarkMode;
-  const pageText = dk ? 'text-[#EFE6D2]' : 'text-[#20242B]';
-  const titleText = dk ? 'text-[#F3E8D5]' : 'text-[#20242B]';
-  const bodyText = dk ? 'text-[#D3C5B5]' : 'text-[#4B5566]';
-  const mutedText = dk ? 'text-[#B8AA98]' : 'text-[#8C8577]';
-  const accentText = dk ? 'text-[#F07F75]' : 'text-[#9C3B3B]';
-  const chipCls = dk
-    ? 'bg-[#232936] border-[#3f4756] text-[#E8DDCA]'
-    : 'bg-[#EFE6D2] border-[#BCAE8E] text-[#20242B]';
-  const panelCls = dk
-    ? 'bg-[#1D222C] border-[#3f4756]'
-    : 'bg-[#FAFAFA] border-[#E2D9C5]';
-  const metricCls = dk
-    ? 'bg-[#162820] border-[#55cbb0]/40 text-[#BFEBDC]'
-    : 'bg-[#EAF2ED] border-[#3B6B58]/40 text-[#2C5243]';
+  const pageText = 'text-[#20242B]';
+  const titleText = 'text-[#20242B]';
+  const bodyText = 'text-[#4B5566]';
+  const mutedText = 'text-[#8C8577]';
+  const accentText = 'text-[#9C3B3B]';
+  const chipCls = 'bg-[#EFE6D2] border-[#BCAE8E] text-[#20242B]';
+  const panelCls = 'bg-[#FAFAFA] border-[#E2D9C5]';
+  const metricCls = 'bg-[#EAF2ED] border-[#3B6B58]/40 text-[#2C5243]';
 
   // IF ACTIVE TAB IS 'PROJECTS', SHOW SELECTED PROJECT DETAILS & PREVIEW IMAGE
   if (activeTab === 'projects') {

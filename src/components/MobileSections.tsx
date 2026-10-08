@@ -29,12 +29,12 @@ interface SectionProps { isDarkMode?: boolean; }
 // ══════════════════════════════════════════════════════════════
 // 1. ABOUT SECTION
 // ══════════════════════════════════════════════════════════════
-export const MobileAboutSection: React.FC<SectionProps> = ({ isDarkMode = false }) => {
-  const dk = isDarkMode;
-  const card  = dk ? 'bg-[#1D222C] border-[#3f4756]' : 'bg-[#FBF7EE] border-[#DCCFAF]';
-  const stat  = dk ? 'bg-[#232936] border-[#3f4756] text-[#E8DDCA]' : 'bg-[#EFE6D2] border-[#BCAE8E] text-[#20242B]';
-  const muted = dk ? 'text-[#B8AA98]' : 'text-[#8C8577]';
-  const link  = dk ? 'bg-[#1D222C] border-[#3f4756] text-[#E6DFCF] hover:border-[#9C3B3B]' : 'bg-[#FBF7EE] border-[#DCCFAF] text-[#20242B] hover:border-[#9C3B3B]';
+export const MobileAboutSection: React.FC<SectionProps> = () => {
+  const dk = false;
+  const card  = 'bg-[#FBF7EE] border-[#DCCFAF]';
+  const stat  = 'bg-[#EFE6D2] border-[#BCAE8E] text-[#20242B]';
+  const muted = 'text-[#8C8577]';
+  const link  = 'bg-[#FBF7EE] border-[#DCCFAF] text-[#20242B] hover:border-[#9C3B3B]';
 
   return (
     <motion.div 
@@ -236,8 +236,8 @@ interface MobileProjectsSectionProps extends SectionProps {
   onSelectProject: (p: ProjectItem) => void;
 }
 
-export const MobileProjectsSection: React.FC<MobileProjectsSectionProps> = ({ isDarkMode = false, onSelectProject }) => {
-  const dk = isDarkMode;
+export const MobileProjectsSection: React.FC<MobileProjectsSectionProps> = ({ onSelectProject }) => {
+  const dk = false;
   const [selectedCategory, setSelectedCategory] = useState<string>('All');
   const [idx, setIdx] = useState(0);
   const [isExpanded, setIsExpanded] = useState(false);
@@ -524,9 +524,9 @@ export const MobileProjectsSection: React.FC<MobileProjectsSectionProps> = ({ is
 // ══════════════════════════════════════════════════════════════
 // 3. SKILLS SECTION (Matching Desktop SkillTree & Progress Bars)
 // ══════════════════════════════════════════════════════════════
-export const MobileSkillsSection: React.FC<SectionProps> = ({ isDarkMode = false }) => {
-  const dk   = isDarkMode;
-  const card = dk ? 'bg-[#1D222C] border-[#3f4756]' : 'bg-[#FBF7EE] border-[#DCCFAF]';
+export const MobileSkillsSection: React.FC<SectionProps> = () => {
+  const dk   = false;
+  const card = 'bg-[#FBF7EE] border-[#DCCFAF]';
   const muted = dk ? 'text-[#B8AA98]' : 'text-[#8C8577]';
   const chip = dk ? 'bg-[#232936] border-[#3f4756] text-[#E8DDCA]' : 'bg-[#EFE6D2] border-[#BCAE8E] text-[#4B5566]';
 
@@ -602,9 +602,9 @@ export const MobileSkillsSection: React.FC<SectionProps> = ({ isDarkMode = false
 // ══════════════════════════════════════════════════════════════
 // 4. CONTACT SECTION (Matching Desktop Dispatch & Form)
 // ══════════════════════════════════════════════════════════════
-export const MobileContactSection: React.FC<SectionProps> = ({ isDarkMode = false }) => {
-  const dk = isDarkMode;
-  const card  = dk ? 'bg-[#1D222C] border-[#3f4756]' : 'bg-[#FBF7EE] border-[#DCCFAF]';
+export const MobileContactSection: React.FC<SectionProps> = () => {
+  const dk = false;
+  const card  = 'bg-[#FBF7EE] border-[#DCCFAF]';
   const inputCls = dk
     ? 'bg-[#232936] border-[#3f4756] text-[#E8DDCA] placeholder-[#4a5568] focus:border-[#9C3B3B]'
     : 'bg-white border-[#BCAE8E] text-[#20242B] placeholder-[#8C8577]/70 focus:border-[#9C3B3B]';

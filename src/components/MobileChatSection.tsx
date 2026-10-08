@@ -13,7 +13,6 @@ interface MobileChatSectionProps {
   onQuerySubmit: (query: string) => void;
   onClearChat: () => void;
   onSaveConversation: () => void;
-  isDarkMode?: boolean;
 }
 
 const SHORTCUTS = [
@@ -30,7 +29,6 @@ export const MobileChatSection: React.FC<MobileChatSectionProps> = ({
   onQuerySubmit,
   onClearChat,
   onSaveConversation,
-  isDarkMode = false,
 }) => {
   const [inputValue, setInputValue] = useState('');
   const [copiedIndex, setCopiedIndex] = useState<number | null>(null);
@@ -98,18 +96,10 @@ export const MobileChatSection: React.FC<MobileChatSectionProps> = ({
     setTimeout(() => setSavedSuccess(false), 2000);
   };
 
-  const bg = isDarkMode
-    ? 'bg-[#1E222B] border-[#2d3240]'
-    : 'bg-[#FBF7EE] border-[#DCCFAF]';
-  const inputBg = isDarkMode
-    ? 'bg-[#252b38] border-[#3a4155] text-[#E6DFCF] placeholder-[#6a7685]'
-    : 'bg-[#FBF7EE] border-[#BCAE8E] text-[#20242B] placeholder-[#8C8577]/70';
-  const msgUserBg = isDarkMode
-    ? 'bg-[#2b3140] border-[#3a4155] text-[#E6DFCF]'
-    : 'bg-[#EFE6D2]/90 border-[#BCAE8E] text-[#20242B]';
-  const msgAgentBg = isDarkMode
-    ? 'bg-[#2a2f1e] border-[#4d5e2a] text-[#e8f0d0]'
-    : 'bg-[#FEF9C3]/85 border-[#FDE047] text-[#1E293B]';
+  const bg = 'bg-[#FBF7EE] border-[#DCCFAF]';
+  const inputBg = 'bg-[#FBF7EE] border-[#BCAE8E] text-[#20242B] placeholder-[#8C8577]/70';
+  const msgUserBg = 'bg-[#EFE6D2]/90 border-[#BCAE8E] text-[#20242B]';
+  const msgAgentBg = 'bg-[#FEF9C3]/85 border-[#FDE047] text-[#1E293B]';
 
   return (
     <div className={`flex flex-col h-[80vh] min-h-[500px] max-h-[780px] rounded-2xl overflow-hidden border ${bg} shadow-lg select-none`}>

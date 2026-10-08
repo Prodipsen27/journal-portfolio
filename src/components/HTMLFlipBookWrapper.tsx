@@ -147,22 +147,33 @@ export const HTMLFlipBookWrapper: React.FC<HTMLFlipBookWrapperProps> = ({
         onFlip={onFlip}
         usePortrait={!isJournalOpen || isPortrait}
       >
-        <Page key="cover-front" className="bg-transparent border-l-2 border-black/70">{frontCover}</Page>
-        <Page key="cover-inside-front" className="bg-[#FBF7EE] border-r-2 border-black/70">{insideFrontCover}</Page>
-        <Page key="title-page" className="bg-[#FBF7EE] border-l-2 border-black/70">{titlePage}</Page>
+        <Page key="cover-front" className="bg-transparent">{frontCover}</Page>
+        <Page key="cover-inside-front" className="bg-[#FBF7EE] relative">
+          {insideFrontCover}
+          <div className="absolute top-0 right-0 bottom-0 w-[1px] bg-black/40 z-50 pointer-events-none" />
+        </Page>
+        <Page key="title-page" className="bg-[#FBF7EE] relative">
+          {titlePage}
+        </Page>
         
         {pages.map((p) => [
-          <Page key={`${p.id}-left`} className="bg-[#FBF7EE] border-r-2 border-black/70 shadow-[inset_-10px_0_20px_rgba(0,0,0,0.05)]">{p.left}</Page>,
-          <Page key={`${p.id}-right`} className="bg-[#FBF7EE] border-l-2 border-black/70 shadow-[inset_10px_0_20px_rgba(0,0,0,0.05)]">{p.right}</Page>
+          <Page key={`${p.id}-left`} className="bg-[#FBF7EE] shadow-[inset_-10px_0_20px_rgba(0,0,0,0.05)] relative">
+            {p.left}
+            <div className="absolute top-0 right-0 bottom-0 w-[1px] bg-black/40 z-50 pointer-events-none" />
+          </Page>,
+          <Page key={`${p.id}-right`} className="bg-[#FBF7EE] shadow-[inset_10px_0_20px_rgba(0,0,0,0.05)] relative">
+            {p.right}
+          </Page>
         ]).flat()}
 
-        <Page key="blank-page" className="bg-[#FBF7EE] border-r-2 border-black/70">
+        <Page key="blank-page" className="bg-[#FBF7EE] relative">
           <div className="w-full h-full bg-[#FBF7EE] flex items-center justify-center opacity-30">
              <p className="font-mono text-sm tracking-widest text-[#8C8577]">EOF</p>
           </div>
+          <div className="absolute top-0 right-0 bottom-0 w-[1px] bg-black/40 z-50 pointer-events-none" />
         </Page>
-        <Page key="cover-inside-back" className="bg-[#FBF7EE] border-l-2 border-black/70">{insideBackCover}</Page>
-        <Page key="cover-back" className="bg-transparent border-r-2 border-black/70">{backCover}</Page>
+        <Page key="cover-inside-back" className="bg-[#FBF7EE] relative">{insideBackCover}</Page>
+        <Page key="cover-back" className="bg-transparent">{backCover}</Page>
       </HTMLFlipBook>
     </div>
   );

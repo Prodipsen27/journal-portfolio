@@ -5,8 +5,7 @@ import { JournalLeftPage } from './components/JournalLeftPage';
 import { JournalRightPage } from './components/JournalRightPage';
 import { ProjectItem, ChatMessage } from './types';
 import { usePageFlipSound } from './hooks/usePageFlipSound';
-import { SumieBackground } from './components/SumieBackground';
-import { BrushTransition } from './components/BrushTransition';
+import { DeskBackground } from './components/DeskBackground';
 import { FEATURED_PROJECTS } from './data/portfolioData';
 
 // Dynamic imports for code splitting
@@ -27,8 +26,6 @@ import { motion, AnimatePresence } from 'motion/react';
 export default function App() {
   const { playPageFlipSound } = usePageFlipSound();
   const [isJournalOpen, setIsJournalOpen] = useState<boolean>(false);
-  const [isDarkMode, setIsDarkMode] = useState<boolean>(false);
-  const [isBrushTriggered, setIsBrushTriggered] = useState<boolean>(false);
   const [activeTab, setActiveTab] = useState<string>('overview');
   const [activeProject, setActiveProject] = useState<ProjectItem>(FEATURED_PROJECTS[0]);
   const [modalProject, setModalProject] = useState<ProjectItem | null>(null);
@@ -254,7 +251,6 @@ export default function App() {
           assistantMessages={assistantMessages}
           isAssistantProcessing={isAssistantProcessing}
           onClearAssistantChat={handleClearAssistantChat}
-          isDarkMode={isDarkMode}
         />
       )
     }));
@@ -266,14 +262,13 @@ export default function App() {
     handleClearAssistantChat,
     handleSaveConversation,
     assistantMessages,
-    handleOpenModal,
-    isDarkMode
+    handleOpenModal
   ]);
 
   return (
-    <div className={`h-screen w-screen overflow-hidden text-[#20242B] p-0 sm:p-6 md:p-10 flex items-center justify-center relative transition-colors duration-300 ${isDarkMode ? 'dark dark-mode-grid' : ''}`}>
-      {/* JAPANESE SUMI-E INK WASH BACKGROUND WITH RED RISING SUN */}
-      <SumieBackground isDarkMode={isDarkMode} isJournalOpen={isJournalOpen} />
+    <div className="h-screen w-screen overflow-hidden text-[#20242B] p-0 sm:p-6 md:p-10 flex items-center justify-center relative transition-colors duration-300">
+      {/* DESK BACKGROUND */}
+      <DeskBackground isJournalOpen={isJournalOpen} />
 
       {/* ALWAYS VISIBLE MOBILE NAVBAR */}
       <div className="block md:hidden w-full relative z-30">
@@ -281,8 +276,6 @@ export default function App() {
           activeTab={activeTab}
           setActiveTab={triggerTabChange}
           onCloseJournal={() => setIsJournalOpen(false)}
-          isDarkMode={isDarkMode}
-          onToggleTheme={() => setIsBrushTriggered(true)}
         />
       </div>
 
@@ -304,8 +297,6 @@ export default function App() {
                 activeTab={activeTab}
                 setActiveTab={triggerTabChange}
                 onCloseJournal={() => setIsJournalOpen(false)}
-                isDarkMode={isDarkMode}
-                onToggleTheme={() => setIsBrushTriggered(true)}
               />
             </motion.div>
           )}
@@ -320,20 +311,19 @@ export default function App() {
            <React.Suspense fallback={<div className="p-10 text-center text-[#c4b5a3]">Loading...</div>}>
             {/* 1. ABOUT SECTION */}
             <div id="section-overview" className="">
-              <MobileAboutSection isDarkMode={isDarkMode} />
+              <MobileAboutSection />
             </div>
 
             {/* 2. PROJECTS SECTION */}
             <div id="section-projects" className="">
               <MobileProjectsSection
-                isDarkMode={isDarkMode}
                 onSelectProject={handleOpenModal}
               />
             </div>
 
             {/* 3. SKILLS SECTION */}
             <div id="section-skills" className="">
-              <MobileSkillsSection isDarkMode={isDarkMode} />
+              <MobileSkillsSection />
             </div>
 
             {/* 4. AI TWIN AGENT SECTION */}
@@ -344,13 +334,12 @@ export default function App() {
                 onQuerySubmit={handleAssistantQuery}
                 onClearChat={handleClearAssistantChat}
                 onSaveConversation={handleSaveConversation}
-                isDarkMode={isDarkMode}
               />
             </div>
 
             {/* 5. CONTACT SECTION */}
             <div id="section-contact" className="pb-6">
-              <MobileContactSection isDarkMode={isDarkMode} />
+              <MobileContactSection />
             </div>
            </React.Suspense>
           </div>
@@ -381,15 +370,6 @@ export default function App() {
           onOpenAgentSandbox={(prompt) => prompt && handleAssistantQuery(prompt)}
         />
       </React.Suspense>
-
-      {/* BRUSH WIPE THEME TRANSITION */}
-      <BrushTransition
-        isTriggered={isBrushTriggered}
-        onHalfway={() => setIsDarkMode(prev => !prev)}
-        onComplete={() => setIsBrushTriggered(false)}
-      />
-
-
 
     </div>
   );
