@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prodip Sengupta | Pitch Deck</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=Courier+Prime:wght@400;700&family=Lora:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        paper: '#FBF7EE',
+                        ink: '#20242B',
+                        crimson: '#9C3B3B',
+                        muted: '#8C8577'
+                    },
+                    fontFamily: {
+                        journal: ['Lora', 'serif'],
+                        handwriting: ['Caveat', 'cursive'],
+                        typewriter: ['Courier Prime', 'monospace']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body, html { margin: 0; padding: 0; height: 100%; overflow: hidden; background: #20242B; }
+        .slide {
+            width: 100vw;
+            height: 100vh;
+            display: none;
+            background: #FBF7EE;
+            position: relative;
+            background-image: url('https://www.transparenttextures.com/patterns/cream-paper.png');
+        }
+        .slide.active { display: flex; flex-direction: column; justify-content: center; }
+        .grid-lines {
+            position: absolute; inset: 0;
+            background-size: 40px 40px;
+            background-image: 
+                linear-gradient(to right, rgba(140,133,119,0.1) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(140,133,119,0.1) 1px, transparent 1px);
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Slide 1: Cover -->
+<div class="slide active" id="slide-1">
+    <div class="grid-lines"></div>
+    <div class="max-w-4xl mx-auto px-8 relative z-10 w-full text-center">
+        <h1 class="font-handwriting text-7xl md:text-9xl text-ink font-bold mb-6">Prodip Sengupta</h1>
+        <div class="h-1 w-24 bg-crimson mx-auto mb-8 rounded-full"></div>
+        <p class="font-typewriter text-xl md:text-2xl text-muted tracking-widest uppercase font-bold">
+            Full-Stack Developer <span class="text-crimson">x</span> GenAI Engineer
+        </p>
+        <p class="mt-8 font-journal text-lg text-ink/70">Engineering scalable applications — with AI at the core.</p>
+    </div>
+</div>
+
+<!-- Slide 2: Problem/Solution -->
+<div class="slide" id="slide-2">
+    <div class="grid-lines"></div>
+    <div class="max-w-5xl mx-auto px-8 relative z-10 w-full">
+        <div class="flex items-center space-x-4 mb-8">
+            <span class="font-typewriter text-sm text-crimson font-bold uppercase tracking-widest">01 / The Focus</span>
+            <div class="h-px bg-muted/30 flex-1"></div>
+        </div>
+        <h2 class="font-journal text-5xl md:text-6xl text-ink font-bold mb-12">Bridging the Gap Between <br><span class="italic text-crimson">Front-End & AI Systems</span></h2>
+        
+        <div class="grid grid-cols-2 gap-12">
+            <div>
+                <h3 class="font-handwriting text-3xl mb-4 text-ink">The Architecture</h3>
+                <p class="font-journal text-lg text-muted leading-relaxed">
+                    Building resilient, high-performance user interfaces with React and Next.js, backed by scalable Node.js and PostgreSQL infrastructures.
+                </p>
+            </div>
+            <div>
+                <h3 class="font-handwriting text-3xl mb-4 text-ink">The Intelligence</h3>
+                <p class="font-journal text-lg text-muted leading-relaxed">
+                    Integrating autonomous LLM agents, RAG pipelines, and vector search to create applications that don't just display data—they understand it.
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Slide 3: Tech Stack -->
+<div class="slide" id="slide-3">
+    <div class="grid-lines"></div>
+    <div class="max-w-5xl mx-auto px-8 relative z-10 w-full">
+        <div class="flex items-center space-x-4 mb-8">
+            <span class="font-typewriter text-sm text-crimson font-bold uppercase tracking-widest">02 / Instrumentation</span>
+            <div class="h-px bg-muted/30 flex-1"></div>
+        </div>
+        <h2 class="font-journal text-5xl text-ink font-bold mb-12">Core Capabilities</h2>
+        
+        <div class="grid grid-cols-3 gap-8">
+            <div class="p-6 border-2 border-muted/20 bg-white/50 shadow-sm rounded-xl">
+                <h3 class="font-typewriter text-sm text-crimson font-bold uppercase mb-4 tracking-wider">Frontend</h3>
+                <ul class="font-journal text-lg text-ink space-y-2">
+                    <li>React.js & Next.js</li>
+                    <li>Tailwind CSS</li>
+                    <li>Framer Motion</li>
+                    <li>TypeScript</li>
+                </ul>
+            </div>
+            <div class="p-6 border-2 border-muted/20 bg-white/50 shadow-sm rounded-xl">
+                <h3 class="font-typewriter text-sm text-crimson font-bold uppercase mb-4 tracking-wider">Backend & Cloud</h3>
+                <ul class="font-journal text-lg text-ink space-y-2">
+                    <li>Node.js / Express</li>
+                    <li>PostgreSQL & MongoDB</li>
+                    <li>Supabase & Vercel</li>
+                    <li>Docker</li>
+                </ul>
+            </div>
+            <div class="p-6 border-2 border-muted/20 bg-white/50 shadow-sm rounded-xl">
+                <h3 class="font-typewriter text-sm text-crimson font-bold uppercase mb-4 tracking-wider">Generative AI</h3>
+                <ul class="font-journal text-lg text-ink space-y-2">
+                    <li>LangChain & LangGraph</li>
+                    <li>RAG & Vector Search</li>
+                    <li>OpenAI & Gemini APIs</li>
+                    <li>Anthropic MCP</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Navigation Script -->
+<div class="fixed bottom-8 right-8 z-50 flex space-x-4">
+    <button onclick="prevSlide()" class="w-12 h-12 rounded-full border-2 border-ink/20 flex items-center justify-center text-ink hover:bg-ink hover:text-white transition-colors">&larr;</button>
+    <button onclick="nextSlide()" class="w-12 h-12 rounded-full border-2 border-ink/20 flex items-center justify-center text-ink hover:bg-ink hover:text-white transition-colors">&rarr;</button>
+</div>
+
+<script>
+    let currentSlide = 1;
+    const totalSlides = 3;
+    
+    function showSlide(n) {
+        document.querySelectorAll('.slide').forEach(s => s.classList.remove('active'));
+        document.getElementById('slide-' + n).classList.add('active');
+    }
+    
+    function nextSlide() {
+        currentSlide = currentSlide < totalSlides ? currentSlide + 1 : 1;
+        showSlide(currentSlide);
+    }
+    
+    function prevSlide() {
+        currentSlide = currentSlide > 1 ? currentSlide - 1 : totalSlides;
+        showSlide(currentSlide);
+    }
+    
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowRight' || e.key === 'Space') nextSlide();
+        if (e.key === 'ArrowLeft') prevSlide();
+    });
+</script>
+
+</body>
+</html>

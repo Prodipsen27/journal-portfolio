@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Open Graph Image</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=Courier+Prime:wght@400;700&family=Lora:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        paper: '#FBF7EE',
+                        'paper-dark': '#EFE6D2',
+                        ink: '#20242B',
+                        crimson: '#9C3B3B',
+                        muted: '#8C8577'
+                    },
+                    fontFamily: {
+                        journal: ['Lora', 'serif'],
+                        handwriting: ['Caveat', 'cursive'],
+                        typewriter: ['Courier Prime', 'monospace']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #e5e5e5;
+            height: 100vh;
+        }
+        .banner {
+            width: 1200px;
+            height: 630px;
+            background-color: #FBF7EE;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+        .texture {
+            position: absolute;
+            inset: 0;
+            background-image: url('https://www.transparenttextures.com/patterns/cream-paper.png');
+            opacity: 0.6;
+            pointer-events: none;
+        }
+        .grid-lines {
+            position: absolute;
+            inset: 0;
+            background-size: 40px 40px;
+            background-image: 
+                linear-gradient(to right, rgba(140,133,119,0.1) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(140,133,119,0.1) 1px, transparent 1px);
+        }
+        .washi-tape {
+            position: absolute;
+            background-color: rgba(232, 222, 200, 0.85);
+            border-top: 1px solid rgba(212, 200, 176, 0.8);
+            border-bottom: 1px solid rgba(212, 200, 176, 0.8);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        .tape-1 { top: -20px; left: 100px; width: 250px; height: 50px; transform: rotate(-2deg); }
+        .tape-2 { bottom: 40px; right: -40px; width: 180px; height: 40px; transform: rotate(-45deg); }
+        
+        .red-line {
+            width: 3px;
+            background: #9C3B3B;
+            position: absolute;
+            left: 80px;
+            top: 0;
+            bottom: 0;
+            opacity: 0.4;
+        }
+        .red-line-2 {
+            width: 1px;
+            background: #9C3B3B;
+            position: absolute;
+            left: 86px;
+            top: 0;
+            bottom: 0;
+            opacity: 0.2;
+        }
+
+        .polaroid {
+            position: absolute;
+            right: 120px;
+            top: 80px;
+            width: 380px;
+            height: 440px;
+            background: white;
+            padding: 20px 20px 60px 20px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+            transform: rotate(3deg);
+            border: 1px solid #e0d8c3;
+        }
+        .polaroid-img {
+            width: 100%;
+            height: 100%;
+            background: #EFE6D2;
+            overflow: hidden;
+            position: relative;
+            border: 1px solid #d4c8b0;
+        }
+        .polaroid-text {
+            position: absolute;
+            bottom: 15px;
+            left: 0;
+            width: 100%;
+            text-align: center;
+            font-family: 'Caveat', cursive;
+            font-size: 28px;
+            color: #20242B;
+        }
+        
+        .content {
+            position: absolute;
+            left: 140px;
+            top: 140px;
+            width: 600px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="banner">
+    <div class="grid-lines"></div>
+    <div class="texture"></div>
+    <div class="red-line"></div>
+    <div class="red-line-2"></div>
+    
+    <div class="washi-tape tape-1"></div>
+    <div class="washi-tape tape-2"></div>
+
+    <div class="content">
+        <div class="inline-flex items-center space-x-2 px-3 py-1 rounded border border-muted/40 font-typewriter text-xs text-ink opacity-80 mb-6 bg-paper-dark/50">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 18l6-6-6-6M8 6l-6 6 6 6"/></svg>
+            <span class="font-bold tracking-widest uppercase text-crimson">Portfolio & Field Log</span>
+        </div>
+        
+        <h1 class="font-handwriting text-8xl text-ink font-bold leading-none mb-4 tracking-tight">
+            Prodip<br>Sengupta
+        </h1>
+        
+        <div class="h-1 w-32 bg-crimson mb-8 opacity-80 rounded-full"></div>
+        
+        <p class="font-typewriter text-xl text-muted tracking-widest font-bold uppercase leading-relaxed">
+            Full-Stack Developer<br>
+            <span class="text-crimson">GenAI Engineer</span>
+        </p>
+        
+        <div class="mt-12 flex flex-wrap gap-3 font-journal text-lg">
+            <span class="px-4 py-2 border-2 border-muted/30 rounded shadow-sm bg-white font-bold text-ink transform -rotate-1">Node.js</span>
+            <span class="px-4 py-2 border-2 border-muted/30 rounded shadow-sm bg-white font-bold text-ink transform rotate-2">React</span>
+            <span class="px-4 py-2 border-2 border-muted/30 rounded shadow-sm bg-white font-bold text-ink transform -rotate-2">LangChain</span>
+            <span class="px-4 py-2 border-2 border-muted/30 rounded shadow-sm bg-white font-bold text-ink transform rotate-1">PostgreSQL</span>
+        </div>
+    </div>
+    
+    <div class="polaroid">
+        <div class="polaroid-img">
+            <!-- Note: You can drop the me.webp absolute URL here if served -->
+            <div class="w-full h-full bg-[#1C1F26] flex items-center justify-center">
+                <svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="#E6DFCF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            </div>
+        </div>
+        <div class="polaroid-text">AI Systems Arch.</div>
+    </div>
+</div>
+
+</body>
+</html>
