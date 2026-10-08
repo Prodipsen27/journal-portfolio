@@ -1,7 +1,7 @@
 import React, { useRef, useEffect } from 'react';
 import HTMLFlipBook from 'react-pageflip';
 import { useBookAnimation } from '../hooks/useBookAnimation';
-import { SpiralBinderSpine } from './SpiralBinderSpine';
+
 
 interface HTMLFlipBookWrapperProps {
   activeTab: string;
@@ -165,12 +165,7 @@ export const HTMLFlipBookWrapper: React.FC<HTMLFlipBookWrapperProps> = ({
         <Page key="cover-back" className="bg-transparent">{backCover}</Page>
       </HTMLFlipBook>
 
-      {/* CENTRAL SPIRAL BINDER SPINE: MOUNTED ONCE OVER CENTER SPREAD */}
-      {isJournalOpen && (
-        <div className="absolute left-1/2 top-0 bottom-0 -translate-x-1/2 z-50 pointer-events-none hidden md:block">
-          <SpiralBinderSpine />
-        </div>
-      )}
+
     </div>
   );
 };
