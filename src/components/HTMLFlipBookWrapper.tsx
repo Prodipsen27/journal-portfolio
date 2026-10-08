@@ -165,7 +165,11 @@ export const HTMLFlipBookWrapper: React.FC<HTMLFlipBookWrapperProps> = ({
         <Page key="cover-back" className="bg-transparent">{backCover}</Page>
       </HTMLFlipBook>
 
-
+      {/* CENTRAL SPINE CREASE: MOUNTED ONCE OVER CENTER SPREAD */}
+      {isJournalOpen && (
+        <div className="absolute left-1/2 top-0 bottom-0 w-[2px] bg-black/70 shadow-[0_0_10px_rgba(0,0,0,0.4)] -translate-x-1/2 z-50 pointer-events-none hidden md:block">
+        </div>
+      )}
     </div>
   );
 };
