@@ -4,22 +4,22 @@
 
 @layer base {
   body {
-    font-family: 'Lora', Georgia, serif;
+    font-family: 'Nunito Sans', sans-serif;
     color: #20242B;
     background-color: #120e0c;
   }
 
   /* Redefined to remove the messy handwriting look globally */
   .font-handwriting {
-    font-family: 'Lora', serif;
+    font-family: 'Playwrite CO', cursive;
   }
 
   .font-journal {
-    font-family: 'Lora', serif;
+    font-family: 'Nunito Sans', sans-serif;
   }
 
   .font-typewriter {
-    font-family: 'Inter', system-ui, sans-serif;
+    font-family: 'Orbitron', sans-serif;
   }
 }
 
