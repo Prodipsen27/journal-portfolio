@@ -111,7 +111,7 @@ export const MobileChatSection: React.FC<MobileChatSectionProps> = ({
           <div className="w-7 h-7 rounded-full wax-seal flex items-center justify-center text-[#FBF7EE] font-handwriting font-bold text-xs shadow">PS</div>
           <div>
             <span className="font-typewriter text-[9px] text-[#9C3B3B] font-bold uppercase tracking-widest block">AI ASSISTANT</span>
-            <span className={`font-handwriting text-lg font-bold ${isDarkMode ? 'text-[#E6DFCF]' : 'text-[#20242B]'}`}>Prodip's Assistant</span>
+            <span className={`font-journal text-base font-bold ${isDarkMode ? 'text-[#E6DFCF]' : 'text-[#20242B]'}`}>Prodip's Assistant</span>
           </div>
         </div>
 
@@ -175,7 +175,7 @@ export const MobileChatSection: React.FC<MobileChatSectionProps> = ({
               <PenTool className="w-7 h-7" />
             </div>
             <div>
-              <h3 className={`font-handwriting text-2xl font-bold ${isDarkMode ? 'text-[#E6DFCF]' : 'text-[#20242B]'}`}>Ask me anything</h3>
+              <h3 className={`font-journal text-xl font-bold ${isDarkMode ? 'text-[#E6DFCF]' : 'text-[#20242B]'}`}>Ask me anything</h3>
               <p className={`font-typewriter text-[11px] mt-1 max-w-[220px] leading-relaxed ${isDarkMode ? 'text-[#6a7685]' : 'text-[#8C8577]'}`}>
                 Use the shortcuts above or type your question below
               </p>
@@ -221,7 +221,7 @@ export const MobileChatSection: React.FC<MobileChatSectionProps> = ({
                       {copiedIndex === idx ? <Check className="w-3 h-3 text-[#059669]" /> : <Copy className="w-3 h-3" />}
                     </button>
                   </div>
-                  <div className="font-handwriting text-lg sm:text-xl leading-relaxed whitespace-pre-wrap">
+                  <div className="font-journal text-base sm:text-lg leading-relaxed whitespace-pre-wrap">
                     {textToRender}
                     {isLatest && isTyping && (
                       <span className="inline-block animate-pulse ml-1 w-1.5 h-4 bg-[#9C3B3B] align-middle"></span>
@@ -283,3 +283,4 @@ export const MobileChatSection: React.FC<MobileChatSectionProps> = ({
     </div>
   );
 };
+

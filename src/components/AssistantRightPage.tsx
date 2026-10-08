@@ -85,8 +85,8 @@ export const AssistantRightPage: React.FC<AssistantRightPageProps> = ({
               <span className="font-typewriter text-[9px] text-[#9C3B3B] font-bold uppercase tracking-widest block">
                 LINED NOTEBOOK LOG · ASSISTANT
               </span>
-              <h2 className="font-handwriting text-2xl sm:text-3xl font-bold text-[#20242B]">
-                Handwritten Response Journal
+              <h2 className="font-journal text-2xl sm:text-3xl font-bold text-[#20242B]">
+                AI Response
               </h2>
             </div>
           </div>
@@ -120,7 +120,7 @@ export const AssistantRightPage: React.FC<AssistantRightPageProps> = ({
             <div className="w-16 h-16 rounded-full bg-[#EFE6D2] border-2 border-[#DCCFAF] flex items-center justify-center text-[#9C3B3B] shadow-inner">
               <PenTool className="w-8 h-8" />
             </div>
-            <h3 className="font-handwriting text-3xl font-bold text-[#20242B]">
+            <h3 className="font-journal text-2xl font-bold text-[#20242B]">
               "Ask anything on the left page..."
             </h3>
             <p className="font-typewriter text-xs text-[#8C8577] max-w-xs leading-relaxed">
@@ -178,7 +178,7 @@ export const AssistantRightPage: React.FC<AssistantRightPageProps> = ({
                 </div>
 
                 {/* HANDWRITTEN TEXT DIRECTLY ON LINED PAGE INSIDE HIGHLIGHT BOX */}
-                <div className="relative font-handwriting text-xl sm:text-2xl text-[#1E293B] font-semibold leading-relaxed whitespace-pre-wrap">
+                <div className="relative font-journal text-base sm:text-lg text-[#1E293B] font-medium leading-relaxed whitespace-pre-wrap">
                   {textToRender}
                   {isLatest && isTyping && (
                     <span className="inline-block animate-pulse ml-1 w-2 h-5 bg-[#9C3B3B] align-middle"></span>
